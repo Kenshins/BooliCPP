@@ -13,10 +13,10 @@ using namespace std;
 Booli::Booli()
 {
   Retriver* r = new Retriver();
-  std::string caller = "bopren";
+  std::string caller = "xxxxxx";
   std::string unique = GenerateUnique();
   std::string ti = GenerateTime();
-  std::string ha = GenerateSHA1Hash(caller + ti + "P8rfkeJvKOXgHjvXZ1npRXVGG2kHPmXpd5NZetHS" + unique);
+  std::string ha = GenerateSHA1Hash(caller + ti + "xxx" + unique);
   r->Retrive("https://api.booli.se/listings?q=nacka&limit=3&offset=0&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
 }
 
