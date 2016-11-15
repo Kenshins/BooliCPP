@@ -1,13 +1,12 @@
 #include <iostream>
-#include "Retriver.h"
+#include "Booli.h"
 
 using namespace std;
 
 int main (void)
 {
 
-  Retriver* r = new Retriver();
-  r->Retrive("ju.se");
-
+  Booli* b = new Booli();
+ 
 return 0;
 }

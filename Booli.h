@@ -9,7 +9,7 @@ class Booli
 
  private:
   std::string GenerateUnique();
-  std::string GenerateSHA1Hash();
+  std::string GenerateSHA1Hash(std::string);
   std::string GenerateTime();
 
 };
