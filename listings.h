@@ -5,7 +5,7 @@
 //
 //  listings.h
 //
-//  Created by js2Model on 2016-12-09.
+//  Created by js2Model on 2016-12-30.
 //
 
 #include <string>
@@ -14,7 +14,6 @@
 #include "location.h"
 #include "source.h"
 #include "rapidjson/document.h"
-
 
 #pragma once
 
@@ -25,7 +24,7 @@ class listings_t  {
 
 public:
     int booliId;
-    int livingArea;
+    float livingArea;
     std::string url;
     location_t location;
     source_t source;

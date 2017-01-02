@@ -1,25 +1,31 @@
-#include "SearchCondition.h"
+#include "searchCondition.h"
 #include <string>
 
 using namespace std;
 
-SearchCondition::SearchCondition()
+listingsSearchCondition_t::listingsSearchCondition_t()
 {
 }
 
-ListingsSearchCondition::ListingsSearchCondition()
-{
-}
-
-std::string ListingsSearchCondition::SearchConditionResult()
+std::string listingsSearchCondition_t::SearchConditionResult()
 {
   return "";
 }
 
-SoldSearchCondition::SoldSearchCondition()
+soldSearchCondition_t::soldSearchCondition_t()
 {
 }
 
-AreasSearchCondition::AreasSearchCondition()
+std::string soldSearchCondition_t::SearchConditionResult()
 {
+  return "";
+}
+
+areasSearchCondition_t::areasSearchCondition_t()
+{
+}
+
+std::string areasSearchCondition_t::SearchConditionResult()
+{
+  return "";
 }

@@ -1,17 +1,13 @@
-BooliTest : main.cpp BooliAPI.o
-	g++ -lssl -lcrypto -lcurl BooliAPI.o main.cpp
+CC=g++
+CFLAGS= -W -std=gnu++11 
 
-BooliAPI.o: Booli.o Retriver.o Result.o SearchCondition.o
-	ld -r -o BooliAPI.o Retriver.o Booli.o Result.o SearchCondition.o
+LIBS=-lssl -lcrypto -lcurl
+DEPS= Booli.h retriver.h searchCondition.h listings.h address.h areas.h distance.h location.h position.h region.h result.h searchParams.h sold.h source.h
 
-Booli.o : Booli.cpp Booli.h
-	g++ -c Booli.cpp
+OBJ= Booli.o retriver.o searchCondition.o listings.o address.o areas.o distance.o location.o position.o region.o result.o searchParams.o sold.o source.o
 
-Retriver.o: Retriver.cpp Retriver.h
-	g++ -c Retriver.cpp
+%.o: %.cpp $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)  
 
-Result.o: Result.cpp Result.h
-	g++ -c Result.cpp
-
-SearchCondition.o: SearchCondition.cpp SearchCondition.h
-	g++ -c SearchCondition.cpp
+BooliTest : main.cpp $(OBJ)
+	$(CC) $(CFLAGS) main.cpp $(OBJ) $(LIBS)

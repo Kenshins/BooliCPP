@@ -1,5 +1,5 @@
 #include "Booli.h"
-#include "Retriver.h"
+#include "retriver.h"
 #include <openssl/sha.h>
 #include <cstdlib>
 #include <ctime>
@@ -12,12 +12,12 @@ using namespace std;
 
 Booli::Booli()
 {
-  Retriver* r = new Retriver();
-  std::string caller = "xxxxxx";
+  retriver_t* r = new retriver_t();
+  std::string caller = "xxx";
   std::string unique = GenerateUnique();
   std::string ti = GenerateTime();
-  std::string ha = GenerateSHA1Hash(caller + ti + "xxx" + unique);
-  r->Retrive("https://api.booli.se/listings?q=nacka&limit=3&offset=0&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
+  std::string ha = GenerateSHA1Hash(caller + ti + "your-hash-here" + unique);
+  r->Retrive("https://api.booli.se/listings?q=nacka&limit=12&offset=0&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
 }
 
 std::string Booli::GenerateUnique()

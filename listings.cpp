@@ -5,13 +5,14 @@
 //
 //  listings.cpp
 //
-//  Created by js2Model on 2016-12-09.
+//  Created by js2Model on 2016-12-30.
 //
 
 #include "listings.h"
 #include <vector>
 #include <fstream>
 #include <sstream>
+
 
 using namespace std;
 using namespace rapidjson;
@@ -29,16 +30,15 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
         if (!booliId_iter->value.IsNull()) {
             assert(booliId_iter->value.IsInt());
             booliId = booliId_iter->value.GetInt();
-	}
+        }
     }
 
     auto livingArea_iter = json_value.FindMember("livingArea");
     if ( livingArea_iter != json_value.MemberEnd() ) {
-
         if (!livingArea_iter->value.IsNull()) {
-            assert(livingArea_iter->value.IsInt());
-            livingArea = livingArea_iter->value.GetInt();
-        }
+            assert(livingArea_iter->value.IsNumber());
+            livingArea = livingArea_iter->value.GetDouble();
+	}
     }
 
     auto url_iter = json_value.FindMember("url");
@@ -139,10 +139,10 @@ string to_string(const listings_t &val, std::string indent/* = "" */, std::strin
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"booliId\": " << val.booliId << "," << endl;
-    os << indent << pretty_print << "\"livingArea\": " << val.livingArea << "," << endl;
     os << indent << pretty_print << "\"url\": \"" << val.url << "\"," << endl;
     os << indent << pretty_print << "\"location\": " << to_string(val.location, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"source\": " << to_string(val.source, indent + pretty_print, pretty_print) << "," << endl;
+os << indent << pretty_print << "\"livingArea\": " << val.livingArea << "," << endl;
     os << indent << pretty_print << "\"rent\": " << val.rent << "," << endl;
     os << indent << pretty_print << "\"published\": \"" << val.published << "\"," << endl;
     os << indent << pretty_print << "\"isNewConstruction\": " << val.isNewConstruction << "," << endl;

@@ -2,10 +2,9 @@
 #define SEARCHCONDITION_H
 #include <string>
 
-class SearchCondition
+class searchCondition_t
 {
  public:
-  SearchCondition();
   void SetQ(std::string q);
   virtual std::string SearchConditionResult() = 0;
 
@@ -13,28 +12,28 @@ class SearchCondition
   std::string q;
 };
 
-class ListingsSearchCondition : public SearchCondition
+class listingsSearchCondition_t : public searchCondition_t
 {
  public:
-  ListingsSearchCondition();
+  listingsSearchCondition_t();
   std::string SearchConditionResult();
 
  private:
     
 };
 
-class SoldSearchCondition : public SearchCondition
+class soldSearchCondition_t : public searchCondition_t
 {
  public:
-  SoldSearchCondition();
+  soldSearchCondition_t();
   std::string SearchConditionResult();
 
 };
 
-class AreasSearchCondition : public SearchCondition
+class areasSearchCondition_t : public searchCondition_t
 {
  public:
-  AreasSearchCondition();
+  areasSearchCondition_t();
   std::string SearchConditionResult();
 
 };
