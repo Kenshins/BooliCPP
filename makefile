@@ -9,5 +9,11 @@ OBJ= Booli.o retriver.o searchCondition.o listings.o address.o areas.o distance.
 %.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)  
 
-BooliTest : main.cpp $(OBJ)
-	$(CC) $(CFLAGS) main.cpp $(OBJ) $(LIBS)
+boolitest : main.cpp $(OBJ)
+	$(CC) -o $@ $(CFLAGS) main.cpp $(OBJ) $(LIBS)
+
+unittest : unitTests.cpp searchCondition.cpp
+	$(CC) -o $@ $(CFLAGS) unitTests.cpp searchCondition.cpp $(LIBS) -lgtest -lpthread
+
+clean :
+	rm -f *.o *~ boolitest

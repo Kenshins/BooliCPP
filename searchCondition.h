@@ -1,23 +1,84 @@
 #ifndef SEARCHCONDITION_H
 #define SEARCHCONDITION_H
 #include <string>
+#include <ctime>
 
 // Supporting datatypes
 
 class center
 {
  public:
-  center();
   center(int la, int ln);
   void SetLatLong(int la, int ln);
   void SetLat(int la);
   void SetLong(int ln);
+  std::string RetCenter();
 
  private:
   int latitude;
   int longitude;
 
 };
+
+class dimension
+{
+ public:
+  dimension(int x, int y);
+  void SetX(int x);
+  void SetY(int y);
+  std::string RetDim();
+  
+ private:
+  int x;
+  int y;
+};
+
+class bbox
+{
+ public:
+  bbox(double lat_lo, double lng_lo, double lat_hi, double lng_hi);
+  void setBbox(double lat_lo, double lng_lo, double lat_hi, double lng_hi);
+  std::string RetBbox();
+  
+ private:
+  double latLo;
+  double lngLo;
+  double latHi;
+  double lngHi;
+};
+
+class objectType
+{
+ public:
+  objectType(std::string oT);
+  void setObjectType(std::string oT);
+  std::string retObjectType();
+  
+ private:
+  std::string object_type;
+};
+
+class minPublishedDate
+{
+ public:
+  minPublishedDate(tm *t);
+  std::string retMinPublishedDate();
+  
+ private:
+  tm *minPubDateTime;
+};
+
+class maxPublishedDate
+{
+public:
+  maxPublishedDate(tm *t);
+  std::string retMaxPublishedDate();
+
+ private:
+  tm *maxPubDateTime;
+};
+
+// Search condition base class
 
 class searchCondition_t
 {
@@ -29,14 +90,16 @@ class searchCondition_t
   std::string q;
 };
 
+// Listings search condition
+
 class listingsSearchCondition_t : public searchCondition_t
 {
  public:
   listingsSearchCondition_t();
   std::string SearchConditionResult();
-  void SetC(int la, int ln);
-  void SetDim(std::string d);
-  void SetBbox(std::string b);
+  void SetC(center *c);
+  void SetDim(dimension *d);
+  void SetBbox(bbox *b);
   void SetAreaId(std::string a);
   void SetMinListPrice(double minLP);
   void SetMaxListPrice(double maxLP);
@@ -49,8 +112,11 @@ class listingsSearchCondition_t : public searchCondition_t
   void SetMaxLivingArea(int maxLA);
   void SetMinPlotArea(int minPA);
   void SetMaxPlotArea(int maxPA);
+  void SetObjectType(std::string *oT);
   void SetMinConstructionYear(int minCY);
   void SetMaxConstructionYear(int maxCY);
+  void SetMinPublishDate(minPublishedDate *miPD);
+  void SetMaxPublishDate(maxPublishedDate *maPD);
   void SetPriceDecrease(bool pD);
   void SetIsNewConstruction(bool nC);
   void SetIncludeUnset(bool iU);
@@ -58,10 +124,10 @@ class listingsSearchCondition_t : public searchCondition_t
   void SetOffset(int o);
   
  private:
-  center c; // Should be own type
-  std::string dim; // Should be own type
-  std::string bbox; // Should be own type
-  std::string areaId; // Should be own type
+  center *c;
+  dimension *dim;
+  bbox *bB;
+  std::string areaId;
   double minListPrice;
   double maxListPrice;
   double minListSqmPrice;
@@ -73,11 +139,11 @@ class listingsSearchCondition_t : public searchCondition_t
   int maxLivingArea;
   int minPlotArea;
   int maxPlotArea;
-  // objectType, should be a enum
+  objectType *objectT;
   int minConstructionYear;
   int maxConstructionYear;
-  // minPublished date type
-  // maxPublished date type
+  minPublishedDate *minPubDate;
+  maxPublishedDate *maxPubDate;
   bool priceDecrease;
   bool isNewConstruction;
   bool includeUnset;
@@ -100,6 +166,5 @@ class areasSearchCondition_t : public searchCondition_t
   std::string SearchConditionResult();
 
 };
-
 
 #endif // SEARCHCONDITION_H
