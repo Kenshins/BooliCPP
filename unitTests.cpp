@@ -49,6 +49,58 @@ TEST(MaxPublishedDateTest, DateTheSame) {
   EXPECT_EQ(maxPub->retMaxPublishedDate(), "20151027");
 }
 
+TEST(MissingYearDateTest, DateTheSame) {
+  tm testTime = {};
+  testTime.tm_mon = 10;
+  testTime.tm_mday = 27;
+  maxPublishedDate* maxPub;
+  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
+TEST(MissingMonthDateTest, DateTheSame) {
+  tm testTime = {};
+  testTime.tm_year = 2015;
+  testTime.tm_mday = 27;
+  maxPublishedDate* maxPub;
+  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
+TEST(MissingDayDateTest, DateTheSame) {
+  tm testTime = {};
+  testTime.tm_year = 2015;
+  testTime.tm_mon = 10;
+  maxPublishedDate* maxPub;
+  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
+TEST(InvalidYearDateTest, DateTheSame) {
+  tm testTime = {};
+  testTime.tm_year = 1066;
+  testTime.tm_mon = 10;
+  testTime.tm_mday = 27;
+  maxPublishedDate* maxPub;
+  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
+// month in tm in ctime is from 0 to 11, so confusing
+TEST(InvalidMonthDateTest, DateTheSame) {
+  tm testTime = {};
+  testTime.tm_year = 1997;
+  testTime.tm_mon = 12;
+  testTime.tm_mday = 27;
+  maxPublishedDate* maxPub;
+  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
+TEST(InvalidDayDateTest, DateTheSame) {
+  tm testTime = {};
+  testTime.tm_year = 2017;
+  testTime.tm_mon = 02;
+  testTime.tm_mday = 29;
+  maxPublishedDate* maxPub;
+  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -167,4 +167,13 @@ class areasSearchCondition_t : public searchCondition_t
 
 };
 
+class util
+{
+ public:
+  static bool valid_date(int year,int month,int day);
+
+ private:
+  static bool isleapyear(int year);
+};
+
 #endif // SEARCHCONDITION_H

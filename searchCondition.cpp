@@ -2,6 +2,7 @@
 #include <string>
 #include <stdexcept>
 #include <ctime>
+#include <time.h>
 
 using namespace std;
 
@@ -157,6 +158,11 @@ std::string objectType::retObjectType()
 
 minPublishedDate::minPublishedDate(tm *t)
 {
+  if (!util::valid_date(t->tm_year, t->tm_mon, t->tm_mday))
+    {
+      throw std::invalid_argument( "minPublishedDate: date is invalid!" );
+    }
+  
   minPubDateTime = t;
 }
 
@@ -167,6 +173,12 @@ std::string minPublishedDate::retMinPublishedDate()
 
 maxPublishedDate::maxPublishedDate(tm *t)
 {
+
+  if (!util::valid_date(t->tm_year, t->tm_mon, t->tm_mday))
+    {
+      throw std::invalid_argument( "minPublishedDate: date is invalid!" );
+    }
+
   maxPubDateTime = t;
 }
 
@@ -178,6 +190,108 @@ std::string maxPublishedDate::retMaxPublishedDate()
 // Main type
 
 listingsSearchCondition_t::listingsSearchCondition_t()
+{
+}
+
+// Listing Search Condition sub class
+
+void listingsSearchCondition_t::SetC(center *c)
+{
+}
+
+void listingsSearchCondition_t::SetDim(dimension *d)
+{
+}
+
+void listingsSearchCondition_t::SetBbox(bbox *b)
+{
+}
+
+void listingsSearchCondition_t::SetAreaId(std::string a)
+{
+}
+
+void listingsSearchCondition_t::SetMinListPrice(double minLP)
+{
+}
+
+void listingsSearchCondition_t::SetMaxListPrice(double maxLP)
+{
+}
+
+void listingsSearchCondition_t::SetMinListSqmPrice(double minLSP)
+{
+}
+
+void listingsSearchCondition_t::SetMaxListSqmPrice(double maxLSP)
+{
+}
+
+void listingsSearchCondition_t::SetMinRooms(int minR)
+{
+}
+
+void listingsSearchCondition_t::SetMaxRooms(int maxR)
+{
+}
+
+void listingsSearchCondition_t::SetMaxRent(double maxRent)
+{
+}
+
+void listingsSearchCondition_t::SetMinLivingArea(int minLA)
+{
+}
+
+void listingsSearchCondition_t::SetMaxLivingArea(int maxLA)
+{
+}
+
+void listingsSearchCondition_t::SetMinPlotArea(int minPA)
+{
+}
+
+void listingsSearchCondition_t::SetMaxPlotArea(int maxPA)
+{
+}
+
+void listingsSearchCondition_t::SetObjectType(std::string *oT)
+{
+}
+
+void listingsSearchCondition_t::SetMinConstructionYear(int minCY)
+{
+}
+
+void listingsSearchCondition_t::SetMaxConstructionYear(int maxCY)
+{
+}
+
+void listingsSearchCondition_t::SetMinPublishDate(minPublishedDate *miPD)
+{
+}
+
+void listingsSearchCondition_t::SetMaxPublishDate(maxPublishedDate *maPD)
+{
+}
+
+void listingsSearchCondition_t::SetPriceDecrease(bool pD)
+{
+}
+
+void listingsSearchCondition_t::SetIsNewConstruction(bool nC)
+{
+}
+
+void listingsSearchCondition_t::SetIncludeUnset(bool iU)
+{
+}
+
+void listingsSearchCondition_t::SetLimit(int l)
+{
+}
+
+void listingsSearchCondition_t::SetOffset(int o)
 {
 }
 
@@ -202,4 +316,24 @@ areasSearchCondition_t::areasSearchCondition_t()
 std::string areasSearchCondition_t::SearchConditionResult()
 {
   return "";
+}
+
+bool util::isleapyear(int year){
+	return (!(year%4) && (year%100) || !(year%400));
+}
+
+// TODO: Maybe I rewrite this to return a error string instead
+bool util::valid_date(int year,int month,int day){
+	unsigned short monthlen[]={31,28,31,30,31,30,31,31,30,31,30,31};
+	if (!year || !month || !day || month>12)
+	  return 0;
+	if (year < 1800 || year > 3000)
+	  return 0;
+	if (month < 0 || month > 11)
+	  return 0;
+	if (isleapyear(year) && month==2)
+	  monthlen[1]++;
+	if (day>monthlen[month-1])
+	  return 0;
+	return 1;
 }
