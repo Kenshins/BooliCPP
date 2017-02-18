@@ -197,102 +197,171 @@ listingsSearchCondition_t::listingsSearchCondition_t()
 
 void listingsSearchCondition_t::SetC(center *c)
 {
+  if (c)
+    cent = c;
 }
 
 void listingsSearchCondition_t::SetDim(dimension *d)
 {
+  if (dim)
+    dim = d;
 }
 
 void listingsSearchCondition_t::SetBbox(bbox *b)
 {
+  if (bB)
+    bB = b;
 }
 
-void listingsSearchCondition_t::SetAreaId(std::string a)
+void listingsSearchCondition_t::SetAreaId(std::string aId)
 {
+  areaId = aId;
 }
 
 void listingsSearchCondition_t::SetMinListPrice(double minLP)
 {
+  if (minLP < 0)
+    throw std::invalid_argument( "SetMinListPrice: Min list price cannot be negative!" );
+
+  minListPrice = minLP;
 }
 
 void listingsSearchCondition_t::SetMaxListPrice(double maxLP)
 {
+  if (maxLP < 0)
+    throw std::invalid_argument( "SetMaxListPrice: Max list price cannot be negative!" );
+
+  maxListPrice = maxLP;
 }
 
 void listingsSearchCondition_t::SetMinListSqmPrice(double minLSP)
 {
+  if (minLSP < 0)
+    throw std::invalid_argument( "SetMinListSqmPrice: Min list square meter price cannot be negative!" );
+
+  minListSqmPrice = minLSP;
 }
 
 void listingsSearchCondition_t::SetMaxListSqmPrice(double maxLSP)
 {
+  if (maxLSP < 0)
+    throw std::invalid_argument( "SetMaxListSqmPrice: Max list square meter price cannot be negative!" );
+
+  maxListSqmPrice = maxLSP;
 }
 
 void listingsSearchCondition_t::SetMinRooms(int minR)
 {
+  if (minR < 0)
+    throw std::invalid_argument( "SetMinRooms: min rooms cannot be negative!" );
+
+  minRooms = minR;
 }
 
 void listingsSearchCondition_t::SetMaxRooms(int maxR)
 {
+  if (maxR < 0)
+    throw std::invalid_argument( "SetMaxRooms: max rooms cannot be negative!" );
+
+  maxRooms = maxR;
 }
 
-void listingsSearchCondition_t::SetMaxRent(double maxRent)
+void listingsSearchCondition_t::SetMaxRent(double maxRe)
 {
+  if (maxRe < 0)
+    throw std::invalid_argument( "SetMaxRent: max rent cannot be negative!" );
+
+  maxRent = maxRe;
 }
 
 void listingsSearchCondition_t::SetMinLivingArea(int minLA)
 {
+  if (minLA < 0)
+    throw std::invalid_argument( "SetMinLivingArea: min living area cannot be negative!" );
+
+  minLivingArea = minLA;
 }
 
 void listingsSearchCondition_t::SetMaxLivingArea(int maxLA)
 {
+  if (maxLA < 0)
+    throw std::invalid_argument( "SetMaxLivingArea: max living area cannot be negative!" );
+
+  maxLivingArea = maxLA;
 }
 
 void listingsSearchCondition_t::SetMinPlotArea(int minPA)
 {
+  if (minPA < 0)
+    throw std::invalid_argument( "SetMinPlotArea: min plot area cannot be negative!" );
+
+  minPlotArea = minPA;
 }
 
 void listingsSearchCondition_t::SetMaxPlotArea(int maxPA)
 {
+  if (maxPA < 0)
+    throw std::invalid_argument( "SetMaxPlotArea: max plot area cannot be negative!" );
+
+  maxPlotArea = maxPA;
 }
 
-void listingsSearchCondition_t::SetObjectType(std::string *oT)
+void listingsSearchCondition_t::SetObjectType(std::string oT)
 {
+      objectT = new objectType(oT);
 }
 
 void listingsSearchCondition_t::SetMinConstructionYear(int minCY)
 {
+  if (minCY < 0)
+    throw std::invalid_argument( "SetMinConstructionYear: min construction year cannot be negative!" );
+
+  minConstructionYear = minCY;
 }
 
 void listingsSearchCondition_t::SetMaxConstructionYear(int maxCY)
 {
+  if (maxCY < 0)
+    throw std::invalid_argument( "SetMaxConstructionYear: max construction year cannot be negative!" );
+
+  maxConstructionYear = maxCY;
 }
 
-void listingsSearchCondition_t::SetMinPublishDate(minPublishedDate *miPD)
+void listingsSearchCondition_t::SetMinPublishDate(minPublishedDate *minPD)
 {
+  if (minPD)
+      minPubDate = minPD;
 }
 
-void listingsSearchCondition_t::SetMaxPublishDate(maxPublishedDate *maPD)
+void listingsSearchCondition_t::SetMaxPublishDate(maxPublishedDate *maxPD)
 {
+  if (maxPD)
+    maxPubDate = maxPD;
 }
 
 void listingsSearchCondition_t::SetPriceDecrease(bool pD)
 {
+  priceDecrease = pD;
 }
 
 void listingsSearchCondition_t::SetIsNewConstruction(bool nC)
 {
+  isNewConstruction = nC;
 }
 
 void listingsSearchCondition_t::SetIncludeUnset(bool iU)
 {
+  includeUnset = iU;
 }
 
 void listingsSearchCondition_t::SetLimit(int l)
 {
+  limit = l;
 }
 
 void listingsSearchCondition_t::SetOffset(int o)
 {
+  offset = o;
 }
 
 std::string listingsSearchCondition_t::SearchConditionResult()

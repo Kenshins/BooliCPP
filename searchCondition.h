@@ -100,19 +100,19 @@ class listingsSearchCondition_t : public searchCondition_t
   void SetC(center *c);
   void SetDim(dimension *d);
   void SetBbox(bbox *b);
-  void SetAreaId(std::string a);
+  void SetAreaId(std::string aId);
   void SetMinListPrice(double minLP);
   void SetMaxListPrice(double maxLP);
   void SetMinListSqmPrice(double minLSP);
   void SetMaxListSqmPrice(double maxLSP);
   void SetMinRooms(int minR);
   void SetMaxRooms(int maxR);
-  void SetMaxRent(double maxRent);
+  void SetMaxRent(double maxRe);
   void SetMinLivingArea(int minLA);
   void SetMaxLivingArea(int maxLA);
   void SetMinPlotArea(int minPA);
   void SetMaxPlotArea(int maxPA);
-  void SetObjectType(std::string *oT);
+  void SetObjectType(std::string oT);
   void SetMinConstructionYear(int minCY);
   void SetMaxConstructionYear(int maxCY);
   void SetMinPublishDate(minPublishedDate *miPD);
@@ -124,7 +124,7 @@ class listingsSearchCondition_t : public searchCondition_t
   void SetOffset(int o);
   
  private:
-  center *c;
+  center *cent;
   dimension *dim;
   bbox *bB;
   std::string areaId;
