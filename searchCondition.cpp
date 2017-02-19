@@ -1,6 +1,7 @@
 #include "searchCondition.h"
 #include <string>
 #include <stdexcept>
+#include <sstream>
 #include <ctime>
 #include <time.h>
 
@@ -39,7 +40,9 @@ void center::SetLong(int ln)
 
 std::string center::RetCenter()
 {
-  // TODO
+  stringstream ss;
+  ss << latitude << "," <<longitude;
+  return ss.str(); 
 }
 
 dimension::dimension(int x, int y)
@@ -66,6 +69,9 @@ void dimension::SetY(int iny)
 
 std::string dimension::RetDim()
 {
+  stringstream ss;
+  ss << x << "," << y;
+  return ss.str();
 }
 
 bbox::bbox(double lat_lo, double lng_lo, double lat_hi, double lng_hi)
@@ -108,7 +114,9 @@ bbox::bbox(double lat_lo, double lng_lo, double lat_hi, double lng_hi)
 
 std::string bbox::RetBbox()
 {
-  // TODO
+  stringstream ss;
+  ss << latLo << "," << lngLo << "," << latHi << "," << lngHi;
+  return ss.str();
 }
 
 objectType::objectType(std::string oT)
@@ -366,6 +374,35 @@ void listingsSearchCondition_t::SetOffset(int o)
 
 std::string listingsSearchCondition_t::SearchConditionResult()
 {
+
+  std::string  booliString = "";
+
+  if (q != "" && cent != NULL)
+    throw std::invalid_argument( "SearchConditonResult: Cannot use both center and q at the same time!" );
+
+  if (q != "" && bB != NULL)
+    throw std::invalid_argument( "SearchConditonResult: Cannot use both bbox and q at the same time!" );
+
+  if (bB != NULL && cent != NULL)
+    throw std::invalid_argument( "SearchConditonResult: Cannot use both center and bbox at the same time!" );
+
+  if (q != "" && cent != NULL && bB != NULL)
+    throw std::invalid_argument( "SearchConditonResult: Cannot use both center and q and bbox at the same time!" );
+  
+  if (q != "")
+    booliString = "q=" + q;
+
+  if (cent)
+    {
+    booliString = "center=" + cent->RetCenter();
+
+    if (dim)
+      booliString += "dim=" +  dim->RetDim();
+    }
+
+  if (bB)
+    booliString = "bbox=" + bB->RetBbox();
+
   return "";
 }
 

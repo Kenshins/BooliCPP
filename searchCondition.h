@@ -86,7 +86,7 @@ class searchCondition_t
   void SetQ(std::string q);
   virtual std::string SearchConditionResult() = 0;
 
- private:
+ protected:
   std::string q;
 };
 
