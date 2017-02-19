@@ -101,6 +101,81 @@ TEST(InvalidDayDateTest, DateTheSame) {
   ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
 }
 
+TEST(ListingsSearchConditionSetMinListPriceTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMinListPrice(-22), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxListPriceTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxListPrice(-34), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMinListSqmPriceTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMinListSqmPrice(-4), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxListSqmPriceTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxListSqmPrice(-87), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMinRoomsTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMinRooms(-77), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxRoomsTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxRooms(-4), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxRentTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxRent(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMinLivingAreaTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMinLivingArea(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxLivingAreaTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxLivingArea(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMinPlotAreaTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMinPlotArea(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxPlotAreaTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxPlotArea(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMinConstructionYearTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMinConstructionYear(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetMaxConstructionYearTest, NegativeCheck) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetMaxConstructionYear(-1), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetObjectTypeTest, IncorrectObjectType) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_THROW(sc->SetObjectType("BananBåt"), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectType) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  ASSERT_NO_THROW(sc->SetObjectType("gård"));
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
