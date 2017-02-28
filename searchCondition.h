@@ -94,6 +94,8 @@ class searchCondition_t
 
 class listingsSearchCondition_t : public searchCondition_t
 {
+  enum MainInput {BBOX, DIM, CENTER, AREAID}; 
+  
  public:
   listingsSearchCondition_t();
   std::string SearchConditionResult();
@@ -149,6 +151,7 @@ class listingsSearchCondition_t : public searchCondition_t
   bool includeUnset;
   int limit;
   int offset;
+  void checkNoDuplicateMainInput(MainInput in);
 };
 
 class soldSearchCondition_t : public searchCondition_t
@@ -156,7 +159,6 @@ class soldSearchCondition_t : public searchCondition_t
  public:
   soldSearchCondition_t();
   std::string SearchConditionResult();
-
 };
 
 class areasSearchCondition_t : public searchCondition_t
@@ -164,16 +166,17 @@ class areasSearchCondition_t : public searchCondition_t
  public:
   areasSearchCondition_t();
   std::string SearchConditionResult();
-
 };
 
 class util
 {
  public:
   static bool valid_date(int year,int month,int day);
-
+  static std::string doubleToString(double d);
+  
  private:
   static bool isleapyear(int year);
+  
 };
 
 #endif // SEARCHCONDITION_H

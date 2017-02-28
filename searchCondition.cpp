@@ -199,30 +199,59 @@ std::string maxPublishedDate::retMaxPublishedDate()
 
 listingsSearchCondition_t::listingsSearchCondition_t()
 {
+  cent = NULL;
+  dim = NULL;
+  bB = NULL;
+  areaId = "";
+  minListPrice = 0;
+  maxListPrice = 0;
+  minListSqmPrice = 0;
+  maxListSqmPrice = 0;
+  minRooms = 0;
+  maxRooms = 0;
+  maxRent = 0;
+  minLivingArea = 0;
+  maxLivingArea = 0;
+  minPlotArea = 0;
+  maxPlotArea = 0;
+  objectT = NULL;
+  minConstructionYear = 0;
+  maxConstructionYear = 0;
+  minPubDate = NULL;
+  maxPubDate = NULL;
+  priceDecrease = false;
+  isNewConstruction = false;
+  includeUnset = true;
+  limit = 10;
+  offset = 0;
 }
 
 // Listing Search Condition sub class
 
 void listingsSearchCondition_t::SetC(center *c)
 {
+  checkNoDuplicateMainInput(CENTER);
   if (c)
     cent = c;
 }
 
 void listingsSearchCondition_t::SetDim(dimension *d)
 {
+  checkNoDuplicateMainInput(DIM);
   if (dim)
     dim = d;
 }
 
 void listingsSearchCondition_t::SetBbox(bbox *b)
 {
+  checkNoDuplicateMainInput(BBOX);
   if (bB)
     bB = b;
 }
 
 void listingsSearchCondition_t::SetAreaId(std::string aId)
 {
+  checkNoDuplicateMainInput(AREAID);
   areaId = aId;
 }
 
@@ -372,22 +401,42 @@ void listingsSearchCondition_t::SetOffset(int o)
   offset = o;
 }
 
+void listingsSearchCondition_t::checkNoDuplicateMainInput(MainInput in)
+{
+  if (in == BBOX)
+    {
+      if (cent != NULL || dim != NULL || areaId != "")
+	{
+	  throw std::invalid_argument( "SetBbox: Cannot set bbox if center, dimension or areaid is set!" );
+	}
+    }
+  else if (in == CENTER)
+    {
+      if (bB != NULL || dim != NULL || areaId != "")
+	{
+	  throw std::invalid_argument( "SetC: Cannot set center if bbox, dimension or areaid is set!" );
+	}
+    }
+  else if (in == DIM)
+    {
+      if (bB != NULL || cent != NULL || areaId != "")
+	{
+	   throw std::invalid_argument( "SetDim: Cannot set dimension if bbox, areaid or center is set!" );
+	}
+    }
+  else if (in == AREAID)
+    {
+      if (bB != NULL || cent != NULL || dim != NULL)
+	{
+	  throw std::invalid_argument( "SetAreaId: Cannot set areaid if dimension, center or bbox is set!" );
+	}
+    }
+}
+
 std::string listingsSearchCondition_t::SearchConditionResult()
 {
 
   std::string  booliString = "";
-
-  if (q != "" && cent != NULL)
-    throw std::invalid_argument( "SearchConditonResult: Cannot use both center and q at the same time!" );
-
-  if (q != "" && bB != NULL)
-    throw std::invalid_argument( "SearchConditonResult: Cannot use both bbox and q at the same time!" );
-
-  if (bB != NULL && cent != NULL)
-    throw std::invalid_argument( "SearchConditonResult: Cannot use both center and bbox at the same time!" );
-
-  if (q != "" && cent != NULL && bB != NULL)
-    throw std::invalid_argument( "SearchConditonResult: Cannot use both center and q and bbox at the same time!" );
   
   if (q != "")
     booliString = "q=" + q;
@@ -403,8 +452,71 @@ std::string listingsSearchCondition_t::SearchConditionResult()
   if (bB)
     booliString = "bbox=" + bB->RetBbox();
 
-  return "";
+  if (areaId != "")
+    booliString = "areaId=" + areaId;
+  
+  if (minListPrice != 0)
+    booliString += "minListPrice=" + util::doubleToString(minListPrice);
+
+  if (maxListPrice != 0)
+    booliString += "maxListPrice=" + util::doubleToString(maxListPrice);
+  
+  if (minListSqmPrice != 0)
+    booliString += "minListSqmPrice=" + util::doubleToString(minListSqmPrice);
+
+  if (maxListSqmPrice != 0)
+    booliString += "maxListSqmPrice=" + util::doubleToString(maxListSqmPrice);
+
+  if (minRooms != 0)
+    booliString += "minRooms=" + minRooms;
+
+  if (maxRooms != 0)
+    booliString += "maxRooms=" + maxRooms;
+
+  if (maxRent != 0)
+    booliString += "maxRent=" + util::doubleToString(maxRent);
+  
+  if (minLivingArea != 0)
+    booliString += "minLivingArea=" + minLivingArea;
+
+  if (maxLivingArea != 0)
+    booliString += "maxLivingArea=" + maxLivingArea;
+
+  if (minPlotArea != 0)
+    booliString += "minPlotArea=" + minPlotArea;
+
+  if (maxPlotArea != 0)
+    booliString += "maxPlotArea=" + maxPlotArea;
+  
+  if (objectT != NULL)
+    booliString += "objectType" + objectT->retObjectType();
+
+  if (minConstructionYear != 0)
+    booliString += "minConstructionYear=" + minConstructionYear;
+
+  if (maxConstructionYear != 0)
+    booliString += "maxConstructionYear=" + maxConstructionYear;
+
+  if (minPubDate != NULL)
+    booliString += "minPublished=" + minPubDate->retMinPublishedDate();
+
+  if (maxPubDate != NULL)
+    booliString += "maxPublished=" + maxPubDate->retMaxPublishedDate();
+
+  priceDecrease ? booliString += "priceDecrease=1" : booliString += "priceDecrease=0";
+
+  isNewConstruction ? booliString += "isNewConstruction=1" : booliString += "isNewConstruction=0";
+
+  includeUnset ? booliString += "includeUnset=1" : booliString += "includeUnset=0";
+
+  booliString += "limit=" + limit;
+
+  booliString += "offset=" + offset;
+  
+  return booliString;
 }
+
+
 
 soldSearchCondition_t::soldSearchCondition_t()
 {
@@ -422,6 +534,13 @@ areasSearchCondition_t::areasSearchCondition_t()
 std::string areasSearchCondition_t::SearchConditionResult()
 {
   return "";
+}
+
+std::string util::doubleToString(double d)
+{
+  std::ostringstream strs;
+  strs << d;
+  return strs.str();
 }
 
 bool util::isleapyear(int year){

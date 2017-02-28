@@ -81,7 +81,7 @@ TEST(InvalidYearDateTest, DateTheSame) {
   maxPublishedDate* maxPub;
   ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
 }
-
+  
 // month in tm in ctime is from 0 to 11, so confusing
 TEST(InvalidMonthDateTest, DateTheSame) {
   tm testTime = {};
@@ -99,6 +99,18 @@ TEST(InvalidDayDateTest, DateTheSame) {
   testTime.tm_mday = 29;
   maxPublishedDate* maxPub;
   ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetBbox, MultipleSetCheckBbox) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  sc->SetC(new center(30,30));
+  ASSERT_THROW(sc->SetBbox(new bbox(30,30,30,30)), std::invalid_argument);
+}
+
+TEST(ListingsSearchConditionSetAreaId, MultipleSetCheckAreaId) {
+  listingsSearchCondition_t* mysc = new listingsSearchCondition_t();
+  mysc->SetAreaId("4,5,6,6");
+  ASSERT_THROW(mysc->SetBbox(new bbox(30,30,30,30)), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinListPriceTest, NegativeCheck) {
