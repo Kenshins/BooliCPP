@@ -94,11 +94,12 @@ class searchCondition_t
 
 class listingsSearchCondition_t : public searchCondition_t
 {
-  enum MainInput {BBOX, DIM, CENTER, AREAID}; 
+  enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
   
  public:
   listingsSearchCondition_t();
   std::string SearchConditionResult();
+  void SetQ(std::string q);
   void SetC(center *c);
   void SetDim(dimension *d);
   void SetBbox(bbox *b);
@@ -126,6 +127,7 @@ class listingsSearchCondition_t : public searchCondition_t
   void SetOffset(int o);
   
  private:
+  std::string query;
   center *cent;
   dimension *dim;
   bbox *bB;

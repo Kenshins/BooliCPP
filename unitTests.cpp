@@ -188,6 +188,45 @@ TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectType) {
   ASSERT_NO_THROW(sc->SetObjectType("gård"));
 }
 
+TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
+  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  sc->SetQ("Nacka");
+  sc->SetMinListPrice(200);
+  sc->SetMaxListPrice(4000000);
+  sc->SetMinListSqmPrice(200);
+  sc->SetMaxListSqmPrice(50000);
+  sc->SetMinRooms(2);
+  sc->SetMaxRooms(8);
+  sc->SetMinLivingArea(20);
+  sc->SetMaxLivingArea(300);
+  sc->SetMinPlotArea(20);
+  sc->SetMaxPlotArea(300);
+  sc->SetObjectType("villa");
+  sc->SetMinConstructionYear(1950);
+  sc->SetMaxConstructionYear(2016);
+
+  tm minPubDate = {};
+  minPubDate.tm_year = 2010;
+  minPubDate.tm_mon = 02;
+  minPubDate.tm_mday = 27;
+
+  minPublishedDate* minPub = new minPublishedDate(&minPubDate);
+  sc->SetMinPublishDate(minPub);
+  
+  tm maxPubDate = {};
+  maxPubDate.tm_year = 2017;
+  maxPubDate.tm_mon = 02;
+  maxPubDate.tm_mday = 27;
+
+  maxPublishedDate* maxPub = new maxPublishedDate(&maxPubDate);
+  sc->SetMaxPublishDate(maxPub);
+
+  sc->SetLimit(30);
+
+  EXPECT_EQ(sc->SearchConditionResult(), "20161128");
+}
+
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

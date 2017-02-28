@@ -228,6 +228,12 @@ listingsSearchCondition_t::listingsSearchCondition_t()
 
 // Listing Search Condition sub class
 
+void listingsSearchCondition_t::SetQ(std::string q)
+{
+  checkNoDuplicateMainInput(Q);
+  query = q;
+}
+
 void listingsSearchCondition_t::SetC(center *c)
 {
   checkNoDuplicateMainInput(CENTER);
@@ -405,30 +411,37 @@ void listingsSearchCondition_t::checkNoDuplicateMainInput(MainInput in)
 {
   if (in == BBOX)
     {
-      if (cent != NULL || dim != NULL || areaId != "")
+      if (cent != NULL || dim != NULL || areaId != "" || query != "")
 	{
-	  throw std::invalid_argument( "SetBbox: Cannot set bbox if center, dimension or areaid is set!" );
+	  throw std::invalid_argument( "SetBbox: Cannot set bbox if center, dimension, areaid or q is set!" );
+	}
+    }
+  else if (in == Q)
+    {
+      if (bB != NULL || dim != NULL || areaId != "" || cent != NULL)
+	{
+	  throw std::invalid_argument( "SetQ: Cannot set center if bbox, dimension, areaid or center is set!" );
 	}
     }
   else if (in == CENTER)
     {
-      if (bB != NULL || dim != NULL || areaId != "")
+      if (bB != NULL || dim != NULL || areaId != "" || query != "")
 	{
-	  throw std::invalid_argument( "SetC: Cannot set center if bbox, dimension or areaid is set!" );
+	  throw std::invalid_argument( "SetC: Cannot set center if bbox, dimension, areaid or q is set!" );
 	}
     }
   else if (in == DIM)
     {
-      if (bB != NULL || cent != NULL || areaId != "")
+      if (bB != NULL || cent != NULL || areaId != "" || query != "")
 	{
-	   throw std::invalid_argument( "SetDim: Cannot set dimension if bbox, areaid or center is set!" );
+	   throw std::invalid_argument( "SetDim: Cannot set dimension if bbox, areaid, center or q is set!" );
 	}
     }
   else if (in == AREAID)
     {
-      if (bB != NULL || cent != NULL || dim != NULL)
+      if (bB != NULL || cent != NULL || dim != NULL || query != "")
 	{
-	  throw std::invalid_argument( "SetAreaId: Cannot set areaid if dimension, center or bbox is set!" );
+	  throw std::invalid_argument( "SetAreaId: Cannot set areaid if dimension, center, bbox or q is set!" );
 	}
     }
 }
@@ -438,15 +451,15 @@ std::string listingsSearchCondition_t::SearchConditionResult()
 
   std::string  booliString = "";
   
-  if (q != "")
-    booliString = "q=" + q;
+  if (query != "")
+    booliString = "q=" + query;
 
   if (cent)
     {
     booliString = "center=" + cent->RetCenter();
 
     if (dim)
-      booliString += "dim=" +  dim->RetDim();
+      booliString += "&dim=" +  dim->RetDim();
     }
 
   if (bB)
@@ -456,62 +469,63 @@ std::string listingsSearchCondition_t::SearchConditionResult()
     booliString = "areaId=" + areaId;
   
   if (minListPrice != 0)
-    booliString += "minListPrice=" + util::doubleToString(minListPrice);
+    booliString += "&minListPrice=" + util::doubleToString(minListPrice);
 
   if (maxListPrice != 0)
-    booliString += "maxListPrice=" + util::doubleToString(maxListPrice);
+    booliString += "&maxListPrice=" + util::doubleToString(maxListPrice);
   
   if (minListSqmPrice != 0)
-    booliString += "minListSqmPrice=" + util::doubleToString(minListSqmPrice);
+    booliString += "&minListSqmPrice=" + util::doubleToString(minListSqmPrice);
 
   if (maxListSqmPrice != 0)
-    booliString += "maxListSqmPrice=" + util::doubleToString(maxListSqmPrice);
+    booliString += "&maxListSqmPrice=" + util::doubleToString(maxListSqmPrice);
 
   if (minRooms != 0)
-    booliString += "minRooms=" + minRooms;
+    booliString += "&minRooms=" + util::doubleToString(minRooms);
 
   if (maxRooms != 0)
-    booliString += "maxRooms=" + maxRooms;
+    booliString += "&maxRooms=" + util::doubleToString(maxRooms);
 
   if (maxRent != 0)
-    booliString += "maxRent=" + util::doubleToString(maxRent);
+    booliString += "&maxRent=" + util::doubleToString(maxRent);
   
   if (minLivingArea != 0)
-    booliString += "minLivingArea=" + minLivingArea;
+    booliString += "&minLivingArea=" + util::doubleToString(minLivingArea);
 
   if (maxLivingArea != 0)
-    booliString += "maxLivingArea=" + maxLivingArea;
+    booliString += "&maxLivingArea=" + util::doubleToString(maxLivingArea);
 
   if (minPlotArea != 0)
-    booliString += "minPlotArea=" + minPlotArea;
+    booliString += "&minPlotArea=" + util::doubleToString(minPlotArea);
 
   if (maxPlotArea != 0)
-    booliString += "maxPlotArea=" + maxPlotArea;
+    booliString += "&maxPlotArea=" + util::doubleToString(maxPlotArea);
   
   if (objectT != NULL)
-    booliString += "objectType" + objectT->retObjectType();
+    booliString += "&objectType" + objectT->retObjectType();
 
   if (minConstructionYear != 0)
-    booliString += "minConstructionYear=" + minConstructionYear;
+    booliString += "&minConstructionYear=" + util::doubleToString(minConstructionYear);
 
   if (maxConstructionYear != 0)
-    booliString += "maxConstructionYear=" + maxConstructionYear;
+    booliString += "&maxConstructionYear=" + util::doubleToString(maxConstructionYear);
 
   if (minPubDate != NULL)
-    booliString += "minPublished=" + minPubDate->retMinPublishedDate();
+    booliString += "&minPublished=" + minPubDate->retMinPublishedDate();
 
   if (maxPubDate != NULL)
-    booliString += "maxPublished=" + maxPubDate->retMaxPublishedDate();
+    booliString += "&maxPublished=" + maxPubDate->retMaxPublishedDate();
 
-  priceDecrease ? booliString += "priceDecrease=1" : booliString += "priceDecrease=0";
+  priceDecrease ? booliString += "&priceDecrease=1" : booliString += "&priceDecrease=0";
 
-  isNewConstruction ? booliString += "isNewConstruction=1" : booliString += "isNewConstruction=0";
+  isNewConstruction ? booliString += "&isNewConstruction=1" : booliString += "&isNewConstruction=0";
 
-  includeUnset ? booliString += "includeUnset=1" : booliString += "includeUnset=0";
+  includeUnset ? booliString += "&includeUnset=1" : booliString += "&includeUnset=0";
 
-  booliString += "limit=" + limit;
+  booliString += "&limit=" + util::doubleToString(limit);
 
-  booliString += "offset=" + offset;
+  if (offset != 0)
+    booliString += "&offset=" + util::doubleToString(offset);
   
   return booliString;
 }
