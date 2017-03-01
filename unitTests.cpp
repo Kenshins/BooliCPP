@@ -192,17 +192,14 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
   listingsSearchCondition_t* sc = new listingsSearchCondition_t();
   sc->SetQ("Nacka");
   sc->SetMinListPrice(200);
-  sc->SetMaxListPrice(4000000);
+  sc->SetMaxListPrice(10000000);
   sc->SetMinListSqmPrice(200);
-  sc->SetMaxListSqmPrice(50000);
+  sc->SetMaxListSqmPrice(90000);
   sc->SetMinRooms(2);
   sc->SetMaxRooms(8);
-  sc->SetMinLivingArea(20);
-  sc->SetMaxLivingArea(300);
-  sc->SetMinPlotArea(20);
-  sc->SetMaxPlotArea(300);
-  sc->SetObjectType("villa");
-  sc->SetMinConstructionYear(1950);
+  sc->SetMinLivingArea(10);
+  sc->SetMaxLivingArea(500);
+  sc->SetMinConstructionYear(1900);
   sc->SetMaxConstructionYear(2016);
 
   tm minPubDate = {};
@@ -223,7 +220,7 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
 
   sc->SetLimit(30);
 
-  EXPECT_EQ(sc->SearchConditionResult(), "20161128");
+  EXPECT_EQ(sc->SearchConditionResult(), "q=Nacka&minListPrice=200&maxListPrice=10000000&minListSqmPrice=200&maxListSqmPrice=90000&minRooms=1&maxRooms=8&minLivingArea=10&maxLivingArea=500&minConstructionYear=1900&maxConstructionYear=2016&minPublished=20100227&maxPublished=20170227&priceDecrease=0&isNewConstruction=0&includeUnset=1&limit=30");
 }
 
 

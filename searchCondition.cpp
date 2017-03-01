@@ -176,7 +176,13 @@ minPublishedDate::minPublishedDate(tm *t)
 
 std::string minPublishedDate::retMinPublishedDate()
 {
-  return std::to_string(minPubDateTime->tm_year) + std::to_string(minPubDateTime->tm_mon) + std::to_string(minPubDateTime->tm_mday);
+  std::string month = "";
+  if (minPubDateTime->tm_mon < 10)
+    month = "0" + std::to_string(minPubDateTime->tm_mon);
+  else
+    month = std::to_string(minPubDateTime->tm_mon);
+  
+  return std::to_string(minPubDateTime->tm_year) + month + std::to_string(minPubDateTime->tm_mday);
 }
 
 maxPublishedDate::maxPublishedDate(tm *t)
@@ -192,7 +198,13 @@ maxPublishedDate::maxPublishedDate(tm *t)
 
 std::string maxPublishedDate::retMaxPublishedDate()
 {
-    return std::to_string(maxPubDateTime->tm_year) + std::to_string(maxPubDateTime->tm_mon) + std::to_string(maxPubDateTime->tm_mday);
+  std::string month = "";
+  if (maxPubDateTime->tm_mon < 10)
+    month = "0" + std::to_string(maxPubDateTime->tm_mon);
+  else
+    month = std::to_string(maxPubDateTime->tm_mon);
+  
+    return std::to_string(maxPubDateTime->tm_year) + month + std::to_string(maxPubDateTime->tm_mday);
 }
 
 // Main type
@@ -448,7 +460,7 @@ void listingsSearchCondition_t::checkNoDuplicateMainInput(MainInput in)
 
 std::string listingsSearchCondition_t::SearchConditionResult()
 {
-
+  std::fixed;
   std::string  booliString = "";
   
   if (query != "")
@@ -472,7 +484,7 @@ std::string listingsSearchCondition_t::SearchConditionResult()
     booliString += "&minListPrice=" + util::doubleToString(minListPrice);
 
   if (maxListPrice != 0)
-    booliString += "&maxListPrice=" + util::doubleToString(maxListPrice);
+    booliString += "&maxListPrice=" + std::to_string(maxListPrice);
   
   if (minListSqmPrice != 0)
     booliString += "&minListSqmPrice=" + util::doubleToString(minListSqmPrice);
