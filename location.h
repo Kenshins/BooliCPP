@@ -5,7 +5,7 @@
 //
 //  location.h
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include <string>
@@ -14,7 +14,6 @@
 #include "address.h"
 #include "position.h"
 #include "region.h"
-#include "distance.h"
 #include "rapidjson/document.h"
 
 
@@ -28,9 +27,8 @@ class location_t  {
 public:
     position_t position;
     region_t region;
-    address_t address;
     std::vector<std::string> namedAreas;
-    distance_t distance;
+    address_t address;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

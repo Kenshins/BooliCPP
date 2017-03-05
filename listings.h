@@ -5,7 +5,7 @@
 //
 //  listings.h
 //
-//  Created by js2Model on 2016-12-30.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include <string>
@@ -14,6 +14,7 @@
 #include "location.h"
 #include "source.h"
 #include "rapidjson/document.h"
+
 
 #pragma once
 
@@ -28,12 +29,12 @@ public:
     std::string url;
     location_t location;
     source_t source;
-    int rent;
+    float rent;
     std::string published;
     int isNewConstruction;
     std::string objectType;
-    int listPrice;
-    int rooms;
+    float listPrice;
+    float rooms;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

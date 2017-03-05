@@ -25,9 +25,9 @@
 
 #import "searchParams.h"
 #import "location.h"
-#import "source.h"
 #import "region.h"
-#import "sold.h"
+#import "result.h"
 #import "address.h"
-#import "distance.h"
+#import "source.h"
 #import "position.h"
+#import "listings.h"

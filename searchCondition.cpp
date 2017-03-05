@@ -1,5 +1,6 @@
 #include "searchCondition.h"
 #include <string>
+#include <algorithm>
 #include <stdexcept>
 #include <sstream>
 #include <ctime>
@@ -121,6 +122,8 @@ std::string bbox::RetBbox()
 
 objectType::objectType(std::string oT)
 {
+  std::transform(oT.begin(), oT.end(),oT.begin(), ::tolower);
+  
   if (oT == "villa")
     {
       object_type = oT;
@@ -155,7 +158,7 @@ objectType::objectType(std::string oT)
     }
    else
      {
-       throw std::invalid_argument( "objectType: unknown objectType!" );
+       throw std::invalid_argument( "objectType:" + oT + "unknown objectType!" );
      }
 }
 
@@ -273,7 +276,7 @@ void listingsSearchCondition_t::SetAreaId(std::string aId)
   areaId = aId;
 }
 
-void listingsSearchCondition_t::SetMinListPrice(double minLP)
+void listingsSearchCondition_t::SetMinListPrice(int minLP)
 {
   if (minLP < 0)
     throw std::invalid_argument( "SetMinListPrice: Min list price cannot be negative!" );
@@ -281,7 +284,7 @@ void listingsSearchCondition_t::SetMinListPrice(double minLP)
   minListPrice = minLP;
 }
 
-void listingsSearchCondition_t::SetMaxListPrice(double maxLP)
+void listingsSearchCondition_t::SetMaxListPrice(int maxLP)
 {
   if (maxLP < 0)
     throw std::invalid_argument( "SetMaxListPrice: Max list price cannot be negative!" );
@@ -289,7 +292,7 @@ void listingsSearchCondition_t::SetMaxListPrice(double maxLP)
   maxListPrice = maxLP;
 }
 
-void listingsSearchCondition_t::SetMinListSqmPrice(double minLSP)
+void listingsSearchCondition_t::SetMinListSqmPrice(int minLSP)
 {
   if (minLSP < 0)
     throw std::invalid_argument( "SetMinListSqmPrice: Min list square meter price cannot be negative!" );
@@ -297,7 +300,7 @@ void listingsSearchCondition_t::SetMinListSqmPrice(double minLSP)
   minListSqmPrice = minLSP;
 }
 
-void listingsSearchCondition_t::SetMaxListSqmPrice(double maxLSP)
+void listingsSearchCondition_t::SetMaxListSqmPrice(int maxLSP)
 {
   if (maxLSP < 0)
     throw std::invalid_argument( "SetMaxListSqmPrice: Max list square meter price cannot be negative!" );
@@ -321,7 +324,7 @@ void listingsSearchCondition_t::SetMaxRooms(int maxR)
   maxRooms = maxR;
 }
 
-void listingsSearchCondition_t::SetMaxRent(double maxRe)
+void listingsSearchCondition_t::SetMaxRent(int maxRe)
 {
   if (maxRe < 0)
     throw std::invalid_argument( "SetMaxRent: max rent cannot be negative!" );
@@ -460,7 +463,6 @@ void listingsSearchCondition_t::checkNoDuplicateMainInput(MainInput in)
 
 std::string listingsSearchCondition_t::SearchConditionResult()
 {
-  std::fixed;
   std::string  booliString = "";
   
   if (query != "")
@@ -481,46 +483,46 @@ std::string listingsSearchCondition_t::SearchConditionResult()
     booliString = "areaId=" + areaId;
   
   if (minListPrice != 0)
-    booliString += "&minListPrice=" + util::doubleToString(minListPrice);
+    booliString += "&minListPrice=" + util::intToString(minListPrice);
 
   if (maxListPrice != 0)
     booliString += "&maxListPrice=" + std::to_string(maxListPrice);
   
   if (minListSqmPrice != 0)
-    booliString += "&minListSqmPrice=" + util::doubleToString(minListSqmPrice);
+    booliString += "&minListSqmPrice=" + util::intToString(minListSqmPrice);
 
   if (maxListSqmPrice != 0)
-    booliString += "&maxListSqmPrice=" + util::doubleToString(maxListSqmPrice);
+    booliString += "&maxListSqmPrice=" + util::intToString(maxListSqmPrice);
 
   if (minRooms != 0)
-    booliString += "&minRooms=" + util::doubleToString(minRooms);
+    booliString += "&minRooms=" + util::intToString(minRooms);
 
   if (maxRooms != 0)
-    booliString += "&maxRooms=" + util::doubleToString(maxRooms);
+    booliString += "&maxRooms=" + util::intToString(maxRooms);
 
   if (maxRent != 0)
-    booliString += "&maxRent=" + util::doubleToString(maxRent);
+    booliString += "&maxRent=" + util::intToString(maxRent);
   
   if (minLivingArea != 0)
-    booliString += "&minLivingArea=" + util::doubleToString(minLivingArea);
+    booliString += "&minLivingArea=" + util::intToString(minLivingArea);
 
   if (maxLivingArea != 0)
-    booliString += "&maxLivingArea=" + util::doubleToString(maxLivingArea);
+    booliString += "&maxLivingArea=" + util::intToString(maxLivingArea);
 
   if (minPlotArea != 0)
-    booliString += "&minPlotArea=" + util::doubleToString(minPlotArea);
+    booliString += "&minPlotArea=" + util::intToString(minPlotArea);
 
   if (maxPlotArea != 0)
-    booliString += "&maxPlotArea=" + util::doubleToString(maxPlotArea);
+    booliString += "&maxPlotArea=" + util::intToString(maxPlotArea);
   
   if (objectT != NULL)
-    booliString += "&objectType" + objectT->retObjectType();
+    booliString += "&objectType=" + objectT->retObjectType();
 
   if (minConstructionYear != 0)
-    booliString += "&minConstructionYear=" + util::doubleToString(minConstructionYear);
+    booliString += "&minConstructionYear=" + util::intToString(minConstructionYear);
 
   if (maxConstructionYear != 0)
-    booliString += "&maxConstructionYear=" + util::doubleToString(maxConstructionYear);
+    booliString += "&maxConstructionYear=" + util::intToString(maxConstructionYear);
 
   if (minPubDate != NULL)
     booliString += "&minPublished=" + minPubDate->retMinPublishedDate();
@@ -528,21 +530,22 @@ std::string listingsSearchCondition_t::SearchConditionResult()
   if (maxPubDate != NULL)
     booliString += "&maxPublished=" + maxPubDate->retMaxPublishedDate();
 
-  priceDecrease ? booliString += "&priceDecrease=1" : booliString += "&priceDecrease=0";
+  if (priceDecrease)
+    booliString += "&priceDecrease=1";
 
-  isNewConstruction ? booliString += "&isNewConstruction=1" : booliString += "&isNewConstruction=0";
+  if (isNewConstruction)
+    booliString += "&isNewConstruction=1";
 
-  includeUnset ? booliString += "&includeUnset=1" : booliString += "&includeUnset=0";
-
-  booliString += "&limit=" + util::doubleToString(limit);
+  if (!includeUnset)
+    booliString += "&includeUnset=0";
+    
+  booliString += "&limit=" + util::intToString(limit);
 
   if (offset != 0)
-    booliString += "&offset=" + util::doubleToString(offset);
+    booliString += "&offset=" + util::intToString(offset);
   
   return booliString;
 }
-
-
 
 soldSearchCondition_t::soldSearchCondition_t()
 {
@@ -562,7 +565,7 @@ std::string areasSearchCondition_t::SearchConditionResult()
   return "";
 }
 
-std::string util::doubleToString(double d)
+std::string util::intToString(int d)
 {
   std::ostringstream strs;
   strs << d;

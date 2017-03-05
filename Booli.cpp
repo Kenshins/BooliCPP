@@ -15,14 +15,15 @@ using namespace std;
 Booli::Booli()
 {
   listingsSearchCondition_t lSc = listingsSearchCondition_t();
-  lSc.SetQ("Nacka");
+  lSc.SetQ("Göteborg");
+  lSc.SetLimit(30);
+  retriver_t* r = new retriver_t();
+  std::string caller = "xxx";
+  std::string unique = GenerateUnique();
+  std::string ti = GenerateTime();
+  std::string ha = GenerateSHA1Hash(caller + ti + "xxx" + unique);
+  r->Retrive("https://api.booli.se/listings?" + lSc.SearchConditionResult() + "&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
   cout << lSc.SearchConditionResult();
-  //retriver_t* r = new retriver_t();
-  //std::string caller = "xxx";
-  //std::string unique = GenerateUnique();
-  //std::string ti = GenerateTime();
-  //std::string ha = GenerateSHA1Hash(caller + ti + "your-hash-here" + unique);
-  //r->Retrive("https://api.booli.se/listings?q=nacka&limit=12&offset=0&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
 }
 
 std::string Booli::GenerateUnique()

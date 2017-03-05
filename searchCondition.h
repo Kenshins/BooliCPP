@@ -104,13 +104,13 @@ class listingsSearchCondition_t : public searchCondition_t
   void SetDim(dimension *d);
   void SetBbox(bbox *b);
   void SetAreaId(std::string aId);
-  void SetMinListPrice(double minLP);
-  void SetMaxListPrice(double maxLP);
-  void SetMinListSqmPrice(double minLSP);
-  void SetMaxListSqmPrice(double maxLSP);
+  void SetMinListPrice(int minLP);
+  void SetMaxListPrice(int maxLP);
+  void SetMinListSqmPrice(int minLSP);
+  void SetMaxListSqmPrice(int maxLSP);
   void SetMinRooms(int minR);
   void SetMaxRooms(int maxR);
-  void SetMaxRent(double maxRe);
+  void SetMaxRent(int maxRe);
   void SetMinLivingArea(int minLA);
   void SetMaxLivingArea(int maxLA);
   void SetMinPlotArea(int minPA);
@@ -132,13 +132,13 @@ class listingsSearchCondition_t : public searchCondition_t
   dimension *dim;
   bbox *bB;
   std::string areaId;
-  double minListPrice;
-  double maxListPrice;
-  double minListSqmPrice;
-  double maxListSqmPrice;
+  int minListPrice;
+  int maxListPrice;
+  int minListSqmPrice;
+  int maxListSqmPrice;
   int minRooms;
   int maxRooms;
-  double maxRent;
+  int maxRent;
   int minLivingArea;
   int maxLivingArea;
   int minPlotArea;
@@ -174,7 +174,7 @@ class util
 {
  public:
   static bool valid_date(int year,int month,int day);
-  static std::string doubleToString(double d);
+  static std::string intToString(int d);
   
  private:
   static bool isleapyear(int year);

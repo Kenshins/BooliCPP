@@ -5,7 +5,7 @@
 //
 //  location.cpp
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include "location.h"
@@ -41,15 +41,6 @@ location_t::location_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto address_iter = json_value.FindMember("address");
-    if ( address_iter != json_value.MemberEnd() ) {
-
-        if (!address_iter->value.IsNull()) {
-            assert(address_iter->value.IsObject());
-            address = address_t(address_iter->value);
-        }
-    }
-
     auto namedAreas_iter = json_value.FindMember("namedAreas");
     if ( namedAreas_iter != json_value.MemberEnd() ) {
 
@@ -62,12 +53,12 @@ location_t::location_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto distance_iter = json_value.FindMember("distance");
-    if ( distance_iter != json_value.MemberEnd() ) {
+    auto address_iter = json_value.FindMember("address");
+    if ( address_iter != json_value.MemberEnd() ) {
 
-        if (!distance_iter->value.IsNull()) {
-            assert(distance_iter->value.IsObject());
-            distance = distance_t(distance_iter->value);
+        if (!address_iter->value.IsNull()) {
+            assert(address_iter->value.IsObject());
+            address = address_t(address_iter->value);
         }
     }
 
@@ -80,14 +71,13 @@ string to_string(const location_t &val, std::string indent/* = "" */, std::strin
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"position\": " << to_string(val.position, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"region\": " << to_string(val.region, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"address\": " << to_string(val.address, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"namedAreas\": [";
     for( auto &array_item : val.namedAreas ) {
 
         os << "\"" << array_item << "\",";
     }
     os << indent << pretty_print << "]," << endl;
-    os << indent << pretty_print << "\"distance\": " << to_string(val.distance, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"address\": " << to_string(val.address, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << "}";
 
     return os.str();

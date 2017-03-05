@@ -5,7 +5,7 @@
 //
 //  address.cpp
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include "address.h"
@@ -22,18 +22,6 @@ namespace models {
 address_t::address_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
-
-    auto city_iter = json_value.FindMember("city");
-    if ( city_iter != json_value.MemberEnd() ) {
-
-        if (city_iter->value.IsNull()) {
-            city.clear();
-        }
-        else {
-            assert(city_iter->value.IsString());
-            city = city_iter->value.GetString();
-        }
-    }
 
     auto streetAddress_iter = json_value.FindMember("streetAddress");
     if ( streetAddress_iter != json_value.MemberEnd() ) {
@@ -54,7 +42,6 @@ string to_string(const address_t &val, std::string indent/* = "" */, std::string
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"city\": \"" << val.city << "\"," << endl;
     os << indent << pretty_print << "\"streetAddress\": \"" << val.streetAddress << "\"," << endl;
     os << indent << "}";
 

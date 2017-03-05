@@ -5,7 +5,7 @@
 //
 //  searchParams.cpp
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include "searchParams.h"
@@ -32,6 +32,15 @@ searchParams_t::searchParams_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto upcomingSale_iter = json_value.FindMember("upcomingSale");
+    if ( upcomingSale_iter != json_value.MemberEnd() ) {
+
+        if (!upcomingSale_iter->value.IsNull()) {
+            assert(upcomingSale_iter->value.IsInt());
+            upcomingSale = upcomingSale_iter->value.GetInt();
+        }
+    }
+
 }
 
 string to_string(const searchParams_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -40,6 +49,7 @@ string to_string(const searchParams_t &val, std::string indent/* = "" */, std::s
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"areaId\": " << val.areaId << "," << endl;
+    os << indent << pretty_print << "\"upcomingSale\": " << val.upcomingSale << "," << endl;
     os << indent << "}";
 
     return os.str();

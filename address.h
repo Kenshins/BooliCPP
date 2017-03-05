@@ -5,7 +5,7 @@
 //
 //  address.h
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include <string>
@@ -22,7 +22,6 @@ namespace models {
 class address_t  {
 
 public:
-    std::string city;
     std::string streetAddress;
     std::unordered_map<std::string, std::string> additionalProperties;
 

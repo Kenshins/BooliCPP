@@ -5,7 +5,7 @@
 //
 //  position.cpp
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include "position.h"
@@ -26,11 +26,39 @@ position_t::position_t(const rapidjson::Value &json_value) {
     auto latitude_iter = json_value.FindMember("latitude");
     if ( latitude_iter != json_value.MemberEnd() ) {
 
+	if (!latitude_iter->value.IsNull()) {
+	  if (latitude_iter->value.IsInt())
+	    {
+	      latitude = (float)latitude_iter->value.GetInt();
+	    }
+	  else if (latitude_iter->value.IsFloat())
+	    {
+	      latitude = latitude_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(latitude_iter->value.IsFloat());
+	    }
+        }
     }
 
     auto longitude_iter = json_value.FindMember("longitude");
     if ( longitude_iter != json_value.MemberEnd() ) {
 
+	if (!longitude_iter->value.IsNull()) {
+	  if (longitude_iter->value.IsInt())
+	    {
+	      longitude = (float)longitude_iter->value.GetInt();
+	    }
+	  else if (longitude_iter->value.IsFloat())
+	    {
+	      longitude = longitude_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(longitude_iter->value.IsFloat());
+	    }
+        }
     }
 
 }
@@ -40,6 +68,8 @@ string to_string(const position_t &val, std::string indent/* = "" */, std::strin
     ostringstream os;
 
     os << indent << "{" << endl;
+    os << indent << pretty_print << "\"latitude\": " << val.latitude << "," << endl;
+    os << indent << pretty_print << "\"longitude\": " << val.longitude << "," << endl;
     os << indent << "}";
 
     return os.str();

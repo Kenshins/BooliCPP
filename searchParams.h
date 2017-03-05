@@ -5,7 +5,7 @@
 //
 //  searchParams.h
 //
-//  Created by js2Model on 2016-12-13.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include <string>
@@ -23,6 +23,7 @@ class searchParams_t  {
 
 public:
     int areaId;
+    int upcomingSale;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

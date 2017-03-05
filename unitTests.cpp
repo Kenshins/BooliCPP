@@ -188,19 +188,24 @@ TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectType) {
   ASSERT_NO_THROW(sc->SetObjectType("gård"));
 }
 
-TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
+TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectTypeUpperAndLower) {
   listingsSearchCondition_t* sc = new listingsSearchCondition_t();
-  sc->SetQ("Nacka");
-  sc->SetMinListPrice(200);
-  sc->SetMaxListPrice(10000000);
-  sc->SetMinListSqmPrice(200);
-  sc->SetMaxListSqmPrice(90000);
-  sc->SetMinRooms(2);
-  sc->SetMaxRooms(8);
-  sc->SetMinLivingArea(10);
-  sc->SetMaxLivingArea(500);
-  sc->SetMinConstructionYear(1900);
-  sc->SetMaxConstructionYear(2016);
+  ASSERT_NO_THROW(sc->SetObjectType("GårD"));
+}
+
+TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
+  listingsSearchCondition_t sc = listingsSearchCondition_t();
+  sc.SetQ("Nacka");
+  sc.SetMinListPrice(200);
+  sc.SetMaxListPrice(10000000);
+  sc.SetMinListSqmPrice(200);
+  sc.SetMaxListSqmPrice(90000);
+  sc.SetMinRooms(2);
+  sc.SetMaxRooms(8);
+  sc.SetMinLivingArea(10);
+  sc.SetMaxLivingArea(500);
+  sc.SetMinConstructionYear(1900);
+  sc.SetMaxConstructionYear(2016);
 
   tm minPubDate = {};
   minPubDate.tm_year = 2010;
@@ -208,7 +213,7 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
   minPubDate.tm_mday = 27;
 
   minPublishedDate* minPub = new minPublishedDate(&minPubDate);
-  sc->SetMinPublishDate(minPub);
+  sc.SetMinPublishDate(minPub);
   
   tm maxPubDate = {};
   maxPubDate.tm_year = 2017;
@@ -216,13 +221,19 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
   maxPubDate.tm_mday = 27;
 
   maxPublishedDate* maxPub = new maxPublishedDate(&maxPubDate);
-  sc->SetMaxPublishDate(maxPub);
+  sc.SetMaxPublishDate(maxPub);
 
-  sc->SetLimit(30);
+  sc.SetLimit(30);
 
-  EXPECT_EQ(sc->SearchConditionResult(), "q=Nacka&minListPrice=200&maxListPrice=10000000&minListSqmPrice=200&maxListSqmPrice=90000&minRooms=1&maxRooms=8&minLivingArea=10&maxLivingArea=500&minConstructionYear=1900&maxConstructionYear=2016&minPublished=20100227&maxPublished=20170227&priceDecrease=0&isNewConstruction=0&includeUnset=1&limit=30");
+  EXPECT_EQ(sc.SearchConditionResult(), "q=Nacka&minListPrice=200&maxListPrice=10000000&minListSqmPrice=200&maxListSqmPrice=90000&minRooms=2&maxRooms=8&minLivingArea=10&maxLivingArea=500&minConstructionYear=1900&maxConstructionYear=2016&minPublished=20100227&maxPublished=20170227&limit=30");
 }
 
+TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
+  listingsSearchCondition_t sc = listingsSearchCondition_t();
+  sc.SetQ("Norrköping");
+  sc.SetObjectType("lägenhet");
+  EXPECT_EQ(sc.SearchConditionResult(), "q=Norrköping&objectType=lägenhet&limit=10");
+}
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

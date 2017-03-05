@@ -5,14 +5,13 @@
 //
 //  listings.cpp
 //
-//  Created by js2Model on 2016-12-30.
+//  Created by js2Model on 2017-03-05.
 //
 
 #include "listings.h"
 #include <vector>
 #include <fstream>
 #include <sstream>
-
 
 using namespace std;
 using namespace rapidjson;
@@ -35,10 +34,21 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 
     auto livingArea_iter = json_value.FindMember("livingArea");
     if ( livingArea_iter != json_value.MemberEnd() ) {
-        if (!livingArea_iter->value.IsNull()) {
-            assert(livingArea_iter->value.IsNumber());
-            livingArea = livingArea_iter->value.GetDouble();
-	}
+
+	if (!livingArea_iter->value.IsNull()) {
+	  if (livingArea_iter->value.IsInt())
+	    {
+	      livingArea = (float)livingArea_iter->value.GetInt();
+	    }
+	  else if (livingArea_iter->value.IsFloat())
+	    {
+	      livingArea = livingArea_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(livingArea_iter->value.IsFloat());
+	    }
+        }
     }
 
     auto url_iter = json_value.FindMember("url");
@@ -74,9 +84,19 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
     auto rent_iter = json_value.FindMember("rent");
     if ( rent_iter != json_value.MemberEnd() ) {
 
-        if (!rent_iter->value.IsNull()) {
-            assert(rent_iter->value.IsInt());
-            rent = rent_iter->value.GetInt();
+	if (!rent_iter->value.IsNull()) {
+	  if (rent_iter->value.IsInt())
+	    {
+	      rent = (float)rent_iter->value.GetInt();
+	    }
+	  else if (rent_iter->value.IsFloat())
+	    {
+	      rent = rent_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(rent_iter->value.IsFloat());
+	    }
         }
     }
 
@@ -116,18 +136,38 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
     auto listPrice_iter = json_value.FindMember("listPrice");
     if ( listPrice_iter != json_value.MemberEnd() ) {
 
-        if (!listPrice_iter->value.IsNull()) {
-            assert(listPrice_iter->value.IsInt());
-            listPrice = listPrice_iter->value.GetInt();
+	if (!listPrice_iter->value.IsNull()) {
+	  if (listPrice_iter->value.IsInt())
+	    {
+	      listPrice = (float)listPrice_iter->value.GetInt();
+	    }
+	  else if (listPrice_iter->value.IsFloat())
+	    {
+	      listPrice = listPrice_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(listPrice_iter->value.IsFloat());
+	    }
         }
     }
 
     auto rooms_iter = json_value.FindMember("rooms");
     if ( rooms_iter != json_value.MemberEnd() ) {
 
-        if (!rooms_iter->value.IsNull()) {
-            assert(rooms_iter->value.IsInt());
-            rooms = rooms_iter->value.GetInt();
+	if (!rooms_iter->value.IsNull()) {
+	  if (rooms_iter->value.IsInt())
+	    {
+	      rooms = (float)rooms_iter->value.GetInt();
+	    }
+	  else if (rooms_iter->value.IsFloat())
+	    {
+	      rooms = rooms_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(rooms_iter->value.IsFloat());
+	    }
         }
     }
 
@@ -139,10 +179,10 @@ string to_string(const listings_t &val, std::string indent/* = "" */, std::strin
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"booliId\": " << val.booliId << "," << endl;
+    os << indent << pretty_print << "\"livingArea\": " << val.livingArea << "," << endl;
     os << indent << pretty_print << "\"url\": \"" << val.url << "\"," << endl;
     os << indent << pretty_print << "\"location\": " << to_string(val.location, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"source\": " << to_string(val.source, indent + pretty_print, pretty_print) << "," << endl;
-os << indent << pretty_print << "\"livingArea\": " << val.livingArea << "," << endl;
     os << indent << pretty_print << "\"rent\": " << val.rent << "," << endl;
     os << indent << pretty_print << "\"published\": \"" << val.published << "\"," << endl;
     os << indent << pretty_print << "\"isNewConstruction\": " << val.isNewConstruction << "," << endl;
