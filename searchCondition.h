@@ -80,7 +80,7 @@ public:
 
 // Search condition base class
 
-class searchCondition_t
+class searchCondition
 {
  public:
   void SetQ(std::string q);
@@ -92,12 +92,12 @@ class searchCondition_t
 
 // Listings search condition
 
-class listingsSearchCondition_t : public searchCondition_t
+class listingsSearchCondition : public searchCondition
 {
   enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
   
  public:
-  listingsSearchCondition_t();
+  listingsSearchCondition();
   std::string SearchConditionResult();
   void SetQ(std::string q);
   void SetC(center *c);
@@ -156,17 +156,17 @@ class listingsSearchCondition_t : public searchCondition_t
   void checkNoDuplicateMainInput(MainInput in);
 };
 
-class soldSearchCondition_t : public searchCondition_t
+class soldSearchCondition : public searchCondition
 {
  public:
-  soldSearchCondition_t();
+  soldSearchCondition();
   std::string SearchConditionResult();
 };
 
-class areasSearchCondition_t : public searchCondition_t
+class areasSearchCondition : public searchCondition
 {
  public:
-  areasSearchCondition_t();
+  areasSearchCondition();
   std::string SearchConditionResult();
 };
 

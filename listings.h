@@ -5,7 +5,7 @@
 //
 //  listings.h
 //
-//  Created by js2Model on 2017-03-05.
+//  Created by js2Model on 2017-03-15.
 //
 
 #include <string>
@@ -26,15 +26,19 @@ class listings_t  {
 public:
     int booliId;
     float livingArea;
+    float floor;
     std::string url;
+    int constructionYear;
     location_t location;
+    float plotArea;
     source_t source;
-    float rent;
+    float rooms;
     std::string published;
-    int isNewConstruction;
+    bool isNewConstruction;
+    float additionalArea;
     std::string objectType;
     float listPrice;
-    float rooms;
+    float rent;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

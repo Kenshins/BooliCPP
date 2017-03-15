@@ -1,6 +1,8 @@
 #include "Booli.h"
 #include "retriver.h"
 #include "searchCondition.h"
+#include "rapidjson/document.h"
+#include "result.h"
 
 #include <openssl/sha.h>
 #include <cstdlib>
@@ -11,21 +13,29 @@
 #include <bitset>
 
 using namespace std;
+using namespace rapidjson;
 
 Booli::Booli()
 {
-  listingsSearchCondition_t lSc = listingsSearchCondition_t();
-  lSc.SetQ("Göteborg");
-  lSc.SetLimit(30);
-  retriver_t* r = new retriver_t();
-  std::string caller = "xxx";
-  std::string unique = GenerateUnique();
-  std::string ti = GenerateTime();
-  std::string ha = GenerateSHA1Hash(caller + ti + "xxx" + unique);
-  r->Retrive("https://api.booli.se/listings?" + lSc.SearchConditionResult() + "&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
-  cout << lSc.SearchConditionResult();
+  m_jsonRetriver = new jsonRetriver();
 }
 
+Booli::~Booli()
+{
+  delete m_jsonRetriver;
+}
+
+tr::models::result_t Booli::FetchListings(listingsSearchCondition* listSearchCondition, std::string caller, std::string hash)
+{
+  std::string unique = GenerateUnique();
+  std::string ti = GenerateTime();
+  std::string ha = GenerateSHA1Hash(caller + ti + hash + unique);
+  std::string readBuffer = m_jsonRetriver->RetriveJson("https://api.booli.se/listings?" + listSearchCondition->SearchConditionResult() + "&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
+  Document document;
+  document.Parse(readBuffer.c_str());
+  return tr::models::result_t(document);
+}
+ 
 std::string Booli::GenerateUnique()
 {
   std::string s;

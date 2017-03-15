@@ -5,7 +5,7 @@
 //
 //  listings.cpp
 //
-//  Created by js2Model on 2017-03-05.
+//  Created by js2Model on 2017-03-15.
 //
 
 #include "listings.h"
@@ -51,6 +51,25 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto floor_iter = json_value.FindMember("floor");
+    if ( floor_iter != json_value.MemberEnd() ) {
+
+	if (!floor_iter->value.IsNull()) {
+	  if (floor_iter->value.IsInt())
+	    {
+	      floor = (float)floor_iter->value.GetInt();
+	    }
+	  else if (floor_iter->value.IsFloat())
+	    {
+	      floor = floor_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(floor_iter->value.IsFloat());
+	    }
+        }
+    }
+
     auto url_iter = json_value.FindMember("url");
     if ( url_iter != json_value.MemberEnd() ) {
 
@@ -63,12 +82,40 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto constructionYear_iter = json_value.FindMember("constructionYear");
+    if ( constructionYear_iter != json_value.MemberEnd() ) {
+
+        if (!constructionYear_iter->value.IsNull()) {
+            assert(constructionYear_iter->value.IsInt());
+            constructionYear = constructionYear_iter->value.GetInt();
+        }
+    }
+
     auto location_iter = json_value.FindMember("location");
     if ( location_iter != json_value.MemberEnd() ) {
 
         if (!location_iter->value.IsNull()) {
             assert(location_iter->value.IsObject());
             location = location_t(location_iter->value);
+        }
+    }
+
+    auto plotArea_iter = json_value.FindMember("plotArea");
+    if ( plotArea_iter != json_value.MemberEnd() ) {
+
+	if (!plotArea_iter->value.IsNull()) {
+	  if (plotArea_iter->value.IsInt())
+	    {
+	      plotArea = (float)plotArea_iter->value.GetInt();
+	    }
+	  else if (plotArea_iter->value.IsFloat())
+	    {
+	      plotArea = plotArea_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(plotArea_iter->value.IsFloat());
+	    }
         }
     }
 
@@ -81,21 +128,21 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto rent_iter = json_value.FindMember("rent");
-    if ( rent_iter != json_value.MemberEnd() ) {
+    auto rooms_iter = json_value.FindMember("rooms");
+    if ( rooms_iter != json_value.MemberEnd() ) {
 
-	if (!rent_iter->value.IsNull()) {
-	  if (rent_iter->value.IsInt())
+	if (!rooms_iter->value.IsNull()) {
+	  if (rooms_iter->value.IsInt())
 	    {
-	      rent = (float)rent_iter->value.GetInt();
+	      rooms = (float)rooms_iter->value.GetInt();
 	    }
-	  else if (rent_iter->value.IsFloat())
+	  else if (rooms_iter->value.IsFloat())
 	    {
-	      rent = rent_iter->value.GetFloat();
+	      rooms = rooms_iter->value.GetFloat();
 	    }
 	  else
 	    {
-	      assert(rent_iter->value.IsFloat());
+	      assert(rooms_iter->value.IsFloat());
 	    }
         }
     }
@@ -116,8 +163,37 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
     if ( isNewConstruction_iter != json_value.MemberEnd() ) {
 
         if (!isNewConstruction_iter->value.IsNull()) {
-            assert(isNewConstruction_iter->value.IsInt());
-            isNewConstruction = isNewConstruction_iter->value.GetInt();
+	   if (isNewConstruction_iter->value.IsInt())
+	   {
+		isNewConstruction = (bool)isNewConstruction_iter->value.GetInt();
+	   }
+	   else if (isNewConstruction_iter->value.IsBool())
+	   {
+		isNewConstruction = isNewConstruction_iter->value.GetBool();
+	   }
+	   else
+	   {
+		assert(isNewConstruction_iter->value.IsBool());
+	   }	
+        }
+    }
+
+    auto additionalArea_iter = json_value.FindMember("additionalArea");
+    if ( additionalArea_iter != json_value.MemberEnd() ) {
+
+	if (!additionalArea_iter->value.IsNull()) {
+	  if (additionalArea_iter->value.IsInt())
+	    {
+	      additionalArea = (float)additionalArea_iter->value.GetInt();
+	    }
+	  else if (additionalArea_iter->value.IsFloat())
+	    {
+	      additionalArea = additionalArea_iter->value.GetFloat();
+	    }
+	  else
+	    {
+	      assert(additionalArea_iter->value.IsFloat());
+	    }
         }
     }
 
@@ -152,21 +228,21 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto rooms_iter = json_value.FindMember("rooms");
-    if ( rooms_iter != json_value.MemberEnd() ) {
+    auto rent_iter = json_value.FindMember("rent");
+    if ( rent_iter != json_value.MemberEnd() ) {
 
-	if (!rooms_iter->value.IsNull()) {
-	  if (rooms_iter->value.IsInt())
+	if (!rent_iter->value.IsNull()) {
+	  if (rent_iter->value.IsInt())
 	    {
-	      rooms = (float)rooms_iter->value.GetInt();
+	      rent = (float)rent_iter->value.GetInt();
 	    }
-	  else if (rooms_iter->value.IsFloat())
+	  else if (rent_iter->value.IsFloat())
 	    {
-	      rooms = rooms_iter->value.GetFloat();
+	      rent = rent_iter->value.GetFloat();
 	    }
 	  else
 	    {
-	      assert(rooms_iter->value.IsFloat());
+	      assert(rent_iter->value.IsFloat());
 	    }
         }
     }
@@ -180,15 +256,19 @@ string to_string(const listings_t &val, std::string indent/* = "" */, std::strin
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"booliId\": " << val.booliId << "," << endl;
     os << indent << pretty_print << "\"livingArea\": " << val.livingArea << "," << endl;
+    os << indent << pretty_print << "\"floor\": " << val.floor << "," << endl;
     os << indent << pretty_print << "\"url\": \"" << val.url << "\"," << endl;
+    os << indent << pretty_print << "\"constructionYear\": " << val.constructionYear << "," << endl;
     os << indent << pretty_print << "\"location\": " << to_string(val.location, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"plotArea\": " << val.plotArea << "," << endl;
     os << indent << pretty_print << "\"source\": " << to_string(val.source, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"rent\": " << val.rent << "," << endl;
+    os << indent << pretty_print << "\"rooms\": " << val.rooms << "," << endl;
     os << indent << pretty_print << "\"published\": \"" << val.published << "\"," << endl;
-    os << indent << pretty_print << "\"isNewConstruction\": " << val.isNewConstruction << "," << endl;
+    os << indent << pretty_print << "\"isNewConstruction\": " << (val.isNewConstruction ? "true" : "false") << "," << endl;
+    os << indent << pretty_print << "\"additionalArea\": " << val.additionalArea << "," << endl;
     os << indent << pretty_print << "\"objectType\": \"" << val.objectType << "\"," << endl;
     os << indent << pretty_print << "\"listPrice\": " << val.listPrice << "," << endl;
-    os << indent << pretty_print << "\"rooms\": " << val.rooms << "," << endl;
+    os << indent << pretty_print << "\"rent\": " << val.rent << "," << endl;
     os << indent << "}";
 
     return os.str();

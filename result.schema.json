@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "totalCount": {
+      "type": "integer"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "listings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "booliId": {
+            "type": "integer"
+          },
+          "listPrice": {
+            "type": "integer"
+          },
+          "published": {
+            "type": "string"
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "url",
+              "type"
+            ]
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "namedAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "streetAddress": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "streetAddress"
+                ]
+              },
+              "region": {
+                "type": "object",
+                "properties": {
+                  "municipalityName": {
+                    "type": "string"
+                  },
+                  "countyName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "municipalityName",
+                  "countyName"
+                ]
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "longitude": {
+                    "type": "number"
+                  },
+                  "latitude": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "longitude",
+                  "latitude"
+                ]
+              }
+            },
+            "required": [
+              "namedAreas",
+              "address",
+              "region",
+              "position"
+            ]
+          },
+          "isNewConstruction": {
+            "type": "integer"
+          },
+          "objectType": {
+            "type": "string"
+          },
+          "rooms": {
+            "type": "integer"
+          },
+          "livingArea": {
+            "type": "integer"
+          },
+          "rent": {
+            "type": "integer"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "booliId",
+          "listPrice",
+          "published",
+          "source",
+          "location",
+          "isNewConstruction",
+          "objectType",
+          "rooms",
+          "livingArea",
+          "rent",
+          "url"
+        ]
+      }
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "searchParams": {
+      "type": "object",
+      "properties": {
+        "upcomingSale": {
+          "type": "integer"
+        },
+        "areaId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "upcomingSale",
+        "areaId"
+      ]
+    }
+  },
+  "required": [
+    "totalCount",
+    "count",
+    "listings",
+    "limit",
+    "offset",
+    "searchParams"
+  ]
+}

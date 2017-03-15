@@ -113,8 +113,18 @@ ${class_name}::${class_name}(const rapidjson::Value &json_value) {
         }
         %elif v.schema_type == 'boolean':
         if (!${var_iter}->value.IsNull()) {
-            assert(${var_iter}->value.IsBool());
-            ${inst_name} = ${var_iter}->value.GetBool();
+	   if (${var_iter}->value.IsInt())
+	   {
+		${inst_name} = (bool)${var_iter}->value.GetInt();
+	   }
+	   else if (${var_iter}->value.IsBool())
+	   {
+		${inst_name} = ${var_iter}->value.GetBool();
+	   }
+	   else
+	   {
+		assert(${var_iter}->value.IsBool());
+	   }	
         }
         %elif v.schema_type == 'object':
         if (!${var_iter}->value.IsNull()) {
@@ -146,7 +156,7 @@ string to_string(const ${class_name} &val, std::string indent/* = "" */, std::st
         %elif v.schema_type == 'integer':
         os << array_item << ",";
 	%elif v.schema_type == 'number':
-        os << array_item << ",";
+        os << std::fixed << array_item << ",";
         %elif v.schema_type == 'boolean':
         os << (array_item ? "true" : "false") << ",";
         %elif v.schema_type == 'object':

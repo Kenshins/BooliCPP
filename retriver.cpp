@@ -1,19 +1,18 @@
 #include "retriver.h"
-#include "rapidjson/document.h"
-#include "result.h"
+#include "curlException.h"
+
 #include <iostream>
 #include <curl/curl.h>
 
 using namespace std;
-using namespace rapidjson;
 
-size_t retriver_t::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+size_t jsonRetriver::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
   ((std::string*)userp)->append((char*)contents, size * nmemb);
   return size * nmemb;
 }
 
-std::string retriver_t::Retrive(std::string url)
+std::string jsonRetriver::RetriveJson(std::string url)
 {
   CURL *curl;
   CURLcode res;
@@ -29,18 +28,16 @@ std::string retriver_t::Retrive(std::string url)
 
     curl_easy_cleanup(curl);
 
-    std::cout << readBuffer << std::endl << std::endl;
+    if (res != 0)
+      throw new CurlException(res);
+    
+    //std::cout << readBuffer << std::endl << std::endl;
   }
-
-  Document document;
-  document.Parse(readBuffer.c_str());
-  tr::models::result_t r = tr::models::result_t(document);
-  std::cout << tr::models::to_string(r) << std::endl;
   
   return readBuffer;
 }
 
-retriver_t::retriver_t() 
+jsonRetriver::jsonRetriver() 
 {
   // Not implemented
 }

@@ -2,10 +2,10 @@
 #define RETRIVER_H
 #include<string>
 
-class retriver_t {
+class jsonRetriver {
  public:
-  retriver_t();
-  std::string Retrive(std::string url);
+  jsonRetriver();
+  std::string RetriveJson(std::string url);
 
  private:
   static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void *userp);
