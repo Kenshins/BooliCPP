@@ -1,5 +1,5 @@
 #include "Booli.h"
-#include "retriver.h"
+#include "jsonRetriverInterface.h"
 #include "searchCondition.h"
 #include "rapidjson/document.h"
 #include "result.h"
@@ -15,9 +15,9 @@
 using namespace std;
 using namespace rapidjson;
 
-Booli::Booli()
+Booli::Booli(jsonRetriverInterface* jRetriver)
 {
-  m_jsonRetriver = new jsonRetriver();
+  m_jsonRetriver = jRetriver;
 }
 
 Booli::~Booli()
@@ -25,17 +25,26 @@ Booli::~Booli()
   delete m_jsonRetriver;
 }
 
-tr::models::result_t Booli::FetchListings(listingsSearchCondition* listSearchCondition, std::string caller, std::string hash)
+tr::models::result_t Booli::FetchListingsResult(listingsSearchCondition* listSearchCondition, std::string caller, std::string hash)
+{
+  std::string readBuffer = FetchListingsJson(listSearchCondition, caller, hash);
+  Document document;
+  document.Parse(readBuffer.c_str());
+  return tr::models::result_t(document);
+}
+
+std::string Booli::FetchListingsJson(listingsSearchCondition* listSearchCondition, std::string caller, std::string hash)
 {
   std::string unique = GenerateUnique();
   std::string ti = GenerateTime();
   std::string ha = GenerateSHA1Hash(caller + ti + hash + unique);
   std::string readBuffer = m_jsonRetriver->RetriveJson("https://api.booli.se/listings?" + listSearchCondition->SearchConditionResult() + "&callerId=" + caller + "&time=" + ti + "&unique=" + unique  + "&hash=" + ha);
-  Document document;
-  document.Parse(readBuffer.c_str());
-  return tr::models::result_t(document);
+  return readBuffer;
 }
- 
+
+
+
+
 std::string Booli::GenerateUnique()
 {
   std::string s;

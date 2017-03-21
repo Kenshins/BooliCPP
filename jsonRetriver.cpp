@@ -1,4 +1,4 @@
-#include "retriver.h"
+#include "jsonRetriver.h"
 #include "curlException.h"
 
 #include <iostream>
@@ -35,11 +35,6 @@ std::string jsonRetriver::RetriveJson(std::string url)
   }
   
   return readBuffer;
-}
-
-jsonRetriver::jsonRetriver() 
-{
-  // Not implemented
 }
 
 
