@@ -1,4 +1,6 @@
 #include "searchCondition.h"
+#include "jsonRetriverFake.h"
+#include "Booli.h"
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <ctime>
@@ -102,99 +104,99 @@ TEST(InvalidDayDateTest, DateTheSame) {
 }
 
 TEST(ListingsSearchConditionSetBbox, MultipleSetCheckBbox) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   sc->SetC(new center(30,30));
   ASSERT_THROW(sc->SetBbox(new bbox(30,30,30,30)), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetAreaId, MultipleSetCheckAreaId) {
-  listingsSearchCondition_t* mysc = new listingsSearchCondition_t();
+  listingsSearchCondition* mysc = new listingsSearchCondition();
   mysc->SetAreaId("4,5,6,6");
   ASSERT_THROW(mysc->SetBbox(new bbox(30,30,30,30)), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinListPriceTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMinListPrice(-22), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxListPriceTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxListPrice(-34), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinListSqmPriceTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMinListSqmPrice(-4), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxListSqmPriceTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxListSqmPrice(-87), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinRoomsTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMinRooms(-77), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxRoomsTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxRooms(-4), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxRentTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxRent(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinLivingAreaTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMinLivingArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxLivingAreaTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxLivingArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinPlotAreaTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMinPlotArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxPlotAreaTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxPlotArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinConstructionYearTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMinConstructionYear(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxConstructionYearTest, NegativeCheck) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetMaxConstructionYear(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetObjectTypeTest, IncorrectObjectType) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_THROW(sc->SetObjectType("BananBåt"), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectType) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_NO_THROW(sc->SetObjectType("gård"));
 }
 
 TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectTypeUpperAndLower) {
-  listingsSearchCondition_t* sc = new listingsSearchCondition_t();
+  listingsSearchCondition* sc = new listingsSearchCondition();
   ASSERT_NO_THROW(sc->SetObjectType("GårD"));
 }
 
 TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
-  listingsSearchCondition_t sc = listingsSearchCondition_t();
+  listingsSearchCondition sc = listingsSearchCondition();
   sc.SetQ("Nacka");
   sc.SetMinListPrice(200);
   sc.SetMaxListPrice(10000000);
@@ -229,10 +231,44 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
 }
 
 TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
-  listingsSearchCondition_t sc = listingsSearchCondition_t();
+  listingsSearchCondition sc = listingsSearchCondition();
   sc.SetQ("Norrköping");
   sc.SetObjectType("lägenhet");
   EXPECT_EQ(sc.SearchConditionResult(), "q=Norrköping&objectType=lägenhet&limit=10");
+}
+
+// This uses fixed data from testdata.json
+TEST(BooliResultTest, SimpleTest) {
+  Booli* b = new Booli(new jsonRetriverFake());
+  listingsSearchCondition lSC = listingsSearchCondition();
+  lSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
+  EXPECT_EQ(result.count, 10); 
+}
+
+// This uses fixed data from testdata.json
+TEST(BooliResultTest, AdvancedTest) {
+  Booli* b = new Booli(new jsonRetriverFake());
+  listingsSearchCondition lSC = listingsSearchCondition();
+  lSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
+
+  for (auto listings : result.listings) // access by reference to avoid copying
+    {  
+        if (listings.booliId == 2284444)
+        {
+	  EXPECT_EQ(listings.livingArea, 101);
+	  EXPECT_EQ(listings.rooms, 4);
+	  EXPECT_EQ(listings.source.id, 1573);
+	  EXPECT_EQ(listings.source.type, "Broker");
+	  EXPECT_EQ(listings.isNewConstruction, true);
+	  EXPECT_EQ(listings.location.position.longitude, 18.11234352);
+        }
+    }
 }
 
 int main(int argc, char **argv) {
