@@ -11,8 +11,8 @@ int main (void)
   Booli* b = BooliFactory::Create();
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
-  std::string caller = "bopren";
-  std::string hash = "P8rfkeJvKOXgHjvXZ1npRXVGG2kHPmXpd5NZetHS";
+  std::string caller = "xxx";
+  std::string hash = "P8rfkdJvKOXgHjvXM1npRXVGGGkHPmXpd9NZetHS";
   //tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
   //cout << to_string(result);
 
