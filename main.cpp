@@ -13,8 +13,10 @@ int main (void)
   lSC.SetQ("Nacka");
   std::string caller = "bopren";
   std::string hash = "P8rfkeJvKOXgHjvXZ1npRXVGG2kHPmXpd5NZetHS";
-  tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
-  cout << to_string(result);
+  //tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
+  //cout << to_string(result);
+
+  cout << b->FetchListingsJson(&lSC, caller, hash);
     
 return 0;
 }

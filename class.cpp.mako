@@ -100,11 +100,11 @@ ${class_name}::${class_name}(const rapidjson::Value &json_value) {
 	if (!${var_iter}->value.IsNull()) {
 	  if (${var_iter}->value.IsInt())
 	    {
-	      ${inst_name} = (float)${var_iter}->value.GetInt();
+	      ${inst_name} = (double)${var_iter}->value.GetInt();
 	    }
-	  else if (${var_iter}->value.IsFloat())
+	  else if (${var_iter}->value.IsDouble())
 	    {
-	      ${inst_name} = ${var_iter}->value.GetFloat();
+	      ${inst_name} = ${var_iter}->value.GetDouble();
 	    }
 	  else
 	    {
