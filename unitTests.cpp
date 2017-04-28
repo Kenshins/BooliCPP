@@ -6,31 +6,31 @@
 #include <ctime>
  
 TEST(Bboxtest, NegativeLatLo) { 
-  ASSERT_THROW(new bbox(-5, 1, 2, 2), std::invalid_argument);
+  ASSERT_THROW(bbox(-5, 1, 2, 2), std::invalid_argument);
 }
 
 TEST(CenterTest, NegativeLat) {
- ASSERT_THROW(new center(-5, 1), std::invalid_argument);
+ ASSERT_THROW(center(-5, 1), std::invalid_argument);
 }
 
 TEST(CenterTest, ToHighLat) {
- ASSERT_THROW(new center(91, 1), std::invalid_argument);
+ ASSERT_THROW(center(91, 1), std::invalid_argument);
 }
 
 TEST(CenterTest, NegativeLong) {
- ASSERT_THROW(new center(1, -5), std::invalid_argument);
+ ASSERT_THROW(center(1, -5), std::invalid_argument);
 }
 
 TEST(CenterTest, ToHighLong) {
- ASSERT_THROW(new center(1, 181), std::invalid_argument);
+ ASSERT_THROW(center(1, 181), std::invalid_argument);
 }
 
 TEST(DimensionTest, NegativeX) {
- ASSERT_THROW(new dimension(-3, 1), std::invalid_argument);
+ ASSERT_THROW(dimension(-3, 1), std::invalid_argument);
 }
 
 TEST(DimensionTest, NegativeY) {
- ASSERT_THROW(new dimension(1, -4), std::invalid_argument);
+ ASSERT_THROW(dimension(1, -4), std::invalid_argument);
 }
 
 TEST(MinPublishedDateTest, DateTheSame) {
@@ -38,8 +38,8 @@ TEST(MinPublishedDateTest, DateTheSame) {
   testTime.tm_year = 2016;
   testTime.tm_mon = 11;
   testTime.tm_mday = 28;
-  minPublishedDate* minPub = new minPublishedDate(&testTime);
-  EXPECT_EQ(minPub->retMinPublishedDate(), "20161128");
+  minPublishedDate minPub = minPublishedDate(&testTime);
+  EXPECT_EQ(minPub.retMinPublishedDate(), "20161128");
 }
 
 TEST(MaxPublishedDateTest, DateTheSame) {
@@ -47,32 +47,29 @@ TEST(MaxPublishedDateTest, DateTheSame) {
   testTime.tm_year = 2015;
   testTime.tm_mon = 10;
   testTime.tm_mday = 27;
-  maxPublishedDate* maxPub = new maxPublishedDate(&testTime);
-  EXPECT_EQ(maxPub->retMaxPublishedDate(), "20151027");
+  maxPublishedDate maxPub = maxPublishedDate(&testTime);
+  EXPECT_EQ(maxPub.retMaxPublishedDate(), "20151027");
 }
 
 TEST(MissingYearDateTest, DateTheSame) {
   tm testTime = {};
   testTime.tm_mon = 10;
   testTime.tm_mday = 27;
-  maxPublishedDate* maxPub;
-  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+  ASSERT_THROW(maxPublishedDate maxPub = maxPublishedDate(&testTime), std::invalid_argument);
 }
 
 TEST(MissingMonthDateTest, DateTheSame) {
   tm testTime = {};
   testTime.tm_year = 2015;
   testTime.tm_mday = 27;
-  maxPublishedDate* maxPub;
-  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+  ASSERT_THROW(maxPublishedDate maxPub = maxPublishedDate(&testTime), std::invalid_argument);
 }
 
 TEST(MissingDayDateTest, DateTheSame) {
   tm testTime = {};
   testTime.tm_year = 2015;
   testTime.tm_mon = 10;
-  maxPublishedDate* maxPub;
-  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+  ASSERT_THROW(maxPublishedDate maxPub = maxPublishedDate(&testTime), std::invalid_argument);
 }
 
 TEST(InvalidYearDateTest, DateTheSame) {
@@ -80,8 +77,7 @@ TEST(InvalidYearDateTest, DateTheSame) {
   testTime.tm_year = 1066;
   testTime.tm_mon = 10;
   testTime.tm_mday = 27;
-  maxPublishedDate* maxPub;
-  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+  ASSERT_THROW(maxPublishedDate maxPub = maxPublishedDate(&testTime), std::invalid_argument);
 }
   
 // month in tm in ctime is from 0 to 11, so confusing
@@ -90,8 +86,7 @@ TEST(InvalidMonthDateTest, DateTheSame) {
   testTime.tm_year = 1997;
   testTime.tm_mon = 12;
   testTime.tm_mday = 27;
-  maxPublishedDate* maxPub;
-  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+  ASSERT_THROW(maxPublishedDate maxPub = maxPublishedDate(&testTime), std::invalid_argument);
 }
 
 TEST(InvalidDayDateTest, DateTheSame) {
@@ -99,100 +94,102 @@ TEST(InvalidDayDateTest, DateTheSame) {
   testTime.tm_year = 2017;
   testTime.tm_mon = 02;
   testTime.tm_mday = 29;
-  maxPublishedDate* maxPub;
-  ASSERT_THROW(maxPub = new maxPublishedDate(&testTime), std::invalid_argument);
+  ASSERT_THROW(maxPublishedDate maxPub = maxPublishedDate(&testTime), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetBbox, MultipleSetCheckBbox) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  sc->SetC(new center(30,30));
-  ASSERT_THROW(sc->SetBbox(new bbox(30,30,30,30)), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  center c = center(30,30);
+  sc.SetC(&c);
+  bbox b = bbox(30,30,30,30);
+  ASSERT_THROW(sc.SetBbox(&b), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetAreaId, MultipleSetCheckAreaId) {
-  listingsSearchCondition* mysc = new listingsSearchCondition();
-  mysc->SetAreaId("4,5,6,6");
-  ASSERT_THROW(mysc->SetBbox(new bbox(30,30,30,30)), std::invalid_argument);
+  listingsSearchCondition mysc = listingsSearchCondition();
+  mysc.SetAreaId("4,5,6,6");
+  bbox b = bbox(30,30,30,30);
+  ASSERT_THROW(mysc.SetBbox(&b), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinListPriceTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMinListPrice(-22), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMinListPrice(-22), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxListPriceTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxListPrice(-34), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxListPrice(-34), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinListSqmPriceTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMinListSqmPrice(-4), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMinListSqmPrice(-4), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxListSqmPriceTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxListSqmPrice(-87), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxListSqmPrice(-87), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinRoomsTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMinRooms(-77), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMinRooms(-77), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxRoomsTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxRooms(-4), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxRooms(-4), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxRentTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxRent(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxRent(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinLivingAreaTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMinLivingArea(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMinLivingArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxLivingAreaTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxLivingArea(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxLivingArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinPlotAreaTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMinPlotArea(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMinPlotArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxPlotAreaTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxPlotArea(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxPlotArea(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMinConstructionYearTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMinConstructionYear(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMinConstructionYear(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetMaxConstructionYearTest, NegativeCheck) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetMaxConstructionYear(-1), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetMaxConstructionYear(-1), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetObjectTypeTest, IncorrectObjectType) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_THROW(sc->SetObjectType("BananBåt"), std::invalid_argument);
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_THROW(sc.SetObjectType("BananBåt"), std::invalid_argument);
 }
 
 TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectType) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_NO_THROW(sc->SetObjectType("gård"));
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_NO_THROW(sc.SetObjectType("gård"));
 }
 
 TEST(ListingsSearchConditionSetObjectTypeTest, CorrectObjectTypeUpperAndLower) {
-  listingsSearchCondition* sc = new listingsSearchCondition();
-  ASSERT_NO_THROW(sc->SetObjectType("GårD"));
+  listingsSearchCondition sc = listingsSearchCondition();
+  ASSERT_NO_THROW(sc.SetObjectType("GårD"));
 }
 
 TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
@@ -214,16 +211,16 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
   minPubDate.tm_mon = 02;
   minPubDate.tm_mday = 27;
 
-  minPublishedDate* minPub = new minPublishedDate(&minPubDate);
-  sc.SetMinPublishDate(minPub);
+  minPublishedDate minPub = minPublishedDate(&minPubDate);
+  sc.SetMinPublishDate(&minPub);
   
   tm maxPubDate = {};
   maxPubDate.tm_year = 2017;
   maxPubDate.tm_mon = 02;
   maxPubDate.tm_mday = 27;
 
-  maxPublishedDate* maxPub = new maxPublishedDate(&maxPubDate);
-  sc.SetMaxPublishDate(maxPub);
+  maxPublishedDate maxPub = maxPublishedDate(&maxPubDate);
+  sc.SetMaxPublishDate(&maxPub);
 
   sc.SetLimit(30);
 
@@ -245,7 +242,8 @@ TEST(BooliResultTest, SimpleTest) {
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
   tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
-  EXPECT_EQ(result.count, 10); 
+  EXPECT_EQ(result.count, 10);
+  delete b;
 }
 
 // This uses fixed data from testdata.json
@@ -269,6 +267,7 @@ TEST(BooliResultTest, AdvancedTest) {
 	  EXPECT_EQ(listings.location.position.longitude, 18.11234352);
         }
     }
+  delete b;
 }
 
 int main(int argc, char **argv) {
