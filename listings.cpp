@@ -5,7 +5,7 @@
 //
 //  listings.cpp
 //
-//  Created by js2Model on 2017-03-15.
+//  Created by js2Model on 2017-04-06.
 //
 
 #include "listings.h"
@@ -38,11 +38,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!livingArea_iter->value.IsNull()) {
 	  if (livingArea_iter->value.IsInt())
 	    {
-	      livingArea = (float)livingArea_iter->value.GetInt();
+	      livingArea = (double)livingArea_iter->value.GetInt();
 	    }
-	  else if (livingArea_iter->value.IsFloat())
+	  else if (livingArea_iter->value.IsDouble())
 	    {
-	      livingArea = livingArea_iter->value.GetFloat();
+	      livingArea = livingArea_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -57,11 +57,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!floor_iter->value.IsNull()) {
 	  if (floor_iter->value.IsInt())
 	    {
-	      floor = (float)floor_iter->value.GetInt();
+	      floor = (double)floor_iter->value.GetInt();
 	    }
-	  else if (floor_iter->value.IsFloat())
+	  else if (floor_iter->value.IsDouble())
 	    {
-	      floor = floor_iter->value.GetFloat();
+	      floor = floor_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -106,11 +106,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!plotArea_iter->value.IsNull()) {
 	  if (plotArea_iter->value.IsInt())
 	    {
-	      plotArea = (float)plotArea_iter->value.GetInt();
+	      plotArea = (double)plotArea_iter->value.GetInt();
 	    }
-	  else if (plotArea_iter->value.IsFloat())
+	  else if (plotArea_iter->value.IsDouble())
 	    {
-	      plotArea = plotArea_iter->value.GetFloat();
+	      plotArea = plotArea_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -134,11 +134,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!rooms_iter->value.IsNull()) {
 	  if (rooms_iter->value.IsInt())
 	    {
-	      rooms = (float)rooms_iter->value.GetInt();
+	      rooms = (double)rooms_iter->value.GetInt();
 	    }
-	  else if (rooms_iter->value.IsFloat())
+	  else if (rooms_iter->value.IsDouble())
 	    {
-	      rooms = rooms_iter->value.GetFloat();
+	      rooms = rooms_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -184,11 +184,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!additionalArea_iter->value.IsNull()) {
 	  if (additionalArea_iter->value.IsInt())
 	    {
-	      additionalArea = (float)additionalArea_iter->value.GetInt();
+	      additionalArea = (double)additionalArea_iter->value.GetInt();
 	    }
-	  else if (additionalArea_iter->value.IsFloat())
+	  else if (additionalArea_iter->value.IsDouble())
 	    {
-	      additionalArea = additionalArea_iter->value.GetFloat();
+	      additionalArea = additionalArea_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -215,11 +215,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!listPrice_iter->value.IsNull()) {
 	  if (listPrice_iter->value.IsInt())
 	    {
-	      listPrice = (float)listPrice_iter->value.GetInt();
+	      listPrice = (double)listPrice_iter->value.GetInt();
 	    }
-	  else if (listPrice_iter->value.IsFloat())
+	  else if (listPrice_iter->value.IsDouble())
 	    {
-	      listPrice = listPrice_iter->value.GetFloat();
+	      listPrice = listPrice_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -234,11 +234,11 @@ listings_t::listings_t(const rapidjson::Value &json_value) {
 	if (!rent_iter->value.IsNull()) {
 	  if (rent_iter->value.IsInt())
 	    {
-	      rent = (float)rent_iter->value.GetInt();
+	      rent = (double)rent_iter->value.GetInt();
 	    }
-	  else if (rent_iter->value.IsFloat())
+	  else if (rent_iter->value.IsDouble())
 	    {
-	      rent = rent_iter->value.GetFloat();
+	      rent = rent_iter->value.GetDouble();
 	    }
 	  else
 	    {

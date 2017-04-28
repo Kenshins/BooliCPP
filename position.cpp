@@ -5,7 +5,7 @@
 //
 //  position.cpp
 //
-//  Created by js2Model on 2017-03-10.
+//  Created by js2Model on 2017-04-06.
 //
 
 #include "position.h"
@@ -29,11 +29,11 @@ position_t::position_t(const rapidjson::Value &json_value) {
 	if (!latitude_iter->value.IsNull()) {
 	  if (latitude_iter->value.IsInt())
 	    {
-	      latitude = (float)latitude_iter->value.GetInt();
+	      latitude = (double)latitude_iter->value.GetInt();
 	    }
-	  else if (latitude_iter->value.IsFloat())
+	  else if (latitude_iter->value.IsDouble())
 	    {
-	      latitude = latitude_iter->value.GetFloat();
+	      latitude = latitude_iter->value.GetDouble();
 	    }
 	  else
 	    {
@@ -48,11 +48,11 @@ position_t::position_t(const rapidjson::Value &json_value) {
 	if (!longitude_iter->value.IsNull()) {
 	  if (longitude_iter->value.IsInt())
 	    {
-	      longitude = (float)longitude_iter->value.GetInt();
+	      longitude = (double)longitude_iter->value.GetInt();
 	    }
-	  else if (longitude_iter->value.IsFloat())
+	  else if (longitude_iter->value.IsDouble())
 	    {
-	      longitude = longitude_iter->value.GetFloat();
+	      longitude = longitude_iter->value.GetDouble();
 	    }
 	  else
 	    {
