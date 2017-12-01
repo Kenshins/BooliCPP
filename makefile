@@ -9,11 +9,14 @@ OBJ= jsonRetriver.o searchCondition.o listings.o address.o areas.o distance.o lo
 %.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)  
 
-boolitest : main.cpp $(OBJ)
-	$(CC) -o $@ $(CFLAGS) main.cpp $(OBJ) $(LIBS)
+boolilibrary : $(OBJ)
+	ar rvs booli.a $(OBJ)
 
-unittest : unitTests.cpp jsonRetriverFake.cpp $(OBJ)
-	$(CC) -o $@ $(CFLAGS) unitTests.cpp jsonRetriverFake.cpp $(OBJ) $(LIBS) -lgtest -lpthread
+boolitest : main.cpp booli.a
+	$(CC) -o $@ $(CFLAGS) main.cpp booli.a $(LIBS)
+
+unittest : unitTests.cpp jsonRetriverFake.cpp booli.a
+	$(CC) -o $@ $(CFLAGS) unitTests.cpp jsonRetriverFake.cpp booli.a $(LIBS) -lgtest -lpthread
 
 clean :
-	rm -f *.o *~ boolitest
+	rm -f *.o *~ *.a boolitest unittest
