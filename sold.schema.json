@@ -1,0 +1,354 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "totalCount": {
+      "$id": "/properties/totalCount",
+      "type": "integer",
+      "title": "The Totalcount Schema.",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        6530
+      ]
+    },
+    "count": {
+      "$id": "/properties/count",
+      "type": "integer",
+      "title": "The Count Schema.",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        5
+      ]
+    },
+    "sold": {
+      "$id": "/properties/sold",
+      "type": "array",
+      "items": {
+        "$id": "/properties/sold/items",
+        "type": "object",
+        "properties": {
+          "location": {
+            "$id": "/properties/sold/items/properties/location",
+            "type": "object",
+            "properties": {
+              "address": {
+                "$id": "/properties/sold/items/properties/location/properties/address",
+                "type": "object",
+                "properties": {
+                  "streetAddress": {
+                    "$id": "/properties/sold/items/properties/location/properties/address/properties/streetAddress",
+                    "type": "string",
+                    "title": "The Streetaddress Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                      "Fabrikörvägen 10D"
+                    ]
+                  }
+                }
+              },
+              "position": {
+                "$id": "/properties/sold/items/properties/location/properties/position",
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "$id": "/properties/sold/items/properties/location/properties/position/properties/latitude",
+                    "type": "number",
+                    "title": "The Latitude Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                      59.31668472290039
+                    ]
+                  },
+                  "longitude": {
+                    "$id": "/properties/sold/items/properties/location/properties/position/properties/longitude",
+                    "type": "number",
+                    "title": "The Longitude Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                      18.1539363861084
+                    ]
+                  }
+                }
+              },
+              "namedAreas": {
+                "$id": "/properties/sold/items/properties/location/properties/namedAreas",
+                "type": "array",
+                "items": {
+                  "$id": "/properties/sold/items/properties/location/properties/namedAreas/items",
+                  "type": "string",
+                  "title": "The 0 Schema.",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": [
+                    "Nacka Strand"
+                  ]
+                }
+              },
+              "region": {
+                "$id": "/properties/sold/items/properties/location/properties/region",
+                "type": "object",
+                "properties": {
+                  "municipalityName": {
+                    "$id": "/properties/sold/items/properties/location/properties/region/properties/municipalityName",
+                    "type": "string",
+                    "title": "The Municipalityname Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                      "Nacka"
+                    ]
+                  },
+                  "countyName": {
+                    "$id": "/properties/sold/items/properties/location/properties/region/properties/countyName",
+                    "type": "string",
+                    "title": "The Countyname Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                      "Stockholms län"
+                    ]
+                  }
+                }
+              },
+              "distance": {
+                "$id": "/properties/sold/items/properties/location/properties/distance",
+                "type": "object",
+                "properties": {
+                  "ocean": {
+                    "$id": "/properties/sold/items/properties/location/properties/distance/properties/ocean",
+                    "type": "integer",
+                    "title": "The Ocean Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                      108
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "listPrice": {
+            "$id": "/properties/sold/items/properties/listPrice",
+            "type": "integer",
+            "title": "The Listprice Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              5495000
+            ]
+          },
+          "rent": {
+            "$id": "/properties/sold/items/properties/rent",
+            "type": "integer",
+            "title": "The Rent Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              5853
+            ]
+          },
+          "livingArea": {
+            "$id": "/properties/sold/items/properties/livingArea",
+            "type": "integer",
+            "title": "The Livingarea Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              108
+            ]
+          },
+          "additionalArea": {
+            "$id": "/properties/sold/items/properties/additionalArea",
+            "type": "integer",
+            "title": "The Additionalarea Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              2
+            ]
+          },
+          "plotArea": {
+            "$id": "/properties/sold/items/properties/plotArea",
+            "type": "integer",
+            "title": "The Plotarea Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              0
+            ]
+          },
+          "source": {
+            "$id": "/properties/sold/items/properties/source",
+            "type": "object",
+            "properties": {
+              "name": {
+                "$id": "/properties/sold/items/properties/source/properties/name",
+                "type": "string",
+                "title": "The Name Schema.",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                  "Notar"
+                ]
+              },
+              "id": {
+                "$id": "/properties/sold/items/properties/source/properties/id",
+                "type": "integer",
+                "title": "The Id Schema.",
+                "description": "An explanation about the purpose of this instance.",
+                "default": 0,
+                "examples": [
+                  1566
+                ]
+              },
+              "type": {
+                "$id": "/properties/sold/items/properties/source/properties/type",
+                "type": "string",
+                "title": "The Type Schema.",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                  "Broker"
+                ]
+              },
+              "url": {
+                "$id": "/properties/sold/items/properties/source/properties/url",
+                "type": "string",
+                "title": "The Url Schema.",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                  "http://www.notar.se/"
+                ]
+              }
+            }
+          },
+          "rooms": {
+            "$id": "/properties/sold/items/properties/rooms",
+            "type": "integer",
+            "title": "The Rooms Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              3
+            ]
+          },
+          "published": {
+            "$id": "/properties/sold/items/properties/published",
+            "type": "string",
+            "title": "The Published Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "2017-12-04 18:12:56"
+            ]
+          },
+          "objectType": {
+            "$id": "/properties/sold/items/properties/objectType",
+            "type": "string",
+            "title": "The Objecttype Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "Lägenhet"
+            ]
+          },
+          "booliId": {
+            "$id": "/properties/sold/items/properties/booliId",
+            "type": "integer",
+            "title": "The Booliid Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              3053907
+            ]
+          },
+          "soldDate": {
+            "$id": "/properties/sold/items/properties/soldDate",
+            "type": "string",
+            "title": "The Solddate Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "2017-12-27"
+            ]
+          },
+          "soldPrice": {
+            "$id": "/properties/sold/items/properties/soldPrice",
+            "type": "integer",
+            "title": "The Soldprice Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+              5495000
+            ]
+          },
+          "soldPriceSource": {
+            "$id": "/properties/sold/items/properties/soldPriceSource",
+            "type": "string",
+            "title": "The Soldpricesource Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "bid"
+            ]
+          },
+          "url": {
+            "$id": "/properties/sold/items/properties/url",
+            "type": "string",
+            "title": "The Url Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "https://www.booli.se/annons/3053907"
+            ]
+          }
+        }
+      }
+    },
+    "limit": {
+      "$id": "/properties/limit",
+      "type": "integer",
+      "title": "The Limit Schema.",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        5
+      ]
+    },
+    "offset": {
+      "$id": "/properties/offset",
+      "type": "integer",
+      "title": "The Offset Schema.",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        0
+      ]
+    },
+    "searchParams": {
+      "$id": "/properties/searchParams",
+      "type": "object",
+      "properties": {
+        "areaId": {
+          "$id": "/properties/searchParams/properties/areaId",
+          "type": "integer",
+          "title": "The Areaid Schema.",
+          "description": "An explanation about the purpose of this instance.",
+          "default": 0,
+          "examples": [
+            76
+          ]
+        }
+      }
+    }
+  }
+}
