@@ -1,10 +1,13 @@
 #include "searchCondition.h"
 #include "jsonRetriverFake.h"
 #include "Booli.h"
+
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include <stdexcept>
 #include <ctime>
- 
+#include <memory>
+
 TEST(Bboxtest, NegativeLatLo) { 
   ASSERT_THROW(bbox(-5, 1, 2, 2), std::invalid_argument);
 }
@@ -236,35 +239,35 @@ TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
 
 // This uses fixed data from testdata.json
 TEST(BooliResultTest, SimpleTest) {
-  Booli* b = new Booli(new jsonRetriverFake());
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>());
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
   tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
-  EXPECT_EQ(result.count, 10);
+  EXPECT_EQ(result.Count, 10);
   delete b;
 }
 
 // This uses fixed data from testdata.json
 TEST(BooliResultTest, AdvancedTest) {
-  Booli* b = new Booli(new jsonRetriverFake());
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>());
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
   tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
 
-  for (auto listings : result.listings) // access by reference to avoid copying
+  for (auto listings : result.Listings) // access by reference to avoid copying
     {  
-        if (listings.booliId == 2284444)
+        if (listings.BooliId == 2284444)
         {
-	  EXPECT_EQ(listings.livingArea, 101);
-	  EXPECT_EQ(listings.rooms, 4);
-	  EXPECT_EQ(listings.source.id, 1573);
-	  EXPECT_EQ(listings.source.type, "Broker");
-	  EXPECT_EQ(listings.isNewConstruction, true);
-	  EXPECT_EQ(listings.location.position.longitude, 18.11234352);
+	  EXPECT_EQ(listings.LivingArea, 101);
+	  EXPECT_EQ(listings.Rooms, 4);
+	  EXPECT_EQ(listings.Source.Id, 1573);
+	  EXPECT_EQ(listings.Source.Type, "Broker");
+	  EXPECT_EQ(listings.IsNewConstruction, true);
+	  EXPECT_EQ(listings.Location.Position.Longitude, 18.11234352);
         }
     }
   delete b;

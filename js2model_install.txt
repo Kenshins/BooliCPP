@@ -1,0 +1,9 @@
+Instructions howto install js2model
+
+js2model is needed to generate the json files used with Booli api. These files are in the git repository so generation is only needed if you are developing the api. If you only intend to use the api you do not need to do these instructions.
+
+* Python 3 is needed to install js2model
+
+Commands:
+sudo pip install -r requirements.txt 
+sudo python setup.py install
