@@ -5,14 +5,14 @@
 //
 //  Location.h
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Region.h"
 #include "Position.h"
+#include "Region.h"
 #include "Address.h"
 #include "rapidjson/document.h"
 
@@ -25,10 +25,10 @@ namespace models {
 class location_t  {
 
 public:
-    std::vector<std::string> NamedAreas;
-    region_t Region;
-    position_t Position;
     address_t Address;
+    position_t Position;
+    region_t Region;
+    std::vector<std::string> NamedAreas;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

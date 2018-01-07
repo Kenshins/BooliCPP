@@ -5,7 +5,7 @@
 //
 //  Areas.h
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include <string>
@@ -22,14 +22,14 @@ namespace models {
 class areas_t  {
 
 public:
-    std::string UrlFriendlyName;
     std::vector<std::string> ParentTypes;
-    std::vector<std::string> Types;
-    std::string ParentName;
-    int ParentBooliId;
-    std::string FullName;
+    std::string UrlFriendlyName;
     int BooliId;
+    std::string FullName;
+    std::string ParentName;
     std::string Name;
+    std::vector<std::string> Types;
+    int ParentBooliId;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

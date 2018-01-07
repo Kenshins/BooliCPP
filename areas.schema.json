@@ -7,8 +7,6 @@
     "totalCount": {
       "$id": "/properties/totalCount",
       "type": "integer",
-      "title": "The Totalcount Schema.",
-      "description": "An explanation about the purpose of this instance.",
       "default": 0,
       "examples": [
         5
@@ -17,8 +15,6 @@
     "count": {
       "$id": "/properties/count",
       "type": "integer",
-      "title": "The Count Schema.",
-      "description": "An explanation about the purpose of this instance.",
       "default": 0,
       "examples": [
         5
@@ -34,8 +30,6 @@
           "booliId": {
             "$id": "/properties/areas/items/properties/booliId",
             "type": "integer",
-            "title": "The Booliid Schema.",
-            "description": "An explanation about the purpose of this instance.",
             "default": 0,
             "examples": [
               76
@@ -44,8 +38,6 @@
           "name": {
             "$id": "/properties/areas/items/properties/name",
             "type": "string",
-            "title": "The Name Schema.",
-            "description": "An explanation about the purpose of this instance.",
             "default": "",
             "examples": [
               "Nacka"
@@ -57,8 +49,6 @@
             "items": {
               "$id": "/properties/areas/items/properties/types/items",
               "type": "string",
-              "title": "The 0 Schema.",
-              "description": "An explanation about the purpose of this instance.",
               "default": "",
               "examples": [
                 "Kommun"
@@ -68,8 +58,6 @@
           "parentBooliId": {
             "$id": "/properties/areas/items/properties/parentBooliId",
             "type": "integer",
-            "title": "The Parentbooliid Schema.",
-            "description": "An explanation about the purpose of this instance.",
             "default": 0,
             "examples": [
               2
@@ -78,8 +66,6 @@
           "parentName": {
             "$id": "/properties/areas/items/properties/parentName",
             "type": "string",
-            "title": "The Parentname Schema.",
-            "description": "An explanation about the purpose of this instance.",
             "default": "",
             "examples": [
               "Stockholms län"
@@ -91,8 +77,6 @@
             "items": {
               "$id": "/properties/areas/items/properties/parentTypes/items",
               "type": "string",
-              "title": "The 0 Schema.",
-              "description": "An explanation about the purpose of this instance.",
               "default": "",
               "examples": [
                 "Län"
@@ -102,8 +86,6 @@
           "fullName": {
             "$id": "/properties/areas/items/properties/fullName",
             "type": "string",
-            "title": "The Fullname Schema.",
-            "description": "An explanation about the purpose of this instance.",
             "default": "",
             "examples": [
               "Nacka, Stockholms län"
@@ -112,8 +94,6 @@
           "urlFriendlyName": {
             "$id": "/properties/areas/items/properties/urlFriendlyName",
             "type": "string",
-            "title": "The Urlfriendlyname Schema.",
-            "description": "An explanation about the purpose of this instance.",
             "default": "",
             "examples": [
               "nacka"
@@ -129,8 +109,6 @@
         "q": {
           "$id": "/properties/searchParams/properties/q",
           "type": "string",
-          "title": "The Q Schema.",
-          "description": "An explanation about the purpose of this instance.",
           "default": "",
           "examples": [
             "nacka"
@@ -139,8 +117,6 @@
         "listings": {
           "$id": "/properties/searchParams/properties/listings",
           "type": "integer",
-          "title": "The Listings Schema.",
-          "description": "An explanation about the purpose of this instance.",
           "default": 0,
           "examples": [
             1
@@ -149,8 +125,6 @@
         "transactions": {
           "$id": "/properties/searchParams/properties/transactions",
           "type": "integer",
-          "title": "The Transactions Schema.",
-          "description": "An explanation about the purpose of this instance.",
           "default": 0,
           "examples": [
             0
@@ -161,8 +135,6 @@
     "limit": {
       "$id": "/properties/limit",
       "type": "integer",
-      "title": "The Limit Schema.",
-      "description": "An explanation about the purpose of this instance.",
       "default": 0,
       "examples": [
         5

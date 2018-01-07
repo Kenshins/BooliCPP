@@ -5,7 +5,7 @@
 //
 //  Result.h
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include <string>
@@ -26,10 +26,10 @@ class result_t  {
 public:
     int TotalCount;
     int Offset;
-    searchParams_t SearchParams;
-    int Limit;
     std::vector<listings_t> Listings;
+    int Limit;
     int Count;
+    searchParams_t SearchParams;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

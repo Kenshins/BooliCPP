@@ -5,14 +5,14 @@
 //
 //  Listings.h
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Location.h"
 #include "Source.h"
+#include "Location.h"
 #include "rapidjson/document.h"
 
 
@@ -24,17 +24,17 @@ namespace models {
 class listings_t  {
 
 public:
-    std::string Url;
-    int ListPrice;
-    std::string ObjectType;
-    int LivingArea;
-    int IsNewConstruction;
     source_t Source;
-    int BooliId;
-    location_t Location;
     std::string Published;
-    int Rooms;
-    int Rent;
+    double Rooms;
+    location_t Location;
+    int IsNewConstruction;
+    std::string Url;
+    std::string ObjectType;
+    double LivingArea;
+    int BooliId;
+    double Rent;
+    double ListPrice;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

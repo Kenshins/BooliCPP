@@ -5,7 +5,7 @@
 //
 //  Source.h
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include <string>
@@ -23,9 +23,9 @@ class source_t  {
 
 public:
     std::string Url;
-    int Id;
-    std::string Name;
     std::string Type;
+    std::string Name;
+    int Id;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

@@ -5,7 +5,7 @@
 //
 //  SearchParams.cpp
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include "SearchParams.h"
@@ -32,15 +32,6 @@ searchParams_t::searchParams_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Transactions_iter = json_value.FindMember("transactions");
-    if ( Transactions_iter != json_value.MemberEnd() ) {
-
-        if (!Transactions_iter->value.IsNull()) {
-            assert(Transactions_iter->value.IsInt());
-            Transactions = Transactions_iter->value.GetInt();
-        }
-    }
-
     auto Q_iter = json_value.FindMember("q");
     if ( Q_iter != json_value.MemberEnd() ) {
 
@@ -53,6 +44,15 @@ searchParams_t::searchParams_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto Transactions_iter = json_value.FindMember("transactions");
+    if ( Transactions_iter != json_value.MemberEnd() ) {
+
+        if (!Transactions_iter->value.IsNull()) {
+            assert(Transactions_iter->value.IsInt());
+            Transactions = Transactions_iter->value.GetInt();
+        }
+    }
+
 }
 
 string to_string(const searchParams_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -61,8 +61,8 @@ string to_string(const searchParams_t &val, std::string indent/* = "" */, std::s
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"Listings\": " << val.Listings << "," << endl;
-    os << indent << pretty_print << "\"Transactions\": " << val.Transactions << "," << endl;
     os << indent << pretty_print << "\"Q\": \"" << val.Q << "\"," << endl;
+    os << indent << pretty_print << "\"Transactions\": " << val.Transactions << "," << endl;
     os << indent << "}";
 
     return os.str();

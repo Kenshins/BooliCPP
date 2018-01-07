@@ -17,7 +17,7 @@
             "type": "integer"
           },
           "listPrice": {
-            "type": "integer"
+            "type": "number"
           },
           "published": {
             "type": "string"
@@ -110,13 +110,13 @@
             "type": "string"
           },
           "rooms": {
-            "type": "integer"
+            "type": "number"
           },
           "livingArea": {
-            "type": "integer"
+            "type": "number"
           },
           "rent": {
-            "type": "integer"
+            "type": "number"
           },
           "url": {
             "type": "string"

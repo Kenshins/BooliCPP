@@ -5,7 +5,7 @@
 //
 //  Distance.cpp
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include "Distance.h"
@@ -26,9 +26,19 @@ distance_t::distance_t(const rapidjson::Value &json_value) {
     auto Ocean_iter = json_value.FindMember("ocean");
     if ( Ocean_iter != json_value.MemberEnd() ) {
 
-        if (!Ocean_iter->value.IsNull()) {
-            assert(Ocean_iter->value.IsInt());
-            Ocean = Ocean_iter->value.GetInt();
+	if (!Ocean_iter->value.IsNull()) {
+	  if (Ocean_iter->value.IsInt())
+	    {
+	      Ocean = (double)Ocean_iter->value.GetInt();
+	    }
+	  else if (Ocean_iter->value.IsDouble())
+	    {
+	      Ocean = Ocean_iter->value.GetDouble();
+	    }
+	  else
+	    {
+	      assert(Ocean_iter->value.IsFloat());
+	    }
         }
     }
 

@@ -5,7 +5,7 @@
 //
 //  Location.cpp
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include "Location.h"
@@ -23,24 +23,12 @@ location_t::location_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto NamedAreas_iter = json_value.FindMember("namedAreas");
-    if ( NamedAreas_iter != json_value.MemberEnd() ) {
+    auto Address_iter = json_value.FindMember("address");
+    if ( Address_iter != json_value.MemberEnd() ) {
 
-        for( auto array_item = NamedAreas_iter->value.Begin(); array_item != NamedAreas_iter->value.End(); array_item++  ) {
-
-            if (!array_item->IsNull()) {
-                assert(array_item->IsString());
-                NamedAreas.push_back(array_item->GetString());
-            }
-        }
-    }
-
-    auto Region_iter = json_value.FindMember("region");
-    if ( Region_iter != json_value.MemberEnd() ) {
-
-        if (!Region_iter->value.IsNull()) {
-            assert(Region_iter->value.IsObject());
-            Region = region_t(Region_iter->value);
+        if (!Address_iter->value.IsNull()) {
+            assert(Address_iter->value.IsObject());
+            Address = address_t(Address_iter->value);
         }
     }
 
@@ -53,12 +41,24 @@ location_t::location_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Address_iter = json_value.FindMember("address");
-    if ( Address_iter != json_value.MemberEnd() ) {
+    auto Region_iter = json_value.FindMember("region");
+    if ( Region_iter != json_value.MemberEnd() ) {
 
-        if (!Address_iter->value.IsNull()) {
-            assert(Address_iter->value.IsObject());
-            Address = address_t(Address_iter->value);
+        if (!Region_iter->value.IsNull()) {
+            assert(Region_iter->value.IsObject());
+            Region = region_t(Region_iter->value);
+        }
+    }
+
+    auto NamedAreas_iter = json_value.FindMember("namedAreas");
+    if ( NamedAreas_iter != json_value.MemberEnd() ) {
+
+        for( auto array_item = NamedAreas_iter->value.Begin(); array_item != NamedAreas_iter->value.End(); array_item++  ) {
+
+            if (!array_item->IsNull()) {
+                assert(array_item->IsString());
+                NamedAreas.push_back(array_item->GetString());
+            }
         }
     }
 
@@ -69,15 +69,15 @@ string to_string(const location_t &val, std::string indent/* = "" */, std::strin
     ostringstream os;
 
     os << indent << "{" << endl;
+    os << indent << pretty_print << "\"Address\": " << to_string(val.Address, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"Position\": " << to_string(val.Position, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"Region\": " << to_string(val.Region, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"NamedAreas\": [";
     for( auto &array_item : val.NamedAreas ) {
 
         os << "\"" << array_item << "\",";
     }
     os << indent << pretty_print << "]," << endl;
-    os << indent << pretty_print << "\"Region\": " << to_string(val.Region, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"Position\": " << to_string(val.Position, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"Address\": " << to_string(val.Address, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << "}";
 
     return os.str();

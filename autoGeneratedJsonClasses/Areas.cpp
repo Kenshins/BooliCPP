@@ -5,7 +5,7 @@
 //
 //  Areas.cpp
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include "Areas.h"
@@ -23,18 +23,6 @@ areas_t::areas_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto UrlFriendlyName_iter = json_value.FindMember("urlFriendlyName");
-    if ( UrlFriendlyName_iter != json_value.MemberEnd() ) {
-
-        if (UrlFriendlyName_iter->value.IsNull()) {
-            UrlFriendlyName.clear();
-        }
-        else {
-            assert(UrlFriendlyName_iter->value.IsString());
-            UrlFriendlyName = UrlFriendlyName_iter->value.GetString();
-        }
-    }
-
     auto ParentTypes_iter = json_value.FindMember("parentTypes");
     if ( ParentTypes_iter != json_value.MemberEnd() ) {
 
@@ -47,36 +35,24 @@ areas_t::areas_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Types_iter = json_value.FindMember("types");
-    if ( Types_iter != json_value.MemberEnd() ) {
+    auto UrlFriendlyName_iter = json_value.FindMember("urlFriendlyName");
+    if ( UrlFriendlyName_iter != json_value.MemberEnd() ) {
 
-        for( auto array_item = Types_iter->value.Begin(); array_item != Types_iter->value.End(); array_item++  ) {
-
-            if (!array_item->IsNull()) {
-                assert(array_item->IsString());
-                Types.push_back(array_item->GetString());
-            }
-        }
-    }
-
-    auto ParentName_iter = json_value.FindMember("parentName");
-    if ( ParentName_iter != json_value.MemberEnd() ) {
-
-        if (ParentName_iter->value.IsNull()) {
-            ParentName.clear();
+        if (UrlFriendlyName_iter->value.IsNull()) {
+            UrlFriendlyName.clear();
         }
         else {
-            assert(ParentName_iter->value.IsString());
-            ParentName = ParentName_iter->value.GetString();
+            assert(UrlFriendlyName_iter->value.IsString());
+            UrlFriendlyName = UrlFriendlyName_iter->value.GetString();
         }
     }
 
-    auto ParentBooliId_iter = json_value.FindMember("parentBooliId");
-    if ( ParentBooliId_iter != json_value.MemberEnd() ) {
+    auto BooliId_iter = json_value.FindMember("booliId");
+    if ( BooliId_iter != json_value.MemberEnd() ) {
 
-        if (!ParentBooliId_iter->value.IsNull()) {
-            assert(ParentBooliId_iter->value.IsInt());
-            ParentBooliId = ParentBooliId_iter->value.GetInt();
+        if (!BooliId_iter->value.IsNull()) {
+            assert(BooliId_iter->value.IsInt());
+            BooliId = BooliId_iter->value.GetInt();
         }
     }
 
@@ -92,12 +68,15 @@ areas_t::areas_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto BooliId_iter = json_value.FindMember("booliId");
-    if ( BooliId_iter != json_value.MemberEnd() ) {
+    auto ParentName_iter = json_value.FindMember("parentName");
+    if ( ParentName_iter != json_value.MemberEnd() ) {
 
-        if (!BooliId_iter->value.IsNull()) {
-            assert(BooliId_iter->value.IsInt());
-            BooliId = BooliId_iter->value.GetInt();
+        if (ParentName_iter->value.IsNull()) {
+            ParentName.clear();
+        }
+        else {
+            assert(ParentName_iter->value.IsString());
+            ParentName = ParentName_iter->value.GetString();
         }
     }
 
@@ -113,6 +92,27 @@ areas_t::areas_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto Types_iter = json_value.FindMember("types");
+    if ( Types_iter != json_value.MemberEnd() ) {
+
+        for( auto array_item = Types_iter->value.Begin(); array_item != Types_iter->value.End(); array_item++  ) {
+
+            if (!array_item->IsNull()) {
+                assert(array_item->IsString());
+                Types.push_back(array_item->GetString());
+            }
+        }
+    }
+
+    auto ParentBooliId_iter = json_value.FindMember("parentBooliId");
+    if ( ParentBooliId_iter != json_value.MemberEnd() ) {
+
+        if (!ParentBooliId_iter->value.IsNull()) {
+            assert(ParentBooliId_iter->value.IsInt());
+            ParentBooliId = ParentBooliId_iter->value.GetInt();
+        }
+    }
+
 }
 
 string to_string(const areas_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -120,24 +120,24 @@ string to_string(const areas_t &val, std::string indent/* = "" */, std::string p
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"UrlFriendlyName\": \"" << val.UrlFriendlyName << "\"," << endl;
     os << indent << pretty_print << "\"ParentTypes\": [";
     for( auto &array_item : val.ParentTypes ) {
 
         os << "\"" << array_item << "\",";
     }
     os << indent << pretty_print << "]," << endl;
+    os << indent << pretty_print << "\"UrlFriendlyName\": \"" << val.UrlFriendlyName << "\"," << endl;
+    os << indent << pretty_print << "\"BooliId\": " << val.BooliId << "," << endl;
+    os << indent << pretty_print << "\"FullName\": \"" << val.FullName << "\"," << endl;
+    os << indent << pretty_print << "\"ParentName\": \"" << val.ParentName << "\"," << endl;
+    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
     os << indent << pretty_print << "\"Types\": [";
     for( auto &array_item : val.Types ) {
 
         os << "\"" << array_item << "\",";
     }
     os << indent << pretty_print << "]," << endl;
-    os << indent << pretty_print << "\"ParentName\": \"" << val.ParentName << "\"," << endl;
     os << indent << pretty_print << "\"ParentBooliId\": " << val.ParentBooliId << "," << endl;
-    os << indent << pretty_print << "\"FullName\": \"" << val.FullName << "\"," << endl;
-    os << indent << pretty_print << "\"BooliId\": " << val.BooliId << "," << endl;
-    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
     os << indent << "}";
 
     return os.str();

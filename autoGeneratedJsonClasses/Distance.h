@@ -5,7 +5,7 @@
 //
 //  Distance.h
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include <string>
@@ -22,7 +22,7 @@ namespace models {
 class distance_t  {
 
 public:
-    int Ocean;
+    double Ocean;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

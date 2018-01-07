@@ -5,7 +5,7 @@
 //
 //  Result.cpp
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include "Result.h"
@@ -41,12 +41,13 @@ result_t::result_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto SearchParams_iter = json_value.FindMember("searchParams");
-    if ( SearchParams_iter != json_value.MemberEnd() ) {
+    auto Listings_iter = json_value.FindMember("listings");
+    if ( Listings_iter != json_value.MemberEnd() ) {
 
-        if (!SearchParams_iter->value.IsNull()) {
-            assert(SearchParams_iter->value.IsObject());
-            SearchParams = searchParams_t(SearchParams_iter->value);
+        for( auto array_item = Listings_iter->value.Begin(); array_item != Listings_iter->value.End(); array_item++  ) {
+
+            assert(array_item->IsObject());
+            Listings.push_back(listings_t(*array_item));
         }
     }
 
@@ -59,22 +60,21 @@ result_t::result_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Listings_iter = json_value.FindMember("listings");
-    if ( Listings_iter != json_value.MemberEnd() ) {
-
-        for( auto array_item = Listings_iter->value.Begin(); array_item != Listings_iter->value.End(); array_item++  ) {
-
-            assert(array_item->IsObject());
-            Listings.push_back(listings_t(*array_item));
-        }
-    }
-
     auto Count_iter = json_value.FindMember("count");
     if ( Count_iter != json_value.MemberEnd() ) {
 
         if (!Count_iter->value.IsNull()) {
             assert(Count_iter->value.IsInt());
             Count = Count_iter->value.GetInt();
+        }
+    }
+
+    auto SearchParams_iter = json_value.FindMember("searchParams");
+    if ( SearchParams_iter != json_value.MemberEnd() ) {
+
+        if (!SearchParams_iter->value.IsNull()) {
+            assert(SearchParams_iter->value.IsObject());
+            SearchParams = searchParams_t(SearchParams_iter->value);
         }
     }
 
@@ -87,15 +87,15 @@ string to_string(const result_t &val, std::string indent/* = "" */, std::string 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"TotalCount\": " << val.TotalCount << "," << endl;
     os << indent << pretty_print << "\"Offset\": " << val.Offset << "," << endl;
-    os << indent << pretty_print << "\"SearchParams\": " << to_string(val.SearchParams, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"Limit\": " << val.Limit << "," << endl;
     os << indent << pretty_print << "\"Listings\": [";
     for( auto &array_item : val.Listings ) {
 
         os << endl << to_string(array_item, indent + pretty_print + pretty_print, pretty_print) << "," << endl;
     }
     os << indent << pretty_print << "]," << endl;
+    os << indent << pretty_print << "\"Limit\": " << val.Limit << "," << endl;
     os << indent << pretty_print << "\"Count\": " << val.Count << "," << endl;
+    os << indent << pretty_print << "\"SearchParams\": " << to_string(val.SearchParams, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << "}";
 
     return os.str();

@@ -5,7 +5,7 @@
 //
 //  Source.cpp
 //
-//  Created by js2Model on 2017-12-31.
+//  Created by js2Model on 2018-01-07.
 //
 
 #include "Source.h"
@@ -35,12 +35,15 @@ source_t::source_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Id_iter = json_value.FindMember("id");
-    if ( Id_iter != json_value.MemberEnd() ) {
+    auto Type_iter = json_value.FindMember("type");
+    if ( Type_iter != json_value.MemberEnd() ) {
 
-        if (!Id_iter->value.IsNull()) {
-            assert(Id_iter->value.IsInt());
-            Id = Id_iter->value.GetInt();
+        if (Type_iter->value.IsNull()) {
+            Type.clear();
+        }
+        else {
+            assert(Type_iter->value.IsString());
+            Type = Type_iter->value.GetString();
         }
     }
 
@@ -56,15 +59,12 @@ source_t::source_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Type_iter = json_value.FindMember("type");
-    if ( Type_iter != json_value.MemberEnd() ) {
+    auto Id_iter = json_value.FindMember("id");
+    if ( Id_iter != json_value.MemberEnd() ) {
 
-        if (Type_iter->value.IsNull()) {
-            Type.clear();
-        }
-        else {
-            assert(Type_iter->value.IsString());
-            Type = Type_iter->value.GetString();
+        if (!Id_iter->value.IsNull()) {
+            assert(Id_iter->value.IsInt());
+            Id = Id_iter->value.GetInt();
         }
     }
 
@@ -76,9 +76,9 @@ string to_string(const source_t &val, std::string indent/* = "" */, std::string 
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"Url\": \"" << val.Url << "\"," << endl;
-    os << indent << pretty_print << "\"Id\": " << val.Id << "," << endl;
-    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
     os << indent << pretty_print << "\"Type\": \"" << val.Type << "\"," << endl;
+    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
+    os << indent << pretty_print << "\"Id\": " << val.Id << "," << endl;
     os << indent << "}";
 
     return os.str();
