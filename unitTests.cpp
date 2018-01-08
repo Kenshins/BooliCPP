@@ -1,5 +1,6 @@
 #include "searchCondition.h"
 #include "jsonRetriverFake.h"
+#include "jsonRetriverMock.h"
 #include "Booli.h"
 
 #include <gtest/gtest.h>
@@ -7,6 +8,9 @@
 #include <stdexcept>
 #include <ctime>
 #include <memory>
+#include <string>
+
+using ::testing::AtLeast; 
 
 TEST(Bboxtest, NegativeLatLo) { 
   ASSERT_THROW(bbox(-5, 1, 2, 2), std::invalid_argument);
@@ -271,6 +275,23 @@ TEST(BooliResultTest, AdvancedTest) {
         }
     }
   delete b;
+}
+
+TEST(jsonRetriverTest, SimpleTest) {
+
+  std::string returnStr = "https://api.booli.se/listings?q=Nacka&limit=10&callerId=&time=*&unique=RrV41mtzxlYvKWrO7&hash=*";
+  
+  std::shared_ptr<MockJsonRetriver> jsonRetriver(new MockJsonRetriver());
+  EXPECT_CALL(*jsonRetriver, RetriveJson(testing::ContainsRegex(returnStr))).Times(AtLeast(1));
+  
+  listingsSearchCondition lSC = listingsSearchCondition();
+  lSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  
+  Booli booli(jsonRetriver);
+  booli.FetchListingsJson(&lSC, "", "");
+  
 }
 
 int main(int argc, char **argv) {

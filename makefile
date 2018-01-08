@@ -16,8 +16,8 @@ boolilibrary : $(OBJ)
 boolitest : main.cpp booli.a
 	$(CC) -o $@ $(CFLAGS) main.cpp booli.a $(LIBS)
 
-unittest : unitTests.cpp jsonRetriverFake.cpp booli.a
-	$(CC) -o $@ $(CFLAGS) unitTests.cpp jsonRetriverFake.cpp booli.a $(LIBS) -lgtest -lpthread
+unittest : unitTests.cpp jsonRetriverFake.cpp jsonRetriverMock.h booli.a
+	$(CC) -o $@ $(CFLAGS) unitTests.cpp jsonRetriverFake.cpp booli.a $(LIBS) -lpthread -lgmock -lgtest
 
 clean :
 	rm -f *.o *~ *.a boolitest unittest
