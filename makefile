@@ -20,4 +20,4 @@ unittest : unitTests.cpp jsonRetriverFake.cpp jsonRetriverMock.h booli.a
 	$(CC) -o $@ $(CFLAGS) unitTests.cpp jsonRetriverFake.cpp booli.a $(LIBS) -lpthread -lgmock -lgtest
 
 clean :
-	rm -f *.o *~ *.a boolitest unittest
+	rm -f *.o *~ *.a $(AUTOGENJSONDIR)/*.o boolitest unittest 
