@@ -1,6 +1,7 @@
 #include "searchCondition.h"
 #include "jsonRetriverFake.h"
 #include "jsonRetriverMock.h"
+#include "urlGenerator.h"
 #include "Booli.h"
 
 #include <gtest/gtest.h>
@@ -243,7 +244,7 @@ TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
 
 // This uses fixed data from testdata.json
 TEST(BooliResultTest, SimpleTest) {
-  Booli* b = new Booli(std::make_shared<jsonRetriverFake>());
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
@@ -255,7 +256,7 @@ TEST(BooliResultTest, SimpleTest) {
 
 // This uses fixed data from testdata.json
 TEST(BooliResultTest, AdvancedTest) {
-  Booli* b = new Booli(std::make_shared<jsonRetriverFake>());
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
@@ -288,8 +289,10 @@ TEST(jsonRetriverTest, SimpleTest) {
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+
+  std::shared_ptr<urlGenerator> urlGen(new urlGenerator);
   
-  Booli booli(jsonRetriver);
+  Booli booli(jsonRetriver, urlGen);
   booli.FetchListingsJson(&lSC, "", "");
   
 }
