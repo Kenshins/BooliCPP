@@ -37,8 +37,7 @@ tr::models::result_t Booli::FetchListingsResult(listingsSearchCondition* listSea
 
 std::string Booli::FetchListingsJson(listingsSearchCondition* listSearchCondition, std::string const& caller, std::string const &hash)
 {
-  std::cout << m_urlGenerator->GenerateUrl(listSearchCondition->SearchConditionResult(), caller, hash);
-  std::string readBuffer = m_urlGenerator->GenerateUrl(listSearchCondition->SearchConditionResult(), caller, hash);
+  std::string readBuffer = m_jsonRetriver->RetriveJson(m_urlGenerator->GenerateUrl(listSearchCondition->SearchConditionResult(), caller, hash));
   return readBuffer;
 }
 
