@@ -280,20 +280,18 @@ TEST(BooliResultTest, AdvancedTest) {
 
 TEST(jsonRetriverTest, SimpleTest) {
 
-  std::string returnStr = "https://api.booli.se/listings?q=Nacka&limit=10&callerId=&time=*&unique=RrV41mtzxlYvKWrO7&hash=*";
+  std::string returnStr = "https://api.booli.se/listings.q=Nacka&limit=10&callerId=blabla&time=.*&unique=.*";
   
   std::shared_ptr<MockJsonRetriver> jsonRetriver(new MockJsonRetriver());
   EXPECT_CALL(*jsonRetriver, RetriveJson(testing::ContainsRegex(returnStr))).Times(AtLeast(1));
   
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
-  std::string caller = "blabla";
-  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
 
   std::shared_ptr<urlGenerator> urlGen(new urlGenerator);
   
   Booli booli(jsonRetriver, urlGen);
-  booli.FetchListingsJson(&lSC, "", "");
+  booli.FetchListingsJson(&lSC, "blabla", "");
   
 }
 
