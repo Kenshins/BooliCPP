@@ -482,24 +482,24 @@ void listingsSearchCondition::checkNoDuplicateMainInput(MainInput in)
 
 std::string listingsSearchCondition::SearchConditionResult()
 {
-  std::string  booliString = "";
+  std::string  booliString = "listings?";
   
   if (query != "")
-    booliString = "q=" + query;
+    booliString += "q=" + query;
 
   if (cent)
     {
-    booliString = "center=" + cent->RetCenter();
+    booliString += "center=" + cent->RetCenter();
 
     if (dim)
       booliString += "&dim=" +  dim->RetDim();
     }
 
   if (bB)
-    booliString = "bbox=" + bB->RetBbox();
+    booliString += "bbox=" + bB->RetBbox();
 
   if (areaId != "")
-    booliString = "areaId=" + areaId;
+    booliString += "areaId=" + areaId;
   
   if (minListPrice != 0)
     booliString += "&minListPrice=" + util::intToString(minListPrice);
