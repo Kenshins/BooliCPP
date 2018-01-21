@@ -210,71 +210,199 @@ std::string maxPublishedDate::retMaxPublishedDate()
     return std::to_string(maxPubDateTime->tm_year) + month + std::to_string(maxPubDateTime->tm_mday);
 }
 
-// Main type
+minSoldDate::minSoldDate(tm *t)
+{
+  if (!util::valid_date(t->tm_year, t->tm_mon, t->tm_mday))
+    {
+      throw std::invalid_argument( "minPublishedDate: date is invalid!" );
+    }
+  
+  minSoldDateTime = t;
+}
+
+std::string minSoldDate::retMinSoldDate()
+{
+  std::string month = "";
+  if (minSoldDateTime->tm_mon < 10)
+    month = "0" + std::to_string(minSoldDateTime->tm_mon);
+  else
+    month = std::to_string(minSoldDateTime->tm_mon);
+  
+  return std::to_string(minSoldDateTime->tm_year) + month + std::to_string(minSoldDateTime->tm_mday);
+}
+
+maxSoldDate::maxSoldDate(tm *t)
+{
+
+  if (!util::valid_date(t->tm_year, t->tm_mon, t->tm_mday))
+    {
+      throw std::invalid_argument( "minPublishedDate: date is invalid!" );
+    }
+
+  maxSoldDateTime = t;
+}
+
+std::string maxSoldDate::retMaxSoldDate()
+{
+  std::string month = "";
+  if (maxSoldDateTime->tm_mon < 10)
+    month = "0" + std::to_string(maxSoldDateTime->tm_mon);
+  else
+    month = std::to_string(maxSoldDateTime->tm_mon);
+  
+    return std::to_string(maxSoldDateTime->tm_year) + month + std::to_string(maxSoldDateTime->tm_mday);
+}
+
+// searchCondition
 
 listingsSearchCondition::listingsSearchCondition()
 {
-  cent = NULL;
-  dim = NULL;
-  bB = NULL;
-  areaId = "";
-  minListPrice = 0;
-  maxListPrice = 0;
-  minListSqmPrice = 0;
-  maxListSqmPrice = 0;
-  minRooms = 0;
-  maxRooms = 0;
-  maxRent = 0;
-  minLivingArea = 0;
-  maxLivingArea = 0;
-  minPlotArea = 0;
-  maxPlotArea = 0;
-  objectT = NULL;
-  minConstructionYear = 0;
-  maxConstructionYear = 0;
-  minPubDate = NULL;
-  maxPubDate = NULL;
-  priceDecrease = false;
-  isNewConstruction = false;
-  includeUnset = true;
-  limit = 10;
-  offset = 0;
+
 }
 
-// Listing Search Condition sub class
-
-void listingsSearchCondition::SetQ(std::string q)
+void searchCondition::SetQ(std::string q)
 {
   checkNoDuplicateMainInput(Q);
   query = q;
 }
 
-void listingsSearchCondition::SetC(center *c)
+void searchCondition::SetC(center *c)
 {
   checkNoDuplicateMainInput(CENTER);
   if (c)
     cent = c;
 }
 
-void listingsSearchCondition::SetDim(dimension *d)
+void searchCondition::SetDim(dimension *d)
 {
   checkNoDuplicateMainInput(DIM);
   if (dim)
     dim = d;
 }
 
-void listingsSearchCondition::SetBbox(bbox *b)
+void searchCondition::SetBbox(bbox *b)
 {
   checkNoDuplicateMainInput(BBOX);
   if (bB)
     bB = b;
 }
 
-void listingsSearchCondition::SetAreaId(std::string aId)
+void searchCondition::SetAreaId(std::string aId)
 {
   checkNoDuplicateMainInput(AREAID);
   areaId = aId;
 }
+
+void searchCondition::SetMinRooms(int minR)
+{
+  if (minR < 0)
+    throw std::invalid_argument( "SetMinRooms: min rooms cannot be negative!" );
+
+  minRooms = minR;
+}
+
+void searchCondition::SetMaxRooms(int maxR)
+{
+  if (maxR < 0)
+    throw std::invalid_argument( "SetMaxRooms: max rooms cannot be negative!" );
+
+  maxRooms = maxR;
+}
+
+void searchCondition::SetMaxRent(int maxRe)
+{
+  if (maxRe < 0)
+    throw std::invalid_argument( "SetMaxRent: max rent cannot be negative!" );
+
+  maxRent = maxRe;
+}
+
+void searchCondition::SetMinLivingArea(int minLA)
+{
+  if (minLA < 0)
+    throw std::invalid_argument( "SetMinLivingArea: min living area cannot be negative!" );
+
+  minLivingArea = minLA;
+}
+
+void searchCondition::SetMaxLivingArea(int maxLA)
+{
+  if (maxLA < 0)
+    throw std::invalid_argument( "SetMaxLivingArea: max living area cannot be negative!" );
+
+  maxLivingArea = maxLA;
+}
+
+void searchCondition::SetMinPlotArea(int minPA)
+{
+  if (minPA < 0)
+    throw std::invalid_argument( "SetMinPlotArea: min plot area cannot be negative!" );
+
+  minPlotArea = minPA;
+}
+
+void searchCondition::SetMaxPlotArea(int maxPA)
+{
+  if (maxPA < 0)
+    throw std::invalid_argument( "SetMaxPlotArea: max plot area cannot be negative!" );
+
+  maxPlotArea = maxPA;
+}
+
+void searchCondition::SetMinPublishDate(minPublishedDate *minPD)
+{
+  if (minPD)
+      minPubDate = minPD;
+}
+
+void searchCondition::SetMaxPublishDate(maxPublishedDate *maxPD)
+{
+  if (maxPD)
+    maxPubDate = maxPD;
+}
+
+void searchCondition::SetObjectType(std::string oT)
+{
+      objectT = new objectType(oT);
+}
+
+void searchCondition::SetMinConstructionYear(int minCY)
+{
+  if (minCY < 0)
+    throw std::invalid_argument( "SetMinConstructionYear: min construction year cannot be negative!" );
+
+  minConstructionYear = minCY;
+}
+
+void searchCondition::SetMaxConstructionYear(int maxCY)
+{
+  if (maxCY < 0)
+    throw std::invalid_argument( "SetMaxConstructionYear: max construction year cannot be negative!" );
+
+  maxConstructionYear = maxCY;
+}
+
+void searchCondition::SetIsNewConstruction(bool nC)
+{
+  isNewConstruction = nC;
+}
+
+void searchCondition::SetIncludeUnset(bool iU)
+{
+  includeUnset = iU;
+}
+
+void searchCondition::SetLimit(int l)
+{
+  limit = l;
+}
+
+void searchCondition::SetOffset(int o)
+{
+  offset = o;
+}
+
+// listing search condition
 
 void listingsSearchCondition::SetMinListPrice(int minLP)
 {
@@ -308,118 +436,9 @@ void listingsSearchCondition::SetMaxListSqmPrice(int maxLSP)
   maxListSqmPrice = maxLSP;
 }
 
-void listingsSearchCondition::SetMinRooms(int minR)
-{
-  if (minR < 0)
-    throw std::invalid_argument( "SetMinRooms: min rooms cannot be negative!" );
-
-  minRooms = minR;
-}
-
-void listingsSearchCondition::SetMaxRooms(int maxR)
-{
-  if (maxR < 0)
-    throw std::invalid_argument( "SetMaxRooms: max rooms cannot be negative!" );
-
-  maxRooms = maxR;
-}
-
-void listingsSearchCondition::SetMaxRent(int maxRe)
-{
-  if (maxRe < 0)
-    throw std::invalid_argument( "SetMaxRent: max rent cannot be negative!" );
-
-  maxRent = maxRe;
-}
-
-void listingsSearchCondition::SetMinLivingArea(int minLA)
-{
-  if (minLA < 0)
-    throw std::invalid_argument( "SetMinLivingArea: min living area cannot be negative!" );
-
-  minLivingArea = minLA;
-}
-
-void listingsSearchCondition::SetMaxLivingArea(int maxLA)
-{
-  if (maxLA < 0)
-    throw std::invalid_argument( "SetMaxLivingArea: max living area cannot be negative!" );
-
-  maxLivingArea = maxLA;
-}
-
-void listingsSearchCondition::SetMinPlotArea(int minPA)
-{
-  if (minPA < 0)
-    throw std::invalid_argument( "SetMinPlotArea: min plot area cannot be negative!" );
-
-  minPlotArea = minPA;
-}
-
-void listingsSearchCondition::SetMaxPlotArea(int maxPA)
-{
-  if (maxPA < 0)
-    throw std::invalid_argument( "SetMaxPlotArea: max plot area cannot be negative!" );
-
-  maxPlotArea = maxPA;
-}
-
-void listingsSearchCondition::SetObjectType(std::string oT)
-{
-      objectT = new objectType(oT);
-}
-
-void listingsSearchCondition::SetMinConstructionYear(int minCY)
-{
-  if (minCY < 0)
-    throw std::invalid_argument( "SetMinConstructionYear: min construction year cannot be negative!" );
-
-  minConstructionYear = minCY;
-}
-
-void listingsSearchCondition::SetMaxConstructionYear(int maxCY)
-{
-  if (maxCY < 0)
-    throw std::invalid_argument( "SetMaxConstructionYear: max construction year cannot be negative!" );
-
-  maxConstructionYear = maxCY;
-}
-
-void listingsSearchCondition::SetMinPublishDate(minPublishedDate *minPD)
-{
-  if (minPD)
-      minPubDate = minPD;
-}
-
-void listingsSearchCondition::SetMaxPublishDate(maxPublishedDate *maxPD)
-{
-  if (maxPD)
-    maxPubDate = maxPD;
-}
-
 void listingsSearchCondition::SetPriceDecrease(bool pD)
 {
   priceDecrease = pD;
-}
-
-void listingsSearchCondition::SetIsNewConstruction(bool nC)
-{
-  isNewConstruction = nC;
-}
-
-void listingsSearchCondition::SetIncludeUnset(bool iU)
-{
-  includeUnset = iU;
-}
-
-void listingsSearchCondition::SetLimit(int l)
-{
-  limit = l;
-}
-
-void listingsSearchCondition::SetOffset(int o)
-{
-  offset = o;
 }
 
 void listingsSearchCondition::checkNoDuplicateMainInput(MainInput in)
@@ -547,7 +566,58 @@ std::string listingsSearchCondition::SearchConditionResult()
   return booliString;
 }
 
+// sold  search condition
+
+void soldSearchCondition::SetMinSoldPrice(int minSP)
+{
+  if (minSP < 0)
+    throw std::invalid_argument( "SetMinSoldPrice: Min sold price cannot be negative!" );
+
+  minSoldPrice = minSP;
+}
+
+void soldSearchCondition::SetMaxSoldPrice(int maxSP)
+{
+  if (maxSP < 0)
+    throw std::invalid_argument( "SetMaxSoldPrice: Max sold price cannot be negative!" );
+
+  maxSoldPrice = maxSP;
+}
+
+void soldSearchCondition::SetMinSoldSqmPrice(int minSSP)
+{
+  if (minSSP < 0)
+    throw std::invalid_argument( "SetMinSoldSqmPrice: Min sold square meter price cannot be negative!" );
+
+  minSoldSqmPrice = minSSP;
+}
+
+void soldSearchCondition::SetMaxSoldSqmPrice(int maxSSP)
+{
+  if (maxSSP < 0)
+    throw std::invalid_argument( "SetMaxSoldSqmPrice: Max sold square meter price cannot be negative!" );
+
+  maxSoldSqmPrice = maxSSP;
+}
+
+void soldSearchCondition::SetMinSoldDate(minSoldDate *minSD)
+{
+  if (minSD)
+      minSDate = minSD;
+}
+
+void soldSearchCondition::SetMaxSoldDate(maxSoldDate *maxSD)
+{
+  if (maxSD)
+    maxSDate = maxSD;
+}
+
+
 soldSearchCondition::soldSearchCondition()
+{
+}
+
+void soldSearchCondition::checkNoDuplicateMainInput(MainInput in)
 {
 }
 
@@ -555,6 +625,8 @@ std::string soldSearchCondition::SearchConditionResult()
 {
   return "";
 }
+
+// area search condition
 
 areasSearchCondition::areasSearchCondition()
 {

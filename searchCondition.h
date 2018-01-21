@@ -78,36 +78,39 @@ public:
   tm *maxPubDateTime;
 };
 
+class minSoldDate
+{
+ public:
+  minSoldDate(tm *t);
+  std::string retMinSoldDate();
+  
+ private:
+  tm *minSoldDateTime;
+};
+
+class maxSoldDate
+{
+public:
+  maxSoldDate(tm *t);
+  std::string retMaxSoldDate();
+
+ private:
+  tm *maxSoldDateTime;
+};
+
 // Search condition base class
 
 class searchCondition
 {
  public:
+  enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
   void SetQ(std::string q);
   virtual std::string SearchConditionResult() = 0;
-
- protected:
-  std::string q;
-};
-
-// Listings search condition
-
-class listingsSearchCondition : public searchCondition
-{
-  enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
-  
- public:
-  listingsSearchCondition();
-  std::string SearchConditionResult();
-  void SetQ(std::string q);
+  virtual void checkNoDuplicateMainInput(MainInput in) = 0;  
   void SetC(center *c);
   void SetDim(dimension *d);
   void SetBbox(bbox *b);
   void SetAreaId(std::string aId);
-  void SetMinListPrice(int minLP);
-  void SetMaxListPrice(int maxLP);
-  void SetMinListSqmPrice(int minLSP);
-  void SetMaxListSqmPrice(int maxLSP);
   void SetMinRooms(int minR);
   void SetMaxRooms(int maxR);
   void SetMaxRent(int maxRe);
@@ -126,48 +129,86 @@ class listingsSearchCondition : public searchCondition
   void SetLimit(int l);
   void SetOffset(int o);
   
- private:
-  std::string query;
-  center *cent;
-  dimension *dim;
-  bbox *bB;
-  std::string areaId;
-  int minListPrice;
-  int maxListPrice;
-  int minListSqmPrice;
-  int maxListSqmPrice;
-  int minRooms;
-  int maxRooms;
-  int maxRent;
-  int minLivingArea;
-  int maxLivingArea;
-  int minPlotArea;
-  int maxPlotArea;
-  objectType *objectT;
-  int minConstructionYear;
-  int maxConstructionYear;
-  minPublishedDate *minPubDate;
-  maxPublishedDate *maxPubDate;
-  bool priceDecrease;
-  bool isNewConstruction;
-  bool includeUnset;
-  int limit;
-  int offset;
-  void checkNoDuplicateMainInput(MainInput in);
+ protected:
+  std::string query = "";
+  center *cent = NULL;
+  dimension *dim = NULL;
+  bbox *bB = NULL;
+  std::string areaId = "";
+  int minRooms = 0;
+  int maxRooms = 0;
+  int maxRent = 0;
+  int minLivingArea = 0;
+  int maxLivingArea = 0; 
+  int minPlotArea = 0;
+  int maxPlotArea = 0;
+  objectType *objectT = NULL;
+  int minConstructionYear = 0;
+  int maxConstructionYear = 0;
+  minPublishedDate *minPubDate = NULL;
+  maxPublishedDate *maxPubDate = NULL;
+  bool isNewConstruction  = false;
+  bool includeUnset = true;
+  int limit = 10;
+  int offset = 0;
 };
+
+// Sold search condition
 
 class soldSearchCondition : public searchCondition
 {
  public:
   soldSearchCondition();
   std::string SearchConditionResult();
+  void SetMinSoldPrice(int minSP);
+  void SetMaxSoldPrice(int maxSP);
+  void SetMinSoldSqmPrice(int minSSP);
+  void SetMaxSoldSqmPrice(int maxSSP);
+  void SetMinSoldDate(minSoldDate *minSD);
+  void SetMaxSoldDate(maxSoldDate *maxSD);
+
+ private:
+  int minSoldPrice = 0;
+  int maxSoldPrice = 0;
+  int minSoldSqmPrice = 0;
+  int maxSoldSqmPrice = 0;
+  minSoldDate *minSDate = NULL;
+  maxSoldDate *maxSDate = NULL;
+
+  void checkNoDuplicateMainInput(MainInput in);  
 };
 
+// Area search condition
+
+// Todo, not done
 class areasSearchCondition : public searchCondition
 {
  public:
   areasSearchCondition();
   std::string SearchConditionResult();
+};
+
+
+class listingsSearchCondition : public searchCondition
+{  
+ public:
+  listingsSearchCondition();
+  std::string SearchConditionResult();
+  void SetMinListPrice(int minLP);
+  void SetMaxListPrice(int maxLP);
+  void SetMinListSqmPrice(int minLSP);
+  void SetMaxListSqmPrice(int maxLSP);
+  void SetPriceDecrease(bool pD);
+  
+ private:
+  
+  int minListPrice = 0;
+  int maxListPrice = 0;
+  int minListSqmPrice = 0;
+  int maxListSqmPrice = 0;
+  bool priceDecrease = false;
+  
+  void checkNoDuplicateMainInput(MainInput in);
 };
 
 class util
