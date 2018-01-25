@@ -402,6 +402,80 @@ void searchCondition::SetOffset(int o)
   offset = o;
 }
 
+std::string searchCondition::CommonSearchConditionResult(std::string tableSpecific)
+{
+  std::string  booliString = "listings?";
+  
+  if (query != "")
+    booliString += "q=" + query;
+
+  if (cent)
+    {
+    booliString += "center=" + cent->RetCenter();
+
+    if (dim)
+      booliString += "&dim=" +  dim->RetDim();
+    }
+
+  if (bB)
+    booliString += "bbox=" + bB->RetBbox();
+
+  if (areaId != "")
+    booliString += "areaId=" + areaId;
+
+  if (minRooms != 0)
+    booliString += "&minRooms=" + util::intToString(minRooms);
+
+  if (maxRooms != 0)
+    booliString += "&maxRooms=" + util::intToString(maxRooms);
+
+  if (maxRent != 0)
+    booliString += "&maxRent=" + util::intToString(maxRent);
+  
+  if (minLivingArea != 0)
+    booliString += "&minLivingArea=" + util::intToString(minLivingArea);
+
+  if (maxLivingArea != 0)
+    booliString += "&maxLivingArea=" + util::intToString(maxLivingArea);
+
+  if (minPlotArea != 0)
+    booliString += "&minPlotArea=" + util::intToString(minPlotArea);
+
+  if (maxPlotArea != 0)
+    booliString += "&maxPlotArea=" + util::intToString(maxPlotArea);
+  
+  if (objectT != NULL)
+    booliString += "&objectType=" + objectT->retObjectType();
+
+  if (minConstructionYear != 0)
+    booliString += "&minConstructionYear=" + util::intToString(minConstructionYear);
+
+  if (maxConstructionYear != 0)
+    booliString += "&maxConstructionYear=" + util::intToString(maxConstructionYear);
+
+  if (minPubDate != NULL)
+    booliString += "&minPublished=" + minPubDate->retMinPublishedDate();
+
+  if (maxPubDate != NULL)
+    booliString += "&maxPublished=" + maxPubDate->retMaxPublishedDate();
+
+  if (tableSpecific != "")
+    booliString += tableSpecific;
+  
+  if (isNewConstruction)
+    booliString += "&isNewConstruction=1";
+
+  if (!includeUnset)
+    booliString += "&includeUnset=0";
+    
+  booliString += "&limit=" + util::intToString(limit);
+
+  if (offset != 0)
+    booliString += "&offset=" + util::intToString(offset);
+  
+  return booliString;
+}
+
 // listing search condition
 
 void listingsSearchCondition::SetMinListPrice(int minLP)
@@ -482,24 +556,7 @@ void listingsSearchCondition::checkNoDuplicateMainInput(MainInput in)
 
 std::string listingsSearchCondition::SearchConditionResult()
 {
-  std::string  booliString = "listings?";
-  
-  if (query != "")
-    booliString += "q=" + query;
-
-  if (cent)
-    {
-    booliString += "center=" + cent->RetCenter();
-
-    if (dim)
-      booliString += "&dim=" +  dim->RetDim();
-    }
-
-  if (bB)
-    booliString += "bbox=" + bB->RetBbox();
-
-  if (areaId != "")
-    booliString += "areaId=" + areaId;
+  std::string booliString = "";
   
   if (minListPrice != 0)
     booliString += "&minListPrice=" + util::intToString(minListPrice);
@@ -513,57 +570,10 @@ std::string listingsSearchCondition::SearchConditionResult()
   if (maxListSqmPrice != 0)
     booliString += "&maxListSqmPrice=" + util::intToString(maxListSqmPrice);
 
-  if (minRooms != 0)
-    booliString += "&minRooms=" + util::intToString(minRooms);
-
-  if (maxRooms != 0)
-    booliString += "&maxRooms=" + util::intToString(maxRooms);
-
-  if (maxRent != 0)
-    booliString += "&maxRent=" + util::intToString(maxRent);
-  
-  if (minLivingArea != 0)
-    booliString += "&minLivingArea=" + util::intToString(minLivingArea);
-
-  if (maxLivingArea != 0)
-    booliString += "&maxLivingArea=" + util::intToString(maxLivingArea);
-
-  if (minPlotArea != 0)
-    booliString += "&minPlotArea=" + util::intToString(minPlotArea);
-
-  if (maxPlotArea != 0)
-    booliString += "&maxPlotArea=" + util::intToString(maxPlotArea);
-  
-  if (objectT != NULL)
-    booliString += "&objectType=" + objectT->retObjectType();
-
-  if (minConstructionYear != 0)
-    booliString += "&minConstructionYear=" + util::intToString(minConstructionYear);
-
-  if (maxConstructionYear != 0)
-    booliString += "&maxConstructionYear=" + util::intToString(maxConstructionYear);
-
-  if (minPubDate != NULL)
-    booliString += "&minPublished=" + minPubDate->retMinPublishedDate();
-
-  if (maxPubDate != NULL)
-    booliString += "&maxPublished=" + maxPubDate->retMaxPublishedDate();
-
   if (priceDecrease)
     booliString += "&priceDecrease=1";
-
-  if (isNewConstruction)
-    booliString += "&isNewConstruction=1";
-
-  if (!includeUnset)
-    booliString += "&includeUnset=0";
-    
-  booliString += "&limit=" + util::intToString(limit);
-
-  if (offset != 0)
-    booliString += "&offset=" + util::intToString(offset);
   
-  return booliString;
+  return this->CommonSearchConditionResult(booliString);
 }
 
 // sold  search condition

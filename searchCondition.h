@@ -106,7 +106,7 @@ class searchCondition
   enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
   void SetQ(std::string q);
   virtual std::string SearchConditionResult() = 0;
-  virtual void checkNoDuplicateMainInput(MainInput in) = 0;  
+  virtual void checkNoDuplicateMainInput(MainInput in) = 0;
   void SetC(center *c);
   void SetDim(dimension *d);
   void SetBbox(bbox *b);
@@ -130,6 +130,7 @@ class searchCondition
   void SetOffset(int o);
   
  protected:
+  std::string CommonSearchConditionResult(std::string tableSpecific);
   std::string query = "";
   center *cent = NULL;
   dimension *dim = NULL;

@@ -232,14 +232,14 @@ TEST(listingsSearchConditionSearchConditionResultTest, FullReturnString) {
 
   sc.SetLimit(30);
 
-  EXPECT_EQ(sc.SearchConditionResult(), "q=Nacka&minListPrice=200&maxListPrice=10000000&minListSqmPrice=200&maxListSqmPrice=90000&minRooms=2&maxRooms=8&minLivingArea=10&maxLivingArea=500&minConstructionYear=1900&maxConstructionYear=2016&minPublished=20100227&maxPublished=20170227&limit=30");
+  EXPECT_EQ(sc.SearchConditionResult(), "listings?q=Nacka&minRooms=2&maxRooms=8&minLivingArea=10&maxLivingArea=500&minConstructionYear=1900&maxConstructionYear=2016&minPublished=20100227&maxPublished=20170227&minListPrice=200&maxListPrice=10000000&minListSqmPrice=200&maxListSqmPrice=90000&limit=30");
 }
 
 TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
   listingsSearchCondition sc = listingsSearchCondition();
   sc.SetQ("Norrköping");
   sc.SetObjectType("lägenhet");
-  EXPECT_EQ(sc.SearchConditionResult(), "q=Norrköping&objectType=lägenhet&limit=10");
+  EXPECT_EQ(sc.SearchConditionResult(), "listings?q=Norrköping&objectType=lägenhet&limit=10");
 }
 
 // This uses fixed data from testdata.json
