@@ -14,9 +14,12 @@ class Booli
  public:
   Booli(std::shared_ptr<jsonRetriverInterface> jRetriver, std::shared_ptr<urlGeneratorInterface> uRetriver);
   ~Booli();
+  // Listings
   tr::models::result_t FetchListingsResult(listingsSearchCondition* listSearchCondition, std::string const& caller, std::string const& hash);
   std::string FetchListingsJson(listingsSearchCondition* listSearchCondition, std::string const& caller, std::string const& hash);
-  
+  // Sold
+  tr::models::result_t FetchListingsResult(soldSearchCondition* sSearchCondition, std::string const& caller, std::string const& hash);
+  std::string FetchListingsJson(soldSearchCondition* sSearchCondition, std::string const& caller, std::string const& hash);  
  private:
   std::shared_ptr<jsonRetriverInterface> m_jsonRetriver;
   std::shared_ptr<urlGeneratorInterface> m_urlGenerator;
