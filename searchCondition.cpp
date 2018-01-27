@@ -404,7 +404,7 @@ void searchCondition::SetOffset(int o)
 
 std::string searchCondition::CommonSearchConditionResult(std::string tableSpecific)
 {
-  std::string  booliString = "listings?";
+  std::string  booliString = "";
   
   if (query != "")
     booliString += "q=" + query;
@@ -573,7 +573,7 @@ std::string listingsSearchCondition::SearchConditionResult()
   if (priceDecrease)
     booliString += "&priceDecrease=1";
   
-  return this->CommonSearchConditionResult(booliString);
+  return "listings?" + this->CommonSearchConditionResult(booliString);
 }
 
 // sold  search condition
@@ -633,7 +633,27 @@ void soldSearchCondition::checkNoDuplicateMainInput(MainInput in)
 
 std::string soldSearchCondition::SearchConditionResult()
 {
-  return "";
+  std::string booliString = "";
+    
+  if (minSoldPrice != 0)
+    booliString += "&minSoldPrice=" + util::intToString(minSoldPrice);
+
+  if (maxSoldPrice != 0)
+    booliString += "&maxSoldPrice=" + std::to_string(maxSoldPrice);
+  
+  if (minSoldSqmPrice != 0)
+    booliString += "&minSoldSqmPrice=" + util::intToString(minSoldSqmPrice);
+
+  if (maxSoldSqmPrice != 0)
+    booliString += "&maxSoldSqmPrice=" + util::intToString(maxSoldSqmPrice);
+
+  if (minSDate != NULL)
+    booliString += "&minSoldDate=" + minSDate->retMinSoldDate();
+
+  if (maxSDate != NULL)
+    booliString += "&maxSoldDate=" + maxSDate->retMaxSoldDate();
+  
+  return "sold?" + this->CommonSearchConditionResult(booliString);
 }
 
 // area search condition
