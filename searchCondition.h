@@ -106,7 +106,7 @@ class searchCondition
   enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
   void SetQ(std::string q);
   virtual std::string SearchConditionResult() = 0;
-  virtual void checkNoDuplicateMainInput(MainInput in) = 0;
+  void checkNoDuplicateMainInput(MainInput in);
   void SetC(center *c);
   void SetDim(dimension *d);
   void SetBbox(bbox *b);
@@ -175,8 +175,6 @@ class soldSearchCondition : public searchCondition
   int maxSoldSqmPrice = 0;
   minSoldDate *minSDate = NULL;
   maxSoldDate *maxSDate = NULL;
-
-  void checkNoDuplicateMainInput(MainInput in);  
 };
 
 // Area search condition
@@ -208,8 +206,6 @@ class listingsSearchCondition : public searchCondition
   int minListSqmPrice = 0;
   int maxListSqmPrice = 0;
   bool priceDecrease = false;
-  
-  void checkNoDuplicateMainInput(MainInput in);
 };
 
 class util

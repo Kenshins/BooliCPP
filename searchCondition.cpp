@@ -402,6 +402,45 @@ void searchCondition::SetOffset(int o)
   offset = o;
 }
 
+void searchCondition::checkNoDuplicateMainInput(MainInput in)
+{
+  if (in == BBOX)
+    {
+      if (cent != NULL || dim != NULL || areaId != "" || query != "")
+	{
+	  throw std::invalid_argument( "SetBbox: Cannot set bbox if center, dimension, areaid or q is set!" );
+	}
+    }
+  else if (in == Q)
+    {
+      if (bB != NULL || dim != NULL || areaId != "" || cent != NULL)
+	{
+	  throw std::invalid_argument( "SetQ: Cannot set center if bbox, dimension, areaid or center is set!" );
+	}
+    }
+  else if (in == CENTER)
+    {
+      if (bB != NULL || dim != NULL || areaId != "" || query != "")
+	{
+	  throw std::invalid_argument( "SetC: Cannot set center if bbox, dimension, areaid or q is set!" );
+	}
+    }
+  else if (in == DIM)
+    {
+      if (bB != NULL || cent != NULL || areaId != "" || query != "")
+	{
+	   throw std::invalid_argument( "SetDim: Cannot set dimension if bbox, areaid, center or q is set!" );
+	}
+    }
+  else if (in == AREAID)
+    {
+      if (bB != NULL || cent != NULL || dim != NULL || query != "")
+	{
+	  throw std::invalid_argument( "SetAreaId: Cannot set areaid if dimension, center, bbox or q is set!" );
+	}
+    }
+}
+
 std::string searchCondition::CommonSearchConditionResult(std::string tableSpecific)
 {
   std::string  booliString = "";
@@ -515,45 +554,6 @@ void listingsSearchCondition::SetPriceDecrease(bool pD)
   priceDecrease = pD;
 }
 
-void listingsSearchCondition::checkNoDuplicateMainInput(MainInput in)
-{
-  if (in == BBOX)
-    {
-      if (cent != NULL || dim != NULL || areaId != "" || query != "")
-	{
-	  throw std::invalid_argument( "SetBbox: Cannot set bbox if center, dimension, areaid or q is set!" );
-	}
-    }
-  else if (in == Q)
-    {
-      if (bB != NULL || dim != NULL || areaId != "" || cent != NULL)
-	{
-	  throw std::invalid_argument( "SetQ: Cannot set center if bbox, dimension, areaid or center is set!" );
-	}
-    }
-  else if (in == CENTER)
-    {
-      if (bB != NULL || dim != NULL || areaId != "" || query != "")
-	{
-	  throw std::invalid_argument( "SetC: Cannot set center if bbox, dimension, areaid or q is set!" );
-	}
-    }
-  else if (in == DIM)
-    {
-      if (bB != NULL || cent != NULL || areaId != "" || query != "")
-	{
-	   throw std::invalid_argument( "SetDim: Cannot set dimension if bbox, areaid, center or q is set!" );
-	}
-    }
-  else if (in == AREAID)
-    {
-      if (bB != NULL || cent != NULL || dim != NULL || query != "")
-	{
-	  throw std::invalid_argument( "SetAreaId: Cannot set areaid if dimension, center, bbox or q is set!" );
-	}
-    }
-}
-
 std::string listingsSearchCondition::SearchConditionResult()
 {
   std::string booliString = "";
@@ -624,10 +624,6 @@ void soldSearchCondition::SetMaxSoldDate(maxSoldDate *maxSD)
 
 
 soldSearchCondition::soldSearchCondition()
-{
-}
-
-void soldSearchCondition::checkNoDuplicateMainInput(MainInput in)
 {
 }
 
