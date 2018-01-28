@@ -23,9 +23,9 @@ class source_t  {
 
 public:
     std::string Type;
-    int Id;
-    std::string Name;
     std::string Url;
+    std::string Name;
+    int Id;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

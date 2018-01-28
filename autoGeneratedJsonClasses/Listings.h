@@ -24,17 +24,17 @@ namespace models {
 class listings_t  {
 
 public:
-    int IsNewConstruction;
-    double LivingArea;
-    source_t Source;
-    location_t Location;
-    std::string Published;
-    double ListPrice;
-    std::string ObjectType;
     double Rent;
+    std::string Published;
+    std::string ObjectType;
     int BooliId;
-    std::string Url;
+    source_t Source;
     double Rooms;
+    double LivingArea;
+    int IsNewConstruction;
+    double ListPrice;
+    location_t Location;
+    std::string Url;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

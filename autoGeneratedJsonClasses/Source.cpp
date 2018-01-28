@@ -35,12 +35,15 @@ source_t::source_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Id_iter = json_value.FindMember("id");
-    if ( Id_iter != json_value.MemberEnd() ) {
+    auto Url_iter = json_value.FindMember("url");
+    if ( Url_iter != json_value.MemberEnd() ) {
 
-        if (!Id_iter->value.IsNull()) {
-            assert(Id_iter->value.IsInt());
-            Id = Id_iter->value.GetInt();
+        if (Url_iter->value.IsNull()) {
+            Url.clear();
+        }
+        else {
+            assert(Url_iter->value.IsString());
+            Url = Url_iter->value.GetString();
         }
     }
 
@@ -56,15 +59,12 @@ source_t::source_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Url_iter = json_value.FindMember("url");
-    if ( Url_iter != json_value.MemberEnd() ) {
+    auto Id_iter = json_value.FindMember("id");
+    if ( Id_iter != json_value.MemberEnd() ) {
 
-        if (Url_iter->value.IsNull()) {
-            Url.clear();
-        }
-        else {
-            assert(Url_iter->value.IsString());
-            Url = Url_iter->value.GetString();
+        if (!Id_iter->value.IsNull()) {
+            assert(Id_iter->value.IsInt());
+            Id = Id_iter->value.GetInt();
         }
     }
 
@@ -76,9 +76,9 @@ string to_string(const source_t &val, std::string indent/* = "" */, std::string 
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"Type\": \"" << val.Type << "\"," << endl;
-    os << indent << pretty_print << "\"Id\": " << val.Id << "," << endl;
-    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
     os << indent << pretty_print << "\"Url\": \"" << val.Url << "\"," << endl;
+    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
+    os << indent << pretty_print << "\"Id\": " << val.Id << "," << endl;
     os << indent << "}";
 
     return os.str();

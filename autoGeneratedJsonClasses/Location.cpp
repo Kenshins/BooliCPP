@@ -23,15 +23,6 @@ location_t::location_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto Address_iter = json_value.FindMember("address");
-    if ( Address_iter != json_value.MemberEnd() ) {
-
-        if (!Address_iter->value.IsNull()) {
-            assert(Address_iter->value.IsObject());
-            Address = address_t(Address_iter->value);
-        }
-    }
-
     auto NamedAreas_iter = json_value.FindMember("namedAreas");
     if ( NamedAreas_iter != json_value.MemberEnd() ) {
 
@@ -53,6 +44,15 @@ location_t::location_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto Address_iter = json_value.FindMember("address");
+    if ( Address_iter != json_value.MemberEnd() ) {
+
+        if (!Address_iter->value.IsNull()) {
+            assert(Address_iter->value.IsObject());
+            Address = address_t(Address_iter->value);
+        }
+    }
+
     auto Position_iter = json_value.FindMember("position");
     if ( Position_iter != json_value.MemberEnd() ) {
 
@@ -69,7 +69,6 @@ string to_string(const location_t &val, std::string indent/* = "" */, std::strin
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"Address\": " << to_string(val.Address, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"NamedAreas\": [";
     for( auto &array_item : val.NamedAreas ) {
 
@@ -77,6 +76,7 @@ string to_string(const location_t &val, std::string indent/* = "" */, std::strin
     }
     os << indent << pretty_print << "]," << endl;
     os << indent << pretty_print << "\"Region\": " << to_string(val.Region, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"Address\": " << to_string(val.Address, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"Position\": " << to_string(val.Position, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << "}";
 

@@ -24,21 +24,21 @@ namespace models {
 class sold_t  {
 
 public:
-    std::string SoldDate;
-    source_t Source;
-    double LivingArea;
-    double Rooms;
-    double AdditionalArea;
-    int PlotArea;
-    double ListPrice;
-    location_t Location;
-    std::string Published;
-    std::string Url;
-    std::string SoldPriceSource;
     double Rent;
-    int BooliId;
-    double SoldPrice;
+    location_t Location;
     std::string ObjectType;
+    int BooliId;
+    int PlotArea;
+    double AdditionalArea;
+    double SoldPrice;
+    double ListPrice;
+    std::string SoldPriceSource;
+    std::string Published;
+    double LivingArea;
+    source_t Source;
+    double Rooms;
+    std::string SoldDate;
+    std::string Url;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

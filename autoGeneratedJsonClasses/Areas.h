@@ -22,14 +22,14 @@ namespace models {
 class areas_t  {
 
 public:
-    std::vector<std::string> Types;
-    std::string UrlFriendlyName;
-    std::string FullName;
-    int BooliId;
-    std::string ParentName;
-    int ParentBooliId;
     std::vector<std::string> ParentTypes;
+    int BooliId;
+    std::vector<std::string> Types;
+    int ParentBooliId;
+    std::string ParentName;
+    std::string UrlFriendlyName;
     std::string Name;
+    std::string FullName;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

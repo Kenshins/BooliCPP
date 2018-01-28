@@ -11,9 +11,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Address.h"
-#include "Region.h"
 #include "Position.h"
+#include "Region.h"
+#include "Address.h"
 #include "rapidjson/document.h"
 
 
@@ -25,9 +25,9 @@ namespace models {
 class location_t  {
 
 public:
-    address_t Address;
     std::vector<std::string> NamedAreas;
     region_t Region;
+    address_t Address;
     position_t Position;
     std::unordered_map<std::string, std::string> additionalProperties;
 

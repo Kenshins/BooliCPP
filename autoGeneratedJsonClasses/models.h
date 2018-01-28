@@ -23,13 +23,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "SearchParams.h"
-#import "Source.h"
-#import "Region.h"
-#import "Address.h"
-#import "Areas.h"
-#import "Sold.h"
 #import "Booliresult.h"
-#import "Listings.h"
-#import "Position.h"
+#import "Address.h"
 #import "Location.h"
+#import "Region.h"
+#import "Position.h"
+#import "Source.h"
+#import "Areas.h"
+#import "SearchParams.h"
+#import "Sold.h"
+#import "Listings.h"
