@@ -249,8 +249,8 @@ TEST(BooliListingsResultTest, SimpleTest) {
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
-  tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
-  EXPECT_EQ(result.Count, 10);
+  tr::models::booliresult_t booliResult = b->FetchListingsResult(&lSC, caller, hash);
+  EXPECT_EQ(booliResult.Count, 10);
   delete b;
 }
 
@@ -261,9 +261,9 @@ TEST(BooliListingsResultTest, AdvancedTest) {
   lSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
-  tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
+  tr::models::booliresult_t booliResult = b->FetchListingsResult(&lSC, caller, hash);
 
-  for (auto listings : result.Listings)
+  for (auto listings : booliResult.Listings)
     {  
         if (listings.BooliId == 2284444)
         {
@@ -285,8 +285,8 @@ TEST(BooliSoldResultTest, SimpleTest) {
   sSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
-  tr::models::result_t result = b->FetchListingsResult(&sSC, caller, hash);
-  EXPECT_EQ(result.Count, 30);
+  tr::models::booliresult_t booliResult = b->FetchListingsResult(&sSC, caller, hash);
+  EXPECT_EQ(booliResult.Count, 30);
   delete b;
 }
 
@@ -297,9 +297,9 @@ TEST(BooliSoldResultTest, AdvancedTest) {
   sSC.SetQ("Nacka");
   std::string caller = "blabla";
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
-  tr::models::result_t result = b->FetchListingsResult(&sSC, caller, hash);
+  tr::models::booliresult_t booliResult = b->FetchListingsResult(&sSC, caller, hash);
 
-  for (auto sold : result.Sold)
+  for (auto sold : booliResult.Sold)
     {  
         if (sold.BooliId == 3069049)
         {
