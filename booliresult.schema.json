@@ -1,0 +1,494 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "totalCount": {
+      "type": "integer"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "areas": {
+      "$id": "/properties/areas",
+      "type": "array",
+      "items": {
+        "$id": "/properties/areas/items",
+        "type": "object",
+        "properties": {
+          "booliId": {
+            "$id": "/properties/areas/items/properties/booliId",
+            "type": "integer",
+            "default": 0,
+            "examples": [
+              76
+            ]
+          },
+          "name": {
+            "$id": "/properties/areas/items/properties/name",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "Nacka"
+            ]
+          },
+          "types": {
+            "$id": "/properties/areas/items/properties/types",
+            "type": "array",
+            "items": {
+              "$id": "/properties/areas/items/properties/types/items",
+              "type": "string",
+              "default": "",
+              "examples": [
+                "Kommun"
+              ]
+            }
+          },
+          "parentBooliId": {
+            "$id": "/properties/areas/items/properties/parentBooliId",
+            "type": "integer",
+            "default": 0,
+            "examples": [
+              2
+            ]
+          },
+          "parentName": {
+            "$id": "/properties/areas/items/properties/parentName",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "Stockholms län"
+            ]
+          },
+          "parentTypes": {
+            "$id": "/properties/areas/items/properties/parentTypes",
+            "type": "array",
+            "items": {
+              "$id": "/properties/areas/items/properties/parentTypes/items",
+              "type": "string",
+              "default": "",
+              "examples": [
+                "Län"
+              ]
+            }
+          },
+          "fullName": {
+            "$id": "/properties/areas/items/properties/fullName",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "Nacka, Stockholms län"
+            ]
+          },
+          "urlFriendlyName": {
+            "$id": "/properties/areas/items/properties/urlFriendlyName",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "nacka"
+            ]
+          }
+        }
+      }
+    },
+    "sold": {
+      "$id": "/properties/sold",
+      "type": "array",
+      "items": {
+        "$id": "/properties/sold/items",
+        "type": "object",
+        "properties": {
+          "location": {
+            "$id": "/properties/sold/items/properties/location",
+            "type": "object",
+            "properties": {
+              "address": {
+                "$id": "/properties/sold/items/properties/location/properties/address",
+                "type": "object",
+                "properties": {
+                  "streetAddress": {
+                    "$id": "/properties/sold/items/properties/location/properties/address/properties/streetAddress",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                      "Fabrikörvägen 10D"
+                    ]
+                  }
+                }
+              },
+              "position": {
+                "$id": "/properties/sold/items/properties/location/properties/position",
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "$id": "/properties/sold/items/properties/location/properties/position/properties/latitude",
+                    "type": "number",
+                    "default": 0,
+                    "examples": [
+                      59.31668472290039
+                    ]
+                  },
+                  "longitude": {
+                    "$id": "/properties/sold/items/properties/location/properties/position/properties/longitude",
+                    "type": "number",
+                    "default": 0,
+                    "examples": [
+                      18.1539363861084
+                    ]
+                  }
+                }
+              },
+              "namedAreas": {
+                "$id": "/properties/sold/items/properties/location/properties/namedAreas",
+                "type": "array",
+                "items": {
+                  "$id": "/properties/sold/items/properties/location/properties/namedAreas/items",
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "Nacka Strand"
+                  ]
+                }
+              },
+              "region": {
+                "$id": "/properties/sold/items/properties/location/properties/region",
+                "type": "object",
+                "properties": {
+                  "municipalityName": {
+                    "$id": "/properties/sold/items/properties/location/properties/region/properties/municipalityName",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                      "Nacka"
+                    ]
+                  },
+                  "countyName": {
+                    "$id": "/properties/sold/items/properties/location/properties/region/properties/countyName",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                      "Stockholms län"
+                    ]
+                  }
+                }
+              },
+              "distance": {
+                "$id": "/properties/sold/items/properties/location/properties/distance",
+                "type": "object",
+                "properties": {
+                  "ocean": {
+                    "$id": "/properties/sold/items/properties/location/properties/distance/properties/ocean",
+                    "type": "number",
+                    "default": 0,
+                    "examples": [
+                      108
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "listPrice": {
+            "$id": "/properties/sold/items/properties/listPrice",
+            "type": "number",
+            "default": 0,
+            "examples": [
+              5495000
+            ]
+          },
+          "rent": {
+            "$id": "/properties/sold/items/properties/rent",
+            "type": "number",
+            "default": 0,
+            "examples": [
+              5853
+            ]
+          },
+          "livingArea": {
+            "$id": "/properties/sold/items/properties/livingArea",
+            "type": "number",
+            "default": 0,
+            "examples": [
+              108
+            ]
+          },
+          "additionalArea": {
+            "$id": "/properties/sold/items/properties/additionalArea",
+            "type": "number",
+            "default": 0,
+            "examples": [
+              2
+            ]
+          },
+          "plotArea": {
+            "$id": "/properties/sold/items/properties/plotArea",
+            "type": "integer",
+            "default": 0,
+            "examples": [
+              0
+            ]
+          },
+          "source": {
+            "$id": "/properties/sold/items/properties/source",
+            "type": "object",
+            "properties": {
+              "name": {
+                "$id": "/properties/sold/items/properties/source/properties/name",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "Notar"
+                ]
+              },
+              "id": {
+                "$id": "/properties/sold/items/properties/source/properties/id",
+                "type": "integer",
+                "default": 0,
+                "examples": [
+                  1566
+                ]
+              },
+              "type": {
+                "$id": "/properties/sold/items/properties/source/properties/type",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "Broker"
+                ]
+              },
+              "url": {
+                "$id": "/properties/sold/items/properties/source/properties/url",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "http://www.notar.se/"
+                ]
+              }
+            }
+          },
+          "rooms": {
+            "$id": "/properties/sold/items/properties/rooms",
+            "type": "number",
+            "default": 0,
+            "examples": [
+              3
+            ]
+          },
+          "published": {
+            "$id": "/properties/sold/items/properties/published",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "2017-12-04 18:12:56"
+            ]
+          },
+          "objectType": {
+            "$id": "/properties/sold/items/properties/objectType",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "Lägenhet"
+            ]
+          },
+          "booliId": {
+            "$id": "/properties/sold/items/properties/booliId",
+            "type": "integer",
+            "default": 0,
+            "examples": [
+              3053907
+            ]
+          },
+          "soldDate": {
+            "$id": "/properties/sold/items/properties/soldDate",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "2017-12-27"
+            ]
+          },
+          "soldPrice": {
+            "$id": "/properties/sold/items/properties/soldPrice",
+            "type": "number",
+            "default": 0,
+            "examples": [
+              5495000
+            ]
+          },
+          "soldPriceSource": {
+            "$id": "/properties/sold/items/properties/soldPriceSource",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "bid"
+            ]
+          },
+          "url": {
+            "$id": "/properties/sold/items/properties/url",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "https://www.booli.se/annons/3053907"
+            ]
+          }
+        }
+      }
+    },
+    "listings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "booliId": {
+            "type": "integer"
+          },
+          "listPrice": {
+            "type": "number"
+          },
+          "published": {
+            "type": "string"
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "url",
+              "type"
+            ]
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "namedAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "streetAddress": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "streetAddress"
+                ]
+              },
+              "region": {
+                "type": "object",
+                "properties": {
+                  "municipalityName": {
+                    "type": "string"
+                  },
+                  "countyName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "municipalityName",
+                  "countyName"
+                ]
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "longitude": {
+                    "type": "number"
+                  },
+                  "latitude": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "longitude",
+                  "latitude"
+                ]
+              }
+            },
+            "required": [
+              "namedAreas",
+              "address",
+              "region",
+              "position"
+            ]
+          },
+          "isNewConstruction": {
+            "type": "integer"
+          },
+          "objectType": {
+            "type": "string"
+          },
+          "rooms": {
+            "type": "number"
+          },
+          "livingArea": {
+            "type": "number"
+          },
+          "rent": {
+            "type": "number"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "booliId",
+          "listPrice",
+          "published",
+          "source",
+          "location",
+          "isNewConstruction",
+          "objectType",
+          "rooms",
+          "livingArea",
+          "rent",
+          "url"
+        ]
+      }
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "searchParams": {
+      "type": "object",
+      "properties": {
+        "upcomingSale": {
+          "type": "integer"
+        },
+        "areaId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "upcomingSale",
+        "areaId"
+      ]
+    }
+  },
+  "required": [
+    "totalCount",
+    "count",
+    "listings",
+    "limit",
+    "offset",
+    "searchParams"
+  ]
+}
