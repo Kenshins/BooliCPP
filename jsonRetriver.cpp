@@ -30,8 +30,9 @@ std::string jsonRetriver::RetriveJson(std::string url)
 
     if (res != 0)
       throw new CurlException(res);
-    
-    std::cout << readBuffer << std::endl << std::endl;
+
+    // Uncomment for debugging
+    //std::cout << readBuffer << std::endl << std::endl;
   }
   
   return readBuffer;

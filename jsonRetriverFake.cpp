@@ -8,7 +8,7 @@ std::string jsonRetriverFake::RetriveJson(std::string url)
 {
   std::string readBuffer = "";   
   
-  std::ifstream file("testdata.json");
+  std::ifstream file("listingstestdata.json");
   std::string line;
   while(std::getline(file, line)) {
     readBuffer += line;
