@@ -654,13 +654,69 @@ std::string soldSearchCondition::SearchConditionResult()
 
 // area search condition
 
-areasSearchCondition::areasSearchCondition()
+areaSearchCondition::areaSearchCondition()
 {
 }
 
-std::string areasSearchCondition::SearchConditionResult()
+std::string areaSearchCondition::SearchConditionResult()
 {
-  return "";
+  std::string booliString = "areas?";
+
+  if (query != "")
+    booliString += "q=" + query;
+
+  if (lat != 0 || lng != 0)
+    {
+      stringstream ss;
+      ss << "lat=" << lat << "&lng=" << lng;
+      booliString += ss.str();
+    }
+
+  if (listings)
+    booliString += "&listings=1";
+
+  if (transactions)
+    booliString += "&transactions=1";
+
+  booliString += "&limit=" + util::intToString(limit);
+  
+  return booliString;
+}
+
+void areaSearchCondition::SetQ(std::string q)
+{
+  if (lat != 0 || lng != 0)
+    throw std::invalid_argument( "SetQ: Cannot set query string if lat or long is set!" );
+  query = q;
+}
+
+void areaSearchCondition::SetLat(double la)
+{
+  if (query != "")
+    throw std::invalid_argument( "SetLat: Cannot set lat if query is set!" );
+  lat = la;
+}
+
+void areaSearchCondition::SetLng(double lo)
+{
+  if (query != "")
+    throw std::invalid_argument( "SetLng: Cannot set long if query is set!" );
+  lng = lo;
+}
+
+void areaSearchCondition::SetListings(bool list)
+{
+  listings = list;
+}
+
+void areaSearchCondition::SetTransactions(bool trans)
+{
+  transactions = trans;
+}
+
+void areaSearchCondition::SetLimit(int l)
+{
+  limit = l;
 }
 
 std::string util::intToString(int d)

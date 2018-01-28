@@ -98,14 +98,19 @@ public:
   tm *maxSoldDateTime;
 };
 
-// Search condition base class
+class searchConditonBase
+{
+ public:
+  virtual std::string SearchConditionResult() = 0;
+};
 
-class searchCondition
+// Search condition class for listings and sold
+
+class searchCondition : public searchConditonBase
 {
  public:
   enum MainInput {Q, BBOX, DIM, CENTER, AREAID}; 
   void SetQ(std::string q);
-  virtual std::string SearchConditionResult() = 0;
   void checkNoDuplicateMainInput(MainInput in);
   void SetC(center *c);
   void SetDim(dimension *d);
@@ -179,12 +184,26 @@ class soldSearchCondition : public searchCondition
 
 // Area search condition
 
-// Todo, not done
-class areasSearchCondition : public searchCondition
+class areaSearchCondition : public searchConditonBase
 {
  public:
-  areasSearchCondition();
+  areaSearchCondition();
   std::string SearchConditionResult();
+
+  void SetQ(std::string q);
+  void SetLat(double la);
+  void SetLng(double lo);
+  void SetListings(bool list);
+  void SetTransactions(bool trans);
+  void SetLimit(int l);
+  
+ private:
+  std::string query = "";
+  double lat = 0;
+  double lng = 0;
+  bool listings = false;
+  bool transactions = false;
+  int limit = 10;
 };
 
 

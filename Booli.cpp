@@ -27,17 +27,22 @@ Booli::~Booli()
 {
 }
 
-tr::models::booliresult_t Booli::FetchListingsResult(searchCondition* searchCondition, std::string const& caller, std::string const& hash)
+tr::models::booliresult_t Booli::FetchResult(searchConditonBase* searchCondition, std::string const& caller, std::string const& hash)
 {
-  std::string readBuffer = FetchListingsJson(searchCondition, caller, hash);
+  std::string readBuffer = FetchListingsJson(searchCondition->SearchConditionResult(), caller, hash);
+  return FetchBooliResult(readBuffer);
+}
+
+tr::models::booliresult_t Booli::FetchBooliResult(std::string readBuffer)
+{
   Document document;
   document.Parse(readBuffer.c_str());
   return tr::models::booliresult_t(document);
 }
 
-std::string Booli::FetchListingsJson(searchCondition* searchCondition, std::string const& caller, std::string const &hash)
+std::string Booli::FetchListingsJson(std::string searchCondition, std::string const& caller, std::string const &hash)
 {
-  std::string readBuffer = m_jsonRetriver->RetriveJson(m_urlGenerator->GenerateUrl(searchCondition->SearchConditionResult(), caller, hash));
+  std::string readBuffer = m_jsonRetriver->RetriveJson(m_urlGenerator->GenerateUrl(searchCondition, caller, hash));
   return readBuffer;
 }
 
