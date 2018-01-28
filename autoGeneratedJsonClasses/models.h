@@ -24,4 +24,12 @@
 //  THE SOFTWARE.
 
 #import "SearchParams.h"
+#import "Source.h"
+#import "Region.h"
+#import "Address.h"
 #import "Areas.h"
+#import "Sold.h"
+#import "Booliresult.h"
+#import "Listings.h"
+#import "Position.h"
+#import "Location.h"

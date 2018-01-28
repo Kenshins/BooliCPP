@@ -5,7 +5,7 @@
 //
 //  Position.h
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include <string>
@@ -22,8 +22,8 @@ namespace models {
 class position_t  {
 
 public:
-    double Longitude;
     double Latitude;
+    double Longitude;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

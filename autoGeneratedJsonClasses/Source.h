@@ -5,7 +5,7 @@
 //
 //  Source.h
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include <string>
@@ -22,10 +22,10 @@ namespace models {
 class source_t  {
 
 public:
-    std::string Url;
     std::string Type;
-    std::string Name;
     int Id;
+    std::string Name;
+    std::string Url;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

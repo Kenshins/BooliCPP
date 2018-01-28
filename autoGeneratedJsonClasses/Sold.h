@@ -5,14 +5,14 @@
 //
 //  Sold.h
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Source.h"
 #include "Location.h"
+#include "Source.h"
 #include "rapidjson/document.h"
 
 
@@ -24,21 +24,21 @@ namespace models {
 class sold_t  {
 
 public:
-    std::string ObjectType;
-    int PlotArea;
-    double SoldPrice;
-    int BooliId;
-    double Rooms;
-    double Rent;
-    source_t Source;
-    double ListPrice;
-    double LivingArea;
-    std::string SoldPriceSource;
-    std::string Url;
-    double AdditionalArea;
-    std::string Published;
-    location_t Location;
     std::string SoldDate;
+    source_t Source;
+    double LivingArea;
+    double Rooms;
+    double AdditionalArea;
+    int PlotArea;
+    double ListPrice;
+    location_t Location;
+    std::string Published;
+    std::string Url;
+    std::string SoldPriceSource;
+    double Rent;
+    int BooliId;
+    double SoldPrice;
+    std::string ObjectType;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

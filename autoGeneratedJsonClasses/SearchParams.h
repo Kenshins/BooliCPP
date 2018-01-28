@@ -5,7 +5,7 @@
 //
 //  SearchParams.h
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include <string>
@@ -22,9 +22,8 @@ namespace models {
 class searchParams_t  {
 
 public:
-    int Listings;
-    std::string Q;
-    int Transactions;
+    int UpcomingSale;
+    int AreaId;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

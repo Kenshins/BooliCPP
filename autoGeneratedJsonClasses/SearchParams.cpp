@@ -5,7 +5,7 @@
 //
 //  SearchParams.cpp
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include "SearchParams.h"
@@ -23,33 +23,21 @@ searchParams_t::searchParams_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto Listings_iter = json_value.FindMember("listings");
-    if ( Listings_iter != json_value.MemberEnd() ) {
+    auto UpcomingSale_iter = json_value.FindMember("upcomingSale");
+    if ( UpcomingSale_iter != json_value.MemberEnd() ) {
 
-        if (!Listings_iter->value.IsNull()) {
-            assert(Listings_iter->value.IsInt());
-            Listings = Listings_iter->value.GetInt();
+        if (!UpcomingSale_iter->value.IsNull()) {
+            assert(UpcomingSale_iter->value.IsInt());
+            UpcomingSale = UpcomingSale_iter->value.GetInt();
         }
     }
 
-    auto Q_iter = json_value.FindMember("q");
-    if ( Q_iter != json_value.MemberEnd() ) {
+    auto AreaId_iter = json_value.FindMember("areaId");
+    if ( AreaId_iter != json_value.MemberEnd() ) {
 
-        if (Q_iter->value.IsNull()) {
-            Q.clear();
-        }
-        else {
-            assert(Q_iter->value.IsString());
-            Q = Q_iter->value.GetString();
-        }
-    }
-
-    auto Transactions_iter = json_value.FindMember("transactions");
-    if ( Transactions_iter != json_value.MemberEnd() ) {
-
-        if (!Transactions_iter->value.IsNull()) {
-            assert(Transactions_iter->value.IsInt());
-            Transactions = Transactions_iter->value.GetInt();
+        if (!AreaId_iter->value.IsNull()) {
+            assert(AreaId_iter->value.IsInt());
+            AreaId = AreaId_iter->value.GetInt();
         }
     }
 
@@ -60,9 +48,8 @@ string to_string(const searchParams_t &val, std::string indent/* = "" */, std::s
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"Listings\": " << val.Listings << "," << endl;
-    os << indent << pretty_print << "\"Q\": \"" << val.Q << "\"," << endl;
-    os << indent << pretty_print << "\"Transactions\": " << val.Transactions << "," << endl;
+    os << indent << pretty_print << "\"UpcomingSale\": " << val.UpcomingSale << "," << endl;
+    os << indent << pretty_print << "\"AreaId\": " << val.AreaId << "," << endl;
     os << indent << "}";
 
     return os.str();

@@ -5,7 +5,7 @@
 //
 //  Region.h
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include <string>
@@ -22,8 +22,8 @@ namespace models {
 class region_t  {
 
 public:
-    std::string MunicipalityName;
     std::string CountyName;
+    std::string MunicipalityName;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

@@ -11,10 +11,10 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Areas.h"
-#include "Listings.h"
-#include "SearchParams.h"
 #include "Sold.h"
+#include "Listings.h"
+#include "Areas.h"
+#include "SearchParams.h"
 #include "rapidjson/document.h"
 
 
@@ -26,14 +26,14 @@ namespace models {
 class booliresult_t  {
 
 public:
-    searchParams_t SearchParams;
+    std::vector<listings_t> Listings;
     int Offset;
     std::vector<areas_t> Areas;
-    std::vector<listings_t> Listings;
+    searchParams_t SearchParams;
+    int TotalCount;
+    std::vector<sold_t> Sold;
     int Limit;
     int Count;
-    std::vector<sold_t> Sold;
-    int TotalCount;
     std::unordered_map<std::string, std::string> additionalProperties;
 
 public:

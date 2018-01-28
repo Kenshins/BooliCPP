@@ -5,7 +5,7 @@
 //
 //  Location.cpp
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include "Location.h"
@@ -32,24 +32,6 @@ location_t::location_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Position_iter = json_value.FindMember("position");
-    if ( Position_iter != json_value.MemberEnd() ) {
-
-        if (!Position_iter->value.IsNull()) {
-            assert(Position_iter->value.IsObject());
-            Position = position_t(Position_iter->value);
-        }
-    }
-
-    auto Region_iter = json_value.FindMember("region");
-    if ( Region_iter != json_value.MemberEnd() ) {
-
-        if (!Region_iter->value.IsNull()) {
-            assert(Region_iter->value.IsObject());
-            Region = region_t(Region_iter->value);
-        }
-    }
-
     auto NamedAreas_iter = json_value.FindMember("namedAreas");
     if ( NamedAreas_iter != json_value.MemberEnd() ) {
 
@@ -62,6 +44,24 @@ location_t::location_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto Region_iter = json_value.FindMember("region");
+    if ( Region_iter != json_value.MemberEnd() ) {
+
+        if (!Region_iter->value.IsNull()) {
+            assert(Region_iter->value.IsObject());
+            Region = region_t(Region_iter->value);
+        }
+    }
+
+    auto Position_iter = json_value.FindMember("position");
+    if ( Position_iter != json_value.MemberEnd() ) {
+
+        if (!Position_iter->value.IsNull()) {
+            assert(Position_iter->value.IsObject());
+            Position = position_t(Position_iter->value);
+        }
+    }
+
 }
 
 string to_string(const location_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -70,14 +70,14 @@ string to_string(const location_t &val, std::string indent/* = "" */, std::strin
 
     os << indent << "{" << endl;
     os << indent << pretty_print << "\"Address\": " << to_string(val.Address, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"Position\": " << to_string(val.Position, indent + pretty_print, pretty_print) << "," << endl;
-    os << indent << pretty_print << "\"Region\": " << to_string(val.Region, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << pretty_print << "\"NamedAreas\": [";
     for( auto &array_item : val.NamedAreas ) {
 
         os << "\"" << array_item << "\",";
     }
     os << indent << pretty_print << "]," << endl;
+    os << indent << pretty_print << "\"Region\": " << to_string(val.Region, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"Position\": " << to_string(val.Position, indent + pretty_print, pretty_print) << "," << endl;
     os << indent << "}";
 
     return os.str();

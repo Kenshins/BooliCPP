@@ -5,7 +5,7 @@
 //
 //  Position.cpp
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include "Position.h"
@@ -22,25 +22,6 @@ namespace models {
 position_t::position_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
-
-    auto Longitude_iter = json_value.FindMember("longitude");
-    if ( Longitude_iter != json_value.MemberEnd() ) {
-
-	if (!Longitude_iter->value.IsNull()) {
-	  if (Longitude_iter->value.IsInt())
-	    {
-	      Longitude = (double)Longitude_iter->value.GetInt();
-	    }
-	  else if (Longitude_iter->value.IsDouble())
-	    {
-	      Longitude = Longitude_iter->value.GetDouble();
-	    }
-	  else
-	    {
-	      assert(Longitude_iter->value.IsFloat());
-	    }
-        }
-    }
 
     auto Latitude_iter = json_value.FindMember("latitude");
     if ( Latitude_iter != json_value.MemberEnd() ) {
@@ -61,6 +42,25 @@ position_t::position_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto Longitude_iter = json_value.FindMember("longitude");
+    if ( Longitude_iter != json_value.MemberEnd() ) {
+
+	if (!Longitude_iter->value.IsNull()) {
+	  if (Longitude_iter->value.IsInt())
+	    {
+	      Longitude = (double)Longitude_iter->value.GetInt();
+	    }
+	  else if (Longitude_iter->value.IsDouble())
+	    {
+	      Longitude = Longitude_iter->value.GetDouble();
+	    }
+	  else
+	    {
+	      assert(Longitude_iter->value.IsFloat());
+	    }
+        }
+    }
+
 }
 
 string to_string(const position_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -68,8 +68,8 @@ string to_string(const position_t &val, std::string indent/* = "" */, std::strin
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"Longitude\": " << val.Longitude << "," << endl;
     os << indent << pretty_print << "\"Latitude\": " << val.Latitude << "," << endl;
+    os << indent << pretty_print << "\"Longitude\": " << val.Longitude << "," << endl;
     os << indent << "}";
 
     return os.str();

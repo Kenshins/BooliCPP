@@ -5,7 +5,7 @@
 //
 //  Source.cpp
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include "Source.h"
@@ -23,18 +23,6 @@ source_t::source_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto Url_iter = json_value.FindMember("url");
-    if ( Url_iter != json_value.MemberEnd() ) {
-
-        if (Url_iter->value.IsNull()) {
-            Url.clear();
-        }
-        else {
-            assert(Url_iter->value.IsString());
-            Url = Url_iter->value.GetString();
-        }
-    }
-
     auto Type_iter = json_value.FindMember("type");
     if ( Type_iter != json_value.MemberEnd() ) {
 
@@ -44,6 +32,15 @@ source_t::source_t(const rapidjson::Value &json_value) {
         else {
             assert(Type_iter->value.IsString());
             Type = Type_iter->value.GetString();
+        }
+    }
+
+    auto Id_iter = json_value.FindMember("id");
+    if ( Id_iter != json_value.MemberEnd() ) {
+
+        if (!Id_iter->value.IsNull()) {
+            assert(Id_iter->value.IsInt());
+            Id = Id_iter->value.GetInt();
         }
     }
 
@@ -59,12 +56,15 @@ source_t::source_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Id_iter = json_value.FindMember("id");
-    if ( Id_iter != json_value.MemberEnd() ) {
+    auto Url_iter = json_value.FindMember("url");
+    if ( Url_iter != json_value.MemberEnd() ) {
 
-        if (!Id_iter->value.IsNull()) {
-            assert(Id_iter->value.IsInt());
-            Id = Id_iter->value.GetInt();
+        if (Url_iter->value.IsNull()) {
+            Url.clear();
+        }
+        else {
+            assert(Url_iter->value.IsString());
+            Url = Url_iter->value.GetString();
         }
     }
 
@@ -75,10 +75,10 @@ string to_string(const source_t &val, std::string indent/* = "" */, std::string 
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"Url\": \"" << val.Url << "\"," << endl;
     os << indent << pretty_print << "\"Type\": \"" << val.Type << "\"," << endl;
-    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
     os << indent << pretty_print << "\"Id\": " << val.Id << "," << endl;
+    os << indent << pretty_print << "\"Name\": \"" << val.Name << "\"," << endl;
+    os << indent << pretty_print << "\"Url\": \"" << val.Url << "\"," << endl;
     os << indent << "}";
 
     return os.str();

@@ -23,12 +23,13 @@ booliresult_t::booliresult_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto SearchParams_iter = json_value.FindMember("searchParams");
-    if ( SearchParams_iter != json_value.MemberEnd() ) {
+    auto Listings_iter = json_value.FindMember("listings");
+    if ( Listings_iter != json_value.MemberEnd() ) {
 
-        if (!SearchParams_iter->value.IsNull()) {
-            assert(SearchParams_iter->value.IsObject());
-            SearchParams = searchParams_t(SearchParams_iter->value);
+        for( auto array_item = Listings_iter->value.Begin(); array_item != Listings_iter->value.End(); array_item++  ) {
+
+            assert(array_item->IsObject());
+            Listings.push_back(listings_t(*array_item));
         }
     }
 
@@ -51,13 +52,31 @@ booliresult_t::booliresult_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Listings_iter = json_value.FindMember("listings");
-    if ( Listings_iter != json_value.MemberEnd() ) {
+    auto SearchParams_iter = json_value.FindMember("searchParams");
+    if ( SearchParams_iter != json_value.MemberEnd() ) {
 
-        for( auto array_item = Listings_iter->value.Begin(); array_item != Listings_iter->value.End(); array_item++  ) {
+        if (!SearchParams_iter->value.IsNull()) {
+            assert(SearchParams_iter->value.IsObject());
+            SearchParams = searchParams_t(SearchParams_iter->value);
+        }
+    }
+
+    auto TotalCount_iter = json_value.FindMember("totalCount");
+    if ( TotalCount_iter != json_value.MemberEnd() ) {
+
+        if (!TotalCount_iter->value.IsNull()) {
+            assert(TotalCount_iter->value.IsInt());
+            TotalCount = TotalCount_iter->value.GetInt();
+        }
+    }
+
+    auto Sold_iter = json_value.FindMember("sold");
+    if ( Sold_iter != json_value.MemberEnd() ) {
+
+        for( auto array_item = Sold_iter->value.Begin(); array_item != Sold_iter->value.End(); array_item++  ) {
 
             assert(array_item->IsObject());
-            Listings.push_back(listings_t(*array_item));
+            Sold.push_back(sold_t(*array_item));
         }
     }
 
@@ -79,25 +98,6 @@ booliresult_t::booliresult_t(const rapidjson::Value &json_value) {
         }
     }
 
-    auto Sold_iter = json_value.FindMember("sold");
-    if ( Sold_iter != json_value.MemberEnd() ) {
-
-        for( auto array_item = Sold_iter->value.Begin(); array_item != Sold_iter->value.End(); array_item++  ) {
-
-            assert(array_item->IsObject());
-            Sold.push_back(sold_t(*array_item));
-        }
-    }
-
-    auto TotalCount_iter = json_value.FindMember("totalCount");
-    if ( TotalCount_iter != json_value.MemberEnd() ) {
-
-        if (!TotalCount_iter->value.IsNull()) {
-            assert(TotalCount_iter->value.IsInt());
-            TotalCount = TotalCount_iter->value.GetInt();
-        }
-    }
-
 }
 
 string to_string(const booliresult_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -105,7 +105,12 @@ string to_string(const booliresult_t &val, std::string indent/* = "" */, std::st
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"SearchParams\": " << to_string(val.SearchParams, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"Listings\": [";
+    for( auto &array_item : val.Listings ) {
+
+        os << endl << to_string(array_item, indent + pretty_print + pretty_print, pretty_print) << "," << endl;
+    }
+    os << indent << pretty_print << "]," << endl;
     os << indent << pretty_print << "\"Offset\": " << val.Offset << "," << endl;
     os << indent << pretty_print << "\"Areas\": [";
     for( auto &array_item : val.Areas ) {
@@ -113,21 +118,16 @@ string to_string(const booliresult_t &val, std::string indent/* = "" */, std::st
         os << endl << to_string(array_item, indent + pretty_print + pretty_print, pretty_print) << "," << endl;
     }
     os << indent << pretty_print << "]," << endl;
-    os << indent << pretty_print << "\"Listings\": [";
-    for( auto &array_item : val.Listings ) {
-
-        os << endl << to_string(array_item, indent + pretty_print + pretty_print, pretty_print) << "," << endl;
-    }
-    os << indent << pretty_print << "]," << endl;
-    os << indent << pretty_print << "\"Limit\": " << val.Limit << "," << endl;
-    os << indent << pretty_print << "\"Count\": " << val.Count << "," << endl;
+    os << indent << pretty_print << "\"SearchParams\": " << to_string(val.SearchParams, indent + pretty_print, pretty_print) << "," << endl;
+    os << indent << pretty_print << "\"TotalCount\": " << val.TotalCount << "," << endl;
     os << indent << pretty_print << "\"Sold\": [";
     for( auto &array_item : val.Sold ) {
 
         os << endl << to_string(array_item, indent + pretty_print + pretty_print, pretty_print) << "," << endl;
     }
     os << indent << pretty_print << "]," << endl;
-    os << indent << pretty_print << "\"TotalCount\": " << val.TotalCount << "," << endl;
+    os << indent << pretty_print << "\"Limit\": " << val.Limit << "," << endl;
+    os << indent << pretty_print << "\"Count\": " << val.Count << "," << endl;
     os << indent << "}";
 
     return os.str();

@@ -5,7 +5,7 @@
 //
 //  Region.cpp
 //
-//  Created by js2Model on 2018-01-07.
+//  Created by js2Model on 2018-01-28.
 //
 
 #include "Region.h"
@@ -23,18 +23,6 @@ region_t::region_t(const rapidjson::Value &json_value) {
 
     assert(json_value.IsObject());
 
-    auto MunicipalityName_iter = json_value.FindMember("municipalityName");
-    if ( MunicipalityName_iter != json_value.MemberEnd() ) {
-
-        if (MunicipalityName_iter->value.IsNull()) {
-            MunicipalityName.clear();
-        }
-        else {
-            assert(MunicipalityName_iter->value.IsString());
-            MunicipalityName = MunicipalityName_iter->value.GetString();
-        }
-    }
-
     auto CountyName_iter = json_value.FindMember("countyName");
     if ( CountyName_iter != json_value.MemberEnd() ) {
 
@@ -47,6 +35,18 @@ region_t::region_t(const rapidjson::Value &json_value) {
         }
     }
 
+    auto MunicipalityName_iter = json_value.FindMember("municipalityName");
+    if ( MunicipalityName_iter != json_value.MemberEnd() ) {
+
+        if (MunicipalityName_iter->value.IsNull()) {
+            MunicipalityName.clear();
+        }
+        else {
+            assert(MunicipalityName_iter->value.IsString());
+            MunicipalityName = MunicipalityName_iter->value.GetString();
+        }
+    }
+
 }
 
 string to_string(const region_t &val, std::string indent/* = "" */, std::string pretty_print/* = "" */) {
@@ -54,8 +54,8 @@ string to_string(const region_t &val, std::string indent/* = "" */, std::string 
     ostringstream os;
 
     os << indent << "{" << endl;
-    os << indent << pretty_print << "\"MunicipalityName\": \"" << val.MunicipalityName << "\"," << endl;
     os << indent << pretty_print << "\"CountyName\": \"" << val.CountyName << "\"," << endl;
+    os << indent << pretty_print << "\"MunicipalityName\": \"" << val.MunicipalityName << "\"," << endl;
     os << indent << "}";
 
     return os.str();
