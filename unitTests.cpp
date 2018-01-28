@@ -242,8 +242,8 @@ TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
   EXPECT_EQ(sc.SearchConditionResult(), "listings?q=Norrköping&objectType=lägenhet&limit=10");
 }
 
-// This uses fixed data from testdata.json
-TEST(BooliResultTest, SimpleTest) {
+// This uses fixed data from listingstestdata.json
+TEST(BooliListingsResultTest, SimpleTest) {
   Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
@@ -254,8 +254,8 @@ TEST(BooliResultTest, SimpleTest) {
   delete b;
 }
 
-// This uses fixed data from testdata.json
-TEST(BooliResultTest, AdvancedTest) {
+// This uses fixed data from listingstestdata.json
+TEST(BooliListingsResultTest, AdvancedTest) {
   Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
   listingsSearchCondition lSC = listingsSearchCondition();
   lSC.SetQ("Nacka");
@@ -263,7 +263,7 @@ TEST(BooliResultTest, AdvancedTest) {
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
   tr::models::result_t result = b->FetchListingsResult(&lSC, caller, hash);
 
-  for (auto listings : result.Listings) // access by reference to avoid copying
+  for (auto listings : result.Listings)
     {  
         if (listings.BooliId == 2284444)
         {
@@ -277,6 +277,42 @@ TEST(BooliResultTest, AdvancedTest) {
     }
   delete b;
 }
+
+// This uses fixed data from soldtestdata.json
+TEST(BooliSoldResultTest, SimpleTest) {
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
+  soldSearchCondition sSC = soldSearchCondition();
+  sSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  tr::models::result_t result = b->FetchListingsResult(&sSC, caller, hash);
+  EXPECT_EQ(result.Count, 30);
+  delete b;
+}
+
+// This uses fixed data from soldtestdata.json
+TEST(BooliSoldResultTest, AdvancedTest) {
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
+  soldSearchCondition sSC = soldSearchCondition();
+  sSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  tr::models::result_t result = b->FetchListingsResult(&sSC, caller, hash);
+
+  for (auto sold : result.Sold)
+    {  
+        if (sold.BooliId == 3069049)
+        {
+	  EXPECT_EQ(sold.LivingArea, 81);
+	  EXPECT_EQ(sold.Rooms, 3);
+	  EXPECT_EQ(sold.Source.Id, 58);
+	  EXPECT_EQ(sold.Source.Type, "Broker");
+	  EXPECT_EQ(sold.Location.Position.Longitude, 18.25889111);
+        }
+    }
+  delete b;
+}
+
 
 TEST(jsonRetriverTest, SimpleTest) {
 
