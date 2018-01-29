@@ -242,6 +242,41 @@ TEST(listingsSearchConditionSearchConditionResultTest, ObjectTypeReturnString) {
   EXPECT_EQ(sc.SearchConditionResult(), "listings?q=Norrköping&objectType=lägenhet&limit=10");
 }
 
+TEST(soldSearchConditionSearchConditionResultTest, FullReturnString) {
+  soldSearchCondition sc = soldSearchCondition();
+  sc.SetQ("Nacka");
+  sc.SetMinSoldPrice(200);
+  sc.SetMaxSoldPrice(10000000);
+  sc.SetMinSoldSqmPrice(200);
+  sc.SetMaxSoldSqmPrice(90000);
+  sc.SetMinRooms(2);
+  sc.SetMaxRooms(8);
+  sc.SetMinLivingArea(10);
+  sc.SetMaxLivingArea(500);
+  sc.SetMinConstructionYear(1900);
+  sc.SetMaxConstructionYear(2016);
+
+  tm minSDate = {};
+  minSDate.tm_year = 2010;
+  minSDate.tm_mon = 02;
+  minSDate.tm_mday = 27;
+
+  minSoldDate minSold = minSoldDate(&minSDate);
+  sc.SetMinSoldDate(&minSold);
+  
+  tm maxSDate = {};
+  maxSDate.tm_year = 2017;
+  maxSDate.tm_mon = 02;
+  maxSDate.tm_mday = 27;
+
+  maxSoldDate maxSold = maxSoldDate(&maxSDate);
+  sc.SetMaxSoldDate(&maxSold);
+
+  sc.SetLimit(30);
+
+  EXPECT_EQ(sc.SearchConditionResult(), "sold?q=Nacka&minRooms=2&maxRooms=8&minLivingArea=10&maxLivingArea=500&minConstructionYear=1900&maxConstructionYear=2016&minSoldPrice=200&maxSoldPrice=10000000&minSoldSqmPrice=200&maxSoldSqmPrice=90000&minSoldDate=20100227&maxSoldDate=20170227&limit=30");
+}
+
 // This uses fixed data from listingstestdata.json
 TEST(BooliListingsResultTest, SimpleTest) {
   Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
