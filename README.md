@@ -12,9 +12,9 @@ Backlog
 
 ### Environment versions
 
-Ubuntu 14.04.1 LTS
-gcc 5.4.0
-glibc 2.23
+* Ubuntu 14.04.1 LTS
+* gcc 5.4.0
+* glibc 2.23
 
 ### Libraries to be able to compile
 
@@ -41,6 +41,7 @@ copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
 sudo cp *.a /usr/lib
 
 ## Examples
+<pre>
 
 #include <iostream>
 #include "BooliFactory.h"
@@ -100,6 +101,8 @@ int main (void)
     
   return 0;
 }
+
+</pre>
 
 ## License
 
