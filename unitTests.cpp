@@ -298,6 +298,7 @@ TEST(BooliListingsResultTest, AdvancedTest) {
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
   tr::models::booliresult_t booliResult = b->FetchResult(&lSC, caller, hash);
 
+  bool found = false;
   for (auto listings : booliResult.Listings)
     {  
         if (listings.BooliId == 2284444)
@@ -308,8 +309,13 @@ TEST(BooliListingsResultTest, AdvancedTest) {
 	  EXPECT_EQ(listings.Source.Type, "Broker");
 	  EXPECT_EQ(listings.IsNewConstruction, true);
 	  EXPECT_EQ(listings.Location.Position.Longitude, 18.11234352);
+	  found = true;
         }
     }
+
+    if (!found)
+    FAIL() << "BooliId 2284444 could not be found in the test json file!";
+    
   delete b;
 }
 
@@ -334,6 +340,7 @@ TEST(BooliSoldResultTest, AdvancedTest) {
   std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
   tr::models::booliresult_t booliResult = b->FetchResult(&sSC, caller, hash);
 
+  bool found = false;
   for (auto sold : booliResult.Sold)
     {  
         if (sold.BooliId == 3069049)
@@ -343,11 +350,53 @@ TEST(BooliSoldResultTest, AdvancedTest) {
 	  EXPECT_EQ(sold.Source.Id, 58);
 	  EXPECT_EQ(sold.Source.Type, "Broker");
 	  EXPECT_EQ(sold.Location.Position.Longitude, 18.25889111);
-        }
+	  found = true;
+        }	
     }
+    if (!found)
+    FAIL() << "BooliId 3069049 could not be found in the test json file!";
+    
   delete b;
 }
 
+// This uses fixed data from areastestdata.json
+TEST(BooliAreasResultTest, SimpleTest) {
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
+  areaSearchCondition aSC = areaSearchCondition();
+  aSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  tr::models::booliresult_t booliResult = b->FetchResult(&aSC, caller, hash);
+  EXPECT_EQ(booliResult.Count, 9);
+  delete b;
+}
+
+// This uses fixed data from areastestdata.json
+TEST(BooliAreasResultTest, AdvancedTest) {
+  Booli* b = new Booli(std::make_shared<jsonRetriverFake>(), std::make_shared<urlGenerator>());
+  areaSearchCondition aSC = areaSearchCondition();
+  aSC.SetQ("Nacka");
+  std::string caller = "blabla";
+  std::string hash = "P8rfkeJvKORgHjvX61npRXVGG2kHPm9pXNZetHS";
+  tr::models::booliresult_t booliResult = b->FetchResult(&aSC, caller, hash);
+
+  bool found = false;
+  for (auto areas : booliResult.Areas)
+    {  
+        if (areas.BooliId == 930508)
+        {
+	  EXPECT_EQ(areas.Name, "Nacka Strand");
+	  EXPECT_EQ(areas.ParentTypes[0], "Kommun");
+	  EXPECT_EQ(areas.FullName, "Nacka Strand, Nacka");
+	  found = true;
+        }	
+    }
+
+  if (!found)
+    FAIL() << "BooliId 930508 could not be found in the test json file!";
+  
+  delete b;
+}
 
 //TEST(jsonRetriverTest, SimpleTest) {
 
